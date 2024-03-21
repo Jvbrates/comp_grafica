@@ -1,0 +1,113 @@
+# depslib dependency file v1.0
+1710338347 source:d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\main.cpp
+	<GLFW/glfw3.h>
+	<windows.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Bola.h"
+	"Relogio.h"
+	"Botao.h"
+	<stdlib.h>
+	<stdio.h>
+
+1589218349 
+
+1379627952 d:\ufsm\disciplinas\computacao grafica\demos\include\glfw\glfw3.h
+	<stddef.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<GLES3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1710338702 source:d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+
+1710333740 2d.h"
+
+1710338678 d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GLFW/glfw3.h>
+	"Vector2.h"
+
+1710338678 "
+
+1589217858 d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\vector2.h
+
+1589214882 d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\bola.h
+	"gl_canvas2d.h"
+
+1193164156 d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\relogio.h
+	"gl_canvas2d.h"
+
+1710333740 d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\botao.h
+	"gl_canvas2d.h"
+
+1589218349 source:d:\ufsm\disciplinas\computacao grafica\demos\gl_3_canvasglfw\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1710338702 source:/home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/gl_canvas2d.cpp
+	"gl_canvas2d.h"
+
+1710338678 /home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GLFW/glfw3.h>
+	"Vector2.h"
+
+1379627952 /home/jvbrates/Downloads/comp_grafica/include/GLFW/glfw3.h
+	<stddef.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<GLES3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1589217858 /home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/Vector2.h
+
+1589218349 source:/home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/Relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1193164156 /home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/Relogio.h
+	"gl_canvas2d.h"
+
+1710370678 source:/home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/main.cpp
+	<GLFW/glfw3.h>
+	<unistd.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Bola.h"
+	"Relogio.h"
+	"Botao.h"
+	<stdlib.h>
+	<stdio.h>
+
+1589214882 /home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/Bola.h
+	"gl_canvas2d.h"
+
+1710333740 /home/jvbrates/Downloads/comp_grafica/2_canvasGlfw/src/Botao.h
+	"gl_canvas2d.h"
+
