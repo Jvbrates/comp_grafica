@@ -82,6 +82,7 @@ public:
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);
+    static void color(int r, int g, int b);
     static void color(float r, float g, float b, float alpha);
     static void color(colors_enum index);
 

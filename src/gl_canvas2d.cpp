@@ -252,6 +252,20 @@ void CV::color(float r, float g, float b)
    glColor3d(r, g, b);
 }
 
+void CV::color(int r, int g, int b)
+{
+
+    double f_r, f_g, f_b;
+
+    f_r = ((double )r) / 255.;
+    f_g = ((double )g) / 255.;
+    f_b = ((double )b) / 255.;
+
+    glColor3d(f_r,f_g,f_b);
+}
+
+
+
 void CV::color(colors_enum idx)
 {
     glColor3fv(Colors[idx]);
@@ -367,27 +381,19 @@ Vector2<int> CV::get_mouse_displacement() {
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-
     EventListener::key_press(key);
-
-    printf("\nTecla: %d" , key);
-
 
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-
     EventListener::key_up(key);
-    printf("\nLiberou: %d" , key);
-
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
 {
-    printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction, x,y);
     if(button != -2) {        //Click
         if(button == GLUT_RIGHT_BUTTON){
             EventListener::mouse_right(state);
