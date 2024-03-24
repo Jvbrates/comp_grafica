@@ -56,20 +56,32 @@ bool teste::key_up(int state) {
     printf("%c\n", state);
 
     auto state_c = (char)state;
-
-    if(state_c == 'r'){
-        imgAbstract->setColor(en_redscale);
-    } else if (state_c == 'g'){
-        imgAbstract->setColor(en_greenscale);
-    } else if (state_c == 'b') {
-        imgAbstract->setColor(en_bluescale);
-    } else if (state_c == 'u'){
-        imgAbstract->setRotation(imgAbstract->getRotation()+10);
-    } else if (state_c == 'j'){
-        imgAbstract->setRotation(imgAbstract->getRotation()-10);
-    } else {
-        imgAbstract->setColor(en_rgb);
+    switch(state_c){
+        case 'r':
+            imgAbstract->setColor(en_redscale);
+            break;
+        case 'g':
+            imgAbstract->setColor(en_greenscale);
+            break;
+        case 'b':
+            imgAbstract->setColor(en_bluescale);
+            break;
+        case 'u':
+            imgAbstract->setRotation(imgAbstract->getRotation()+10);
+            break;
+        case 'j':
+            imgAbstract->setRotation(imgAbstract->getRotation()-10);
+            break;
+        case '+':
+            imgAbstract->setBrightnessMod(imgAbstract->getBrightnessMod()+5);
+            break;
+        case '-':
+            imgAbstract->setBrightnessMod(imgAbstract->getBrightnessMod()-5);
+            break;
+        default:
+            imgAbstract->setColor(en_rgb);
     }
+
 
     return false;
 

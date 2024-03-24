@@ -134,6 +134,8 @@ public:
     void setColor(enum_colors);
     void setRotation(int degress);
     int getRotation();
+    void setBrightnessMod(int );
+    int getBrightnessMod();
     void render() override;
 
 

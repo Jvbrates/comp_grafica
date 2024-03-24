@@ -271,7 +271,7 @@ void Image::render() {
             switch (this->colors) {
                 case en_redscale: {
                     CV::color(
-                            red_channel->pixels[pos],
+                            red_channel->pixels[pos] + brightness_mod,
                             0,
                             0
                     );
@@ -281,7 +281,7 @@ void Image::render() {
                 case en_greenscale: {
                     CV::color(
                             0,
-                            blue_channel->pixels[pos],
+                            blue_channel->pixels[pos] + brightness_mod,
                             0
                     );
 
@@ -291,24 +291,24 @@ void Image::render() {
                     CV::color(
                             0,
                             0,
-                            blue_channel->pixels[pos]
+                            blue_channel->pixels[pos] + brightness_mod
                     );
 
                     break;
                 }
                 case en_grayscale: {
                     CV::color(
-                            gray_channel->pixels[pos],
-                            gray_channel->pixels[pos],
-                            gray_channel->pixels[pos]
+                            gray_channel->pixels[pos] + brightness_mod,
+                            gray_channel->pixels[pos] + brightness_mod,
+                            gray_channel->pixels[pos] + brightness_mod
                     );
                     break;
                 }
                 case en_rgb: {
                     CV::color(
-                            red_channel->pixels[pos],
-                            green_channel->pixels[pos],
-                            blue_channel->pixels[pos]
+                            red_channel->pixels[pos] + brightness_mod,
+                            green_channel->pixels[pos] + brightness_mod,
+                            blue_channel->pixels[pos] + + brightness_mod
                     );
 
                     break;
@@ -341,4 +341,13 @@ void Image::setRotation(int degress) {
 
 int Image::getRotation() {
     return (this->rotation*180)/M_PI_2;
+}
+
+void Image::setBrightnessMod(int b) {
+    this->brightness_mod = b;
+
+}
+
+int Image::getBrightnessMod() {
+    return this->brightness_mod;
 }
