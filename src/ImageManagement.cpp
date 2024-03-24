@@ -250,6 +250,10 @@ Vector2<T> rotate(Vector2<T> pos, double rot){
 }
 
 
+void Image::aux_render(int pos){
+
+}
+
 void Image::render() {
 
     //Rotações:
@@ -266,7 +270,20 @@ void Image::render() {
     int pos;
     for (int y = this->height; y > 0; y--) {
         for (int x = 0; x < this->width; ++x) {
-            pos = (x + y * this->width);
+
+            //Espelhamentos
+            if(this->horizontal_flip){
+                pos = width - x;
+            } else {
+                pos = x;
+            }
+
+            if(this->vertical_flip){
+                pos += (this->height - y)*this->width;
+            } else {
+                pos += y * this->width;
+            }
+            //pos = (x + y * this->width);
 
             switch (this->colors) {
                 case en_redscale: {
@@ -350,4 +367,13 @@ void Image::setBrightnessMod(int b) {
 
 int Image::getBrightnessMod() {
     return this->brightness_mod;
+}
+
+void Image::setHorizontalFlip(bool flip) {
+    this->horizontal_flip = flip;
+
+}
+
+void Image::setVerticalFlip(bool flip) {
+    this->vertical_flip = flip;
 }

@@ -78,6 +78,18 @@ bool teste::key_up(int state) {
         case '-':
             imgAbstract->setBrightnessMod(imgAbstract->getBrightnessMod()-5);
             break;
+        case '1':
+            imgAbstract->setHorizontalFlip(true);
+            break;
+        case '2':
+            imgAbstract->setHorizontalFlip(false);
+            break;
+        case '3':
+            imgAbstract->setVerticalFlip(true);
+            break;
+        case '4':
+            imgAbstract->setVerticalFlip(false);
+            break;
         default:
             imgAbstract->setColor(en_rgb);
     }

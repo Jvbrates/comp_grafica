@@ -118,6 +118,9 @@ private:
     uint height;
     uint width;
     double rotation = 0;
+    void aux_render(int);
+    bool horizontal_flip = false;
+    bool vertical_flip = false;
 
     //Canais de Cores
     std::shared_ptr<color_data_t> red_channel = nullptr;
@@ -137,6 +140,8 @@ public:
     void setBrightnessMod(int );
     int getBrightnessMod();
     void render() override;
+    void setHorizontalFlip(bool flip);
+    void setVerticalFlip(bool flip);
 
 
     uint getBytesPerLyne();
