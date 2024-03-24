@@ -61,8 +61,12 @@ bool teste::key_up(int state) {
         imgAbstract->setColor(en_redscale);
     } else if (state_c == 'g'){
         imgAbstract->setColor(en_greenscale);
-    } else if (state_c == 'b'){
+    } else if (state_c == 'b') {
         imgAbstract->setColor(en_bluescale);
+    } else if (state_c == 'u'){
+        imgAbstract->setRotation(imgAbstract->getRotation()+10);
+    } else if (state_c == 'j'){
+        imgAbstract->setRotation(imgAbstract->getRotation()-10);
     } else {
         imgAbstract->setColor(en_rgb);
     }

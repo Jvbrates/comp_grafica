@@ -117,6 +117,7 @@ private:
     uint bytesPerLine = 0;
     uint height;
     uint width;
+    double rotation = 0;
 
     //Canais de Cores
     std::shared_ptr<color_data_t> red_channel = nullptr;
@@ -131,7 +132,10 @@ public:
     uint getWidth();
     explicit Image(Bmp src);
     void setColor(enum_colors);
+    void setRotation(int degress);
+    int getRotation();
     void render() override;
+
 
     uint getBytesPerLyne();
 

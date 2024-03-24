@@ -12,7 +12,6 @@
 #include <string.h>
 #include <cmath>
 #include <exception>
-
 Bmp::Bmp(const char *fileName) {
     width = height = 0;
     data = NULL;
@@ -242,7 +241,28 @@ void Image::setColor(enum_colors colors_) {
     this->colors = colors_;
 }
 
+
+template<class T>
+Vector2<T> rotate(Vector2<T> pos, double rot){
+    return Vector2<T>{
+            static_cast<T>(pos.x * cos(rot) - pos.y * sin(rot)),
+            static_cast<T>(pos.x* sin(rot) + pos.y * cos(rot))};
+}
+
+
 void Image::render() {
+
+    //Rotações:
+    /* É necessário mais alguns calculos para que a rotação sejá feita em torno do pixel central e não (0,0) */
+    Vector2<int> pontoCentral(width/2, height/2);
+    //TODO: Troque por relative translate
+    auto pontoCentral_r = rotate(pontoCentral, this->rotation);
+    auto pontoCentral_diff = pontoCentral - pontoCentral_r;
+    CV::translate(pontoCentral_diff.x, pontoCentral_diff.y);
+
+
+
+
     int pos;
     for (int y = this->height; y > 0; y--) {
         for (int x = 0; x < this->width; ++x) {
@@ -302,8 +322,23 @@ void Image::render() {
 
             }
 
-            CV::point(x, y);
+
+
+            if(rotation) {
+                auto pixel_rot = rotate(Vector2<float>(x, y), this->rotation);
+                CV::point(pixel_rot.x, pixel_rot.y);
+            } else {
+                CV::point(x, y);
+            }
 
         }
     }
+}
+
+void Image::setRotation(int degress) {
+    this->rotation = (degress*M_PI_2)/180;
+}
+
+int Image::getRotation() {
+    return (this->rotation*180)/M_PI_2;
 }
