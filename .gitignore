@@ -1,7 +1,7 @@
 *.*
 **/*
-
-!src/*.cpp
-!src/*.h
+!./src/*.cpp
+!./src/*.h
+**/_**
 !src/images
 !src/Makefile
