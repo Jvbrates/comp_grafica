@@ -129,11 +129,14 @@ private:
     std::shared_ptr<color_data_t> gray_channel = nullptr;
 
 
-
 public:
+    void grayChannel();
+
     uint getHeight();
     uint getWidth();
+    uint getBytesPerLyne();
     explicit Image(Bmp src);
+    Image(const Image& src, enum_colors color = en_rgb);
     void setColor(enum_colors);
     void setRotation(int degress);
     int getRotation();
@@ -141,10 +144,8 @@ public:
     int getBrightnessMod();
     void render() override;
     void setHorizontalFlip(bool flip);
+
     void setVerticalFlip(bool flip);
-
-
-    uint getBytesPerLyne();
 
     std::shared_ptr<color_data_t> get_channel_pointer(enum_colors color);
 

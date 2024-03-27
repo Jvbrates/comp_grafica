@@ -11,7 +11,9 @@
 #include "gl_canvas2d.h"
 #include <string.h>
 #include <cmath>
-#include <exception>
+#include <stdexcept>
+
+
 Bmp::Bmp(const char *fileName) {
     width = height = 0;
     data = NULL;
@@ -105,8 +107,8 @@ void Bmp::load(const char *fileName) {
     }
 
     if (width * height * 3 != imagesize) {
-        printf("\nWarning: Arquivo BMP nao tem largura multipla de 4");
-        getchar();
+        printf("\nWarning: Arquivo BMP nao tem largura multipla de 4\n");
+        //getchar();
     }
 
     if (info.compression != 0) {
@@ -177,6 +179,9 @@ Image::Image(Bmp src) {
 
 }
 
+
+
+
 uint Image::getHeight() { return this->height; }
 
 uint Image::getWidth() { return this->width; }
@@ -241,14 +246,12 @@ void Image::setColor(enum_colors colors_) {
     this->colors = colors_;
 }
 
-
 template<class T>
 Vector2<T> rotate(Vector2<T> pos, double rot){
     return Vector2<T>{
             static_cast<T>(pos.x * cos(rot) - pos.y * sin(rot)),
             static_cast<T>(pos.x* sin(rot) + pos.y * cos(rot))};
 }
-
 
 void Image::aux_render(int pos){
 
@@ -268,7 +271,7 @@ void Image::render() {
 
 
     int pos;
-    for (int y = this->height; y > 0; y--) {
+    for (int y = this->height - 1; y >= 0; y--) {
         for (int x = 0; x < this->width; ++x) {
 
             //Espelhamentos
@@ -298,7 +301,7 @@ void Image::render() {
                 case en_greenscale: {
                     CV::color(
                             0,
-                            blue_channel->pixels[pos] + brightness_mod,
+                            green_channel->pixels[pos] + brightness_mod,
                             0
                     );
 
@@ -343,9 +346,11 @@ void Image::render() {
 
             if(rotation) {
                 auto pixel_rot = rotate(Vector2<float>(x, y), this->rotation);
-                CV::point(pixel_rot.x, pixel_rot.y);
+                //CV::point(pixel_rot.x, pixel_rot.y);
+                CV::rectFill(pixel_rot.x, pixel_rot.y,pixel_rot.x+1, pixel_rot.y+1);
             } else {
-                CV::point(x, y);
+                //CV::point(x, y);
+                CV::rectFill(x, y, x+1, y+1);
             }
 
         }
@@ -377,3 +382,88 @@ void Image::setHorizontalFlip(bool flip) {
 void Image::setVerticalFlip(bool flip) {
     this->vertical_flip = flip;
 }
+
+Image::Image(const Image &src, enum_colors color) {
+    this->brightness_mod = src.brightness_mod;
+    this->width = src.width;
+    this->height = src.height;
+    this->rotation = src.rotation;
+    this->bytesPerLine = src.bytesPerLine; // TODO: Por enquanto, inútil;
+
+    this->colors = color;
+
+    switch (color) {
+        case en_rgb:{
+            if(src.colors != en_rgb){
+                throw std::invalid_argument("Object source colors need to be en_rgb");
+            }
+
+            this->red_channel = src.red_channel;
+            this->blue_channel = src.blue_channel;
+            this->green_channel = src.green_channel;
+            break;
+        }
+        case en_grayscale:{
+            if(src.gray_channel != nullptr){
+                this->gray_channel = src.gray_channel;
+            } else
+            {
+                throw std::invalid_argument("Object source colors need to have en_grayscale");
+            }
+            
+            break;
+
+        }
+        case en_redscale:{
+            if(src.colors != en_rgb && src.colors != en_redscale){
+                throw std::invalid_argument("Object source colors need to be en_rgb or en_redscale");
+            }
+            this->red_channel = src.red_channel;
+            break;
+        }
+        case en_greenscale:{
+            if(src.colors != en_rgb && src.colors != en_greenscale){
+                throw std::invalid_argument("Object source colors need to be en_rgb or en_greenscale");
+            }
+            this->green_channel = src.green_channel;
+            break;
+        }
+        case en_bluescale:{
+            if(src.colors != en_rgb && src.colors != en_bluescale){
+                throw std::invalid_argument("Object source colors need to be en_rgb or en_bluescale");
+            }
+            this->blue_channel = src.blue_channel;
+            break;
+        }
+    }
+
+
+}
+
+void
+Image::grayChannel() {
+    if(this->gray_channel)
+        std::runtime_error("gray_channel isn't null");
+
+    this->gray_channel = std::make_shared<color_data_t>(this->red_channel->histogram.colors);
+
+
+    switch (colors) {
+
+        case en_rgb:
+        {
+            for (uint i = 0; i < this->red_channel->pixels.size(); i++) {
+                this->gray_channel->push(
+                        this->red_channel->pixels[i] * 0.299
+                        + this->green_channel->pixels[i] * 0.587
+                        + this->blue_channel->pixels[i] * 0.114
+
+                );
+
+            }
+            break;
+        }
+            default:
+                throw std::runtime_error("Só imagens com rgb podem ser decompostas");
+        }
+    }

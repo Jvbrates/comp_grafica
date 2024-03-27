@@ -28,8 +28,8 @@
 int screenWidth = 500, screenHeight = 500;
 
 
-auto image = Bmp("./images/exodia4.bmp");
-Image *imgAbstract;
+auto image = Bmp("./images/b.bmp");
+Image *imgAbstract, *imgAbstract2;
 
 
 class teste : public EventClient{
@@ -110,8 +110,13 @@ teste t_class = teste();
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void render()
 {
+
+    float x = 0.;
     for (Renderizable* item: CV::render_stack){
-        CV::translate(0,0);
+        CV::translate(x,0);
+
+        x+=100.;
+
         CV::color(black);
         item->render();
     }
@@ -150,8 +155,14 @@ int main(void)
     image.convertBGRtoRGB();
 
     imgAbstract = new Image(image);
+    //*imgAbstract2 = Image(*imgAbstract, en_greenscale);
 
-    CV::render_stack.push_back(imgAbstract);
+    imgAbstract->grayChannel();
+    Image img(*imgAbstract, en_grayscale);
+
+    delete imgAbstract;
+    //CV::render_stack.push_back(imgAbstract);
+    CV::render_stack.push_back(&img);
 
     CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
    CV::run();
