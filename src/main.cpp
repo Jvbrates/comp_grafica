@@ -13,16 +13,13 @@
 //	  Para alterar a animacao, digite numeros entre 1 e 3
 // *********************************************************************/
 
-
-#include <cmath>
 #include <cstdio>
 #include "iostream"
 
 #include "gl_canvas2d.h"
 #include "EventListener.h"
 #include "ImageManagement.h"
-#include "button.h"
-#include "unistd.h"
+#include "Conteiner.h"
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
@@ -113,9 +110,6 @@ void CV_render()
 
     float x = 0.;
     for (Renderizable* item: CV::render_stack){
-        CV::translate(x,0);
-
-        x+=100.;
 
         CV::color(black);
         item->render_caller();
@@ -161,11 +155,19 @@ int main(void)
     Image img(*imgAbstract, en_grayscale);
     img.pos_relative = {100.,100.};
 
-    CV::render_stack.push_back(imgAbstract);
+
+    Conteiner conteiner = Conteiner();
+
+    conteiner.elements = std::vector<Renderizable *>();
+    conteiner.elements.push_back(imgAbstract);
+    //conteiner.elements.push_back(&img);
+
+
+    CV::render_stack.push_back(&conteiner);
     CV::render_stack.push_back(&img);
 
     CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
-   CV::run();
+    CV::run();
 
 
 

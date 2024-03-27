@@ -7,5 +7,11 @@
 void Renderizable::render_caller() {
     CV::relative_translate(pos_relative);
     render();
-    CV::relative_translate(pos_relative*-1);
+    CV::relative_translate(pos_relative * -1);
+}
+
+void Conteiner::render() {
+    for (auto &item: elements) {
+        item->render_caller();
+    }
 }

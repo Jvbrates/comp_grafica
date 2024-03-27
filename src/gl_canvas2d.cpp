@@ -244,9 +244,9 @@ void CV::translate(float offsetX, float offsetY)
    glTranslated(offsetX, offsetY, 0);
 }
 
-void CV::relative_translate(float x, float y) {
+void CV::relative_translate(float x_, float y_) {
     //TODO criar overload para +=
-    current_translate = current_translate + Vector2<float>{x,y};
+    current_translate = current_translate + Vector2<float>{x_,y_};
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslated(current_translate.x, current_translate.y, 0);

@@ -111,6 +111,8 @@ public:
     static void translate(float x, float y);
     static void translate(Vector2 <float>pos);
     static void relative_translate(float x, float y);
+
+
     static void relative_translate(Vector2 <float>pos);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
