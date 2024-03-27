@@ -56,6 +56,13 @@ public:
        return( aux );
    }
 
+    Vector2 operator * (const int& i)
+    {
+        Vector2 aux( x*i, y*i);
+        return( aux );
+    }
+
+
    //Adicionem os demais overloads de operadores aqui.
 
    static numeric distance(Vector2 a, Vector2 b){

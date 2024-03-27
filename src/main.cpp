@@ -108,7 +108,7 @@ teste t_class = teste();
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
 //Deve-se manter essa fun��o com poucas linhas de codigo.
-void render()
+void CV_render()
 {
 
     float x = 0.;
@@ -118,7 +118,7 @@ void render()
         x+=100.;
 
         CV::color(black);
-        item->render();
+        item->render_caller();
     }
 
 
@@ -159,9 +159,9 @@ int main(void)
 
     imgAbstract->grayChannel();
     Image img(*imgAbstract, en_grayscale);
+    img.pos_relative = {100.,100.};
 
-    delete imgAbstract;
-    //CV::render_stack.push_back(imgAbstract);
+    CV::render_stack.push_back(imgAbstract);
     CV::render_stack.push_back(&img);
 
     CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");

@@ -35,13 +35,25 @@ typedef enum {
     white
 } colors_enum;
 
-class Renderizable {
-public:
-    virtual void render() = 0;
-};
-
 
 void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, int y);
+
+
+class Renderizable {
+    friend void CV_render();
+    friend class Conteiner;
+
+public:
+    Vector2<float> pos_relative {0.,0.};
+
+    Vector2<float> size {0.,0.};
+
+    virtual void render() = 0;
+private:
+
+    virtual void render_caller() final;
+};
+
 
 
 class CV //classe Canvas2D
@@ -98,6 +110,8 @@ public:
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
     static void translate(Vector2 <float>pos);
+    static void relative_translate(float x, float y);
+    static void relative_translate(Vector2 <float>pos);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int w, int h, const char *title);
@@ -106,10 +120,12 @@ public:
     static void run();
 
 private:
+    static Vector2<float> current_translate;
     static Vector2 <int>mouse_pos;
     static Vector2 <int>mouse_displacement;
 };
 
+void CV_render();
 
 
 

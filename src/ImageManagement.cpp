@@ -265,7 +265,7 @@ void Image::render() {
     //TODO: Troque por relative translate
     auto pontoCentral_r = rotate(pontoCentral, this->rotation);
     auto pontoCentral_diff = pontoCentral - pontoCentral_r;
-    CV::translate(pontoCentral_diff.x, pontoCentral_diff.y);
+    CV::relative_translate(pontoCentral_diff.x, pontoCentral_diff.y);
 
 
 

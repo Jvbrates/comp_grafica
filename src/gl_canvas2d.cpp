@@ -47,11 +47,12 @@ void keyboardUp(int key);
 void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
-void render();
 
 
 Vector2<int> CV::mouse_pos {0,0};   // Jeito legal de declarar variável
 Vector2<int> CV::mouse_displacement {0,0};
+Vector2<float> CV::current_translate {0,0};
+
 
 void CV::point(float x, float y)
 {
@@ -231,20 +232,39 @@ void CV::circleFill( Vector2<float> pos, float radius, int div )
    glEnd();
 }
 
+
+
 //coordenada de offset para desenho de objetos.
 //nao armazena translacoes cumulativas.
 void CV::translate(float offsetX, float offsetY)
 {
+    current_translate = {offsetX, offsetY};
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslated(offsetX, offsetY, 0);
 }
 
+void CV::relative_translate(float x, float y) {
+    //TODO criar overload para +=
+    current_translate = current_translate + Vector2<float>{x,y};
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslated(current_translate.x, current_translate.y, 0);
+}
+
 void CV::translate(Vector2<float> offset)
 {
+   current_translate = offset;
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslated(offset.x, offset.y, 0);
+}
+
+void CV::relative_translate(Vector2<float> move){
+    current_translate = current_translate + move;
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslated(current_translate.x, current_translate.y, 0);
 }
 
 void CV::color(float r, float g, float b)
@@ -321,6 +341,8 @@ void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, i
 
     CV::mouse_displacement = Vector2<int>(x,y) - CV::mouse_pos;
     CV::mouse_pos = Vector2<int>(x,y);
+    CV::current_translate = Vector2<float>{0., 0.};
+
     mouse(button, state, wheel, direction, x, y);
 }
 
@@ -362,7 +384,7 @@ void display (void)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
-   render();
+   CV_render();
 
    glFlush();
    glutSwapBuffers();
