@@ -152,19 +152,40 @@ int main(void)
     //*imgAbstract2 = Image(*imgAbstract, en_greenscale);
 
     imgAbstract->grayChannel();
-    Image img(*imgAbstract, en_grayscale);
-    img.pos_relative = {100.,100.};
+    Image img_gray(*imgAbstract, en_grayscale);
+    Image img_red(*imgAbstract, en_redscale);
+    Image img_green(*imgAbstract, en_greenscale);
+    Image img_blue(*imgAbstract, en_bluescale);
 
 
     Conteiner conteiner = Conteiner();
+    Conteiner conteiner2 = Conteiner();
+    Conteiner conteiner3 = Conteiner();
 
     conteiner.elements = std::vector<Renderizable *>();
+    conteiner2.elements = std::vector<Renderizable *>();
+    conteiner3.elements = std::vector<Renderizable *>();
+
     conteiner.elements.push_back(imgAbstract);
-    //conteiner.elements.push_back(&img);
+    conteiner.elements.push_back(&img_gray);
+    conteiner.elements.push_back(&img_red);
+
+    conteiner2.elements.push_back(&img_green);
+    conteiner2.elements.push_back(&img_blue);
+
+    conteiner3.elements.push_back(&conteiner);
+    conteiner3.elements.push_back(&conteiner2);
+
+    conteiner.position_type = line;
+    conteiner2.position_type = column;
+    conteiner3.position_type = line;
+    conteiner.composer();
+    conteiner2.composer();
+    conteiner3.composer();
 
 
-    CV::render_stack.push_back(&conteiner);
-    CV::render_stack.push_back(&img);
+    CV::render_stack.push_back(&conteiner3);
+    //CV::render_stack.push_back(&img);
 
     CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
     CV::run();

@@ -159,7 +159,7 @@ Image::Image(Bmp src) {
     this->colors = en_rgb;
     this->width = src.getWidth();
     this->height = src.getHeight();
-
+    this->size = {(float)width, (float)height};
 
     this->red_channel = std::make_shared<color_data_t>(colors_n);
     this->blue_channel = std::make_shared<color_data_t>(colors_n);
@@ -394,6 +394,7 @@ Image::Image(const Image &src, enum_colors color) {
     this->height = src.height;
     this->rotation = src.rotation;
     this->bytesPerLine = src.bytesPerLine; // TODO: Por enquanto, inútil;
+    this->size = src.size;
 
     this->colors = color;
 

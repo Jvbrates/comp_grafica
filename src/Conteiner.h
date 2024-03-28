@@ -18,6 +18,7 @@ class Conteiner : public Renderizable{
 public:
     std::vector<Renderizable*> elements;
     position_enum position_type = relative;
+    void composer();
 
 };
 
