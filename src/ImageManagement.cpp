@@ -152,6 +152,36 @@ INFOHEADER Bmp::getInfoHeader(void) {
 //----------------------------------------------------------------
 
 
+Image::Image(std::string path){
+    Bmp src = Bmp(path.c_str());
+
+    src.convertBGRtoRGB();
+
+    this->bytesPerLine = src.getBytesPerLine();
+    uint colors_n = pow(2, src.getInfoHeader().bits);
+    this->colors = en_rgb;
+    this->width = src.getWidth();
+    this->height = src.getHeight();
+    this->size = {(float)width, (float)height};
+
+    this->red_channel = std::make_shared<color_data_t>(colors_n);
+    this->blue_channel = std::make_shared<color_data_t>(colors_n);
+    this->green_channel = std::make_shared<color_data_t>(colors_n);
+
+
+    unsigned char *data = src.getImage();
+    for (int y = src.getHeight(); y > 0; y--) {
+        for (int x = 0; x < src.getWidth() * 3; x += 3) {
+            int pos = y * this->bytesPerLine + x;
+            this->red_channel->push(data[pos]);
+            this->green_channel->push(data[pos + 1]);
+            this->blue_channel->push(data[pos + 2]);
+
+        }
+    }
+
+}
+
 
 Image::Image(Bmp src) {
     this->bytesPerLine = src.getBytesPerLine();
@@ -185,36 +215,6 @@ Image::Image(Bmp src) {
 uint Image::getHeight() { return this->height; }
 
 uint Image::getWidth() { return this->width; }
-
-/*
-
-Image::Image(color_channel_data data, enum_colors colors){
-    return Image();
-}
-
-Image::setHistogram(uint histogram[], uint color_deph, enum_colors color){
-
-}
-
-channel Image::getChannel(){
-    return nullptr;
-};
-
-static Image Image::decompose(Image src, enum_colors out_channel){
-    auto i = Image();
-    return i;
-    ;
-};
-
-uint Image::getColorsDepth(){
-    return 0;
-};
-
-std::vector<uint> Image::getHistogram(enum_colors channel){
-        return std::vector<uint>(0);
-};
-*/
-
 
 uint Image::getBytesPerLyne() {
     return this->bytesPerLine;
@@ -473,3 +473,11 @@ Image::grayChannel() {
                 throw std::runtime_error("Só imagens com rgb podem ser decompostas");
         }
     }
+
+void Image::setPriority(int prio_) {
+    this->priority = prio_;
+}
+
+int Image::getPriority() {
+    return this->priority;
+}

@@ -6,6 +6,7 @@
 #define COMP_GRAFICA_CONTEINER_H
 #include "gl_canvas2d.h"
 #include <vector>
+#include <memory>
 
 #include "Vector2.h"
 typedef enum {relative, line, column}position_enum;
@@ -16,7 +17,7 @@ class Conteiner : public Renderizable{
     void render() override;
 
 public:
-    std::vector<Renderizable*> elements;
+    std::vector<std::shared_ptr<Renderizable>> elements;
     position_enum position_type = relative;
     void composer();
 

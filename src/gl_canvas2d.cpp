@@ -138,6 +138,30 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 
 }
 
+
+void CV::polygonFill(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges)
+{
+    glBegin(GL_POLYGON);
+    for (const auto &item: edges)
+    {
+        glVertex2d(std::get<0>(item).x, std::get<0>(item).y);
+    }
+    glEnd();
+
+}
+
+
+void CV::polygon(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges)
+{
+    glBegin(GL_LINE_LOOP);
+    for (const auto &item: edges)
+    {
+        glVertex2d(std::get<0>(item).x, std::get<0>(item).y);
+    }
+    glEnd();
+
+}
+
 //existem outras fontes de texto que podem ser usadas
 //  GLUT_BITMAP_9_BY_15
 //  GLUT_BITMAP_TIMES_ROMAN_10

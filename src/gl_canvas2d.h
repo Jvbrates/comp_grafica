@@ -44,7 +44,7 @@ class Renderizable {
     friend class Conteiner;
 
 public:
-    Vector2<float> pos_relative {0.,0.};
+    Vector2<float> posRelative {0., 0.};
 
     Vector2<float> size {0.,0.};
 
@@ -83,8 +83,9 @@ public:
 
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(float vx[], float vy[], int n_elems);
+    static void polygon(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges);
     static void polygonFill(float vx[], float vy[], int n_elems);
-
+    static void polygonFill(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges);
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div );
     static void circle( Vector2<float> pos, float radius, int div );

@@ -112,6 +112,7 @@ typedef enum {
 
 class Image : public Renderizable{
 private:
+    int priority = 0;               //Não faz muito sentido isto estar aqui, mas ok
     enum_colors colors = en_rgb;
     int brightness_mod = 0;
     uint bytesPerLine = 0;
@@ -135,7 +136,11 @@ public:
     uint getHeight();
     uint getWidth();
     uint getBytesPerLyne();
+    int getPriority();
+    void setPriority(int prio_);
+
     explicit Image(Bmp src);
+    explicit Image(std::string path);
     Image(const Image& src, enum_colors color = en_rgb);
     void setColor(enum_colors);
     void setRotation(int degress);

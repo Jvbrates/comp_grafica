@@ -19,13 +19,14 @@
 #include "gl_canvas2d.h"
 #include "EventListener.h"
 #include "ImageManagement.h"
+#include "ImageSelector.h"
 #include "Conteiner.h"
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int screenWidth = 500, screenHeight = 500;
 
 
-auto image = Bmp("./images/b.bmp");
+
 Image *imgAbstract, *imgAbstract2;
 
 
@@ -138,17 +139,21 @@ void CV_render()
 int main(void)
 {
 
-    /*auto btn = button({50.,50.},{100.,50.}, red);
-    btn.text({0.,0.}, "Texto", black);
 
-   CV::render_stack.push_back(&btn);
+    ImageSelector Mng = ImageSelector();
 
-    */
+    Mng.loadImage("./images/b.bmp", {0. ,100.});
+    EventListener::add_event(&Mng,en_mouse_right);
+
+    /*
+    Bmp image = Bmp("./images/b.bmp");
 
     EventListener::add_event(&t_class, en_keyboard_up);
     image.convertBGRtoRGB();
 
     imgAbstract = new Image(image);
+
+
     //*imgAbstract2 = Image(*imgAbstract, en_greenscale);
 
     imgAbstract->grayChannel();
@@ -182,10 +187,9 @@ int main(void)
     conteiner.composer();
     conteiner2.composer();
     conteiner3.composer();
+*/
 
-
-    CV::render_stack.push_back(&conteiner3);
-    //CV::render_stack.push_back(&img);
+    CV::render_stack.push_back(&(Mng.images));
 
     CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
     CV::run();
