@@ -51,7 +51,7 @@ public:
         return false;
     }
 
-    virtual bool mouse_move(Vector2<int> pos, Vector2<int> desloc) {
+    virtual bool mouse_move(Vector2<float> pos, Vector2<float> desloc) {
         std::cout << "Está função deveria ser sobrescrita";
         return false;
     }
@@ -92,7 +92,7 @@ public:
 
     static void mouse_scroll(int);
 
-    static void mouse_move(Vector2<int>, Vector2<int>);
+    static void mouse_move(Vector2<float>, Vector2<float>);
 
 
 };

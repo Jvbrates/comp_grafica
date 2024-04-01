@@ -143,7 +143,9 @@ int main(void)
     ImageSelector Mng = ImageSelector();
 
     Mng.loadImage("./images/b.bmp", {0. ,100.});
-    EventListener::add_event(&Mng,en_mouse_right);
+    Mng.loadImage("./images/a.bmp", {50. ,200.});
+    EventListener::add_event(&Mng,en_mouse_left);
+    EventListener::add_event(&Mng,en_mouse_move);
 
     /*
     Bmp image = Bmp("./images/b.bmp");

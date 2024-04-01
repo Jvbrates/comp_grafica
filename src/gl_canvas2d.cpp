@@ -49,8 +49,8 @@ void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
 
 
-Vector2<int> CV::mouse_pos {0,0};   // Jeito legal de declarar variável
-Vector2<int> CV::mouse_displacement {0,0};
+Vector2<float> CV::mouse_pos {0,0};   // Jeito legal de declarar variável
+Vector2<float> CV::mouse_displacement {0,0};
 Vector2<float> CV::current_translate {0,0};
 
 
@@ -363,8 +363,8 @@ void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, i
    //nao faz nada.
 #endif
 
-    CV::mouse_displacement = Vector2<int>(x,y) - CV::mouse_pos;
-    CV::mouse_pos = Vector2<int>(x,y);
+    CV::mouse_displacement = Vector2<float>(x,y) - CV::mouse_pos;
+    CV::mouse_pos = Vector2<float>(x,y);
     CV::current_translate = Vector2<float>{0., 0.};
 
     mouse(button, state, wheel, direction, x, y);
@@ -415,11 +415,11 @@ void display (void)
 }
 
 
-Vector2<int> CV::get_mouse_pos() {
+Vector2<float> CV::get_mouse_pos() {
     return CV::mouse_pos;
 }
 
-Vector2<int> CV::get_mouse_displacement() {
+Vector2<float> CV::get_mouse_displacement() {
     return CV::mouse_displacement;
 }
 

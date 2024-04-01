@@ -45,7 +45,7 @@ class Renderizable {
 
 public:
     Vector2<float> posRelative {0., 0.};
-
+    int priority = 0;
     Vector2<float> size {0.,0.};
 
     virtual void render() = 0;
@@ -63,8 +63,8 @@ class CV //classe Canvas2D
 public:
     static std::vector<Renderizable *> render_stack;
     //Posições do Mouse
-    static Vector2<int> get_mouse_pos();
-    static Vector2<int> get_mouse_displacement();
+    static Vector2<float> get_mouse_pos();
+    static Vector2<float> get_mouse_displacement();
 
     //funcoes para desenho de ponto e linha
     static void point(float x, float y); //coordeandas do ponto
@@ -124,8 +124,8 @@ public:
 
 private:
     static Vector2<float> current_translate;
-    static Vector2 <int>mouse_pos;
-    static Vector2 <int>mouse_displacement;
+    static Vector2 <float>mouse_pos;
+    static Vector2 <float>mouse_displacement;
 };
 
 void CV_render();
