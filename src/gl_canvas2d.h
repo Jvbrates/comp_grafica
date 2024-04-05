@@ -32,7 +32,8 @@ typedef enum {
     olive,
     idk_1,
     idk_2,
-    white
+    white,
+    n_of_colors
 } colors_enum;
 
 

@@ -72,7 +72,7 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
     EventListener::add_event(this, en_mouse_left);
     this->size = {size+label.length()*10, size};
     states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, white, label};
-    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, label};
+    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, label};
     this->state_array.push_back(s1);
     this->state_array.push_back(s2);
 }
@@ -201,7 +201,6 @@ void SliderRangeButton::updateValue() {
 bool SliderRangeButton::mouse_move(Vector2<float> pos, Vector2<float> desloc) {
     if(mouse_left_hold){
         updateValue();
-        std::cout << value << std::endl;
         return true;
     }
 

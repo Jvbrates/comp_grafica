@@ -20,6 +20,7 @@
 #include "EventListener.h"
 #include "ImageManagement.h"
 #include "ImageSelector.h"
+#include "TextBox.h"
 #include "Histogram.h"
 #include "Conteiner.h"
 #include "button.h"
@@ -132,6 +133,12 @@ int main(void)
 
 
     //Botoes de decomposição de Canal
+    // 0 - Titulo
+    auto decomposicao_header =std::make_shared<TextBox>("Canais de Cores", center_center, Vector2<float>{100.,PXL_STR_H+10.});
+    decomposicao_header->setBackground(black);
+    decomposicao_header->setTextColor(green);
+     
+    
     // 1 - Instancia os Botões
     auto dec_R = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"R"});
     auto dec_G = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"G"});
@@ -191,21 +198,30 @@ int main(void)
         return true;
     }, nullptr);
 
-    //conteiner que conterá botões
-    auto conteiner_btn_decomposicao = Conteiner();
-    conteiner_btn_decomposicao.elements.push_back(dec_R);
-    conteiner_btn_decomposicao.elements.push_back(dec_G);
-    conteiner_btn_decomposicao.elements.push_back(dec_B);
-    conteiner_btn_decomposicao.elements.push_back(dec_L);
+    
+    
+    // 3- conteiner que conterá botões
+    auto conteiner_btn_decomposicao = std::make_shared<Conteiner>();
+    conteiner_btn_decomposicao->elements.push_back(dec_R);
+    conteiner_btn_decomposicao->elements.push_back(dec_G);
+    conteiner_btn_decomposicao->elements.push_back(dec_B);
+    conteiner_btn_decomposicao->elements.push_back(dec_L);
     dec_R->active = true;
     dec_G->active = true;
     dec_B->active = true;
     dec_L->active = true;
 
-    conteiner_btn_decomposicao.position_type = line;
-    conteiner_btn_decomposicao.composer();
-    conteiner_btn_decomposicao.setRelativePos(50.,50.);
+    conteiner_btn_decomposicao->position_type = line;
+    conteiner_btn_decomposicao->composer();
+    conteiner_btn_decomposicao->setRelativePos(50.,50.);
 
+    
+    // 4 - Conteiner que conterá os titulo e botoes
+    auto Menu = Conteiner();
+    Menu.push(decomposicao_header);
+    Menu.push(conteiner_btn_decomposicao);
+    Menu.position_type = column;
+    Menu.composer();
 
     // Histogramas e Botões de Histogramas
     auto selectedImage = Mng.getSelected();
@@ -240,7 +256,7 @@ int main(void)
 
 
     //Criação checkbox Histogramas
-    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "Romario:");
+    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "Romario\nTeste\nnovalinha:");
 
     btn_hist_red->onclick([histRed, &btn_hist_red, &conteiner_hist](void * a){
         if(btn_hist_red->getState() == 1){
@@ -268,11 +284,17 @@ int main(void)
         }, nullptr);
     btn_slider.active = true;
 
+
+
+
+
+
     CV::render_stack.push_back(&(Mng.images));
-    CV::render_stack.push_back(&conteiner_btn_decomposicao);
+    CV::render_stack.push_back(&Menu);
     CV::render_stack.push_back(&conteiner_hist);
     CV::render_stack.push_back(&(*btn_hist_red));
     CV::render_stack.push_back(&btn_slider);
+
 
 
 
