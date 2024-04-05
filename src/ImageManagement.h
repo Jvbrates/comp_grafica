@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <vector>
 #include <memory>
+#include "Conteiner.h"
 #include "gl_canvas2d.h"
 
 #define HEADER_SIZE      14 //sizeof(HEADER) vai dar 16 devido ao alinhamento de bytes

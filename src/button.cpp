@@ -24,7 +24,7 @@ Button::Button(states_t start_state) {
     EventListener::add_event(this, en_mouse_left);
     this->state_array.push_back(start_state);
     this->size = start_state.size;
-    this->posRelative = start_state.position;
+    this->setRelativePos(start_state.position);
 }
 
 void Button::onclick(std::function<bool(void *)> f, void *argument_onclick) {
@@ -56,7 +56,7 @@ bool Button::callWraper() {
 }
 
 bool Button::mouse_left(int i) {
-    if (colisions::rectangle(CV::get_mouse_pos(), this->posRelative, this->size + this->posRelative) && i == 1) {
+    if (colisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         return callWraper();
     }
     return false;
@@ -67,7 +67,7 @@ Button::Button() {}
 
 //FIXME porque este initialize nao funciona?
 CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label) : Button() {
-    this->posRelative = pos;
+    this->setRelativePos(pos);
 
     EventListener::add_event(this, en_mouse_left);
     this->size = {size, size};
@@ -79,7 +79,7 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
 
 
 bool CheckboxButton::mouse_left(int i) {
-    if (colisions::rectangle(CV::get_mouse_pos(), this->posRelative, this->size + this->posRelative) && i == 1) {
+    if (colisions::rectangle(CV::get_mouse_pos(), this->getRelativePos(), this->size + this->getRelativePos()) && i == 1) {
         setState(!getState());
         std::cout << "State" << this->state << std::endl;
 

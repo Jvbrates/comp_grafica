@@ -39,22 +39,7 @@ typedef enum {
 void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, int y);
 
 
-class Renderizable {
-    friend void CV_render();
-    friend class Conteiner;
-
-public:
-    Vector2<float> posRelative {0., 0.};
-    int priority = 0;
-    Vector2<float> size {0.,0.};
-
-    virtual void render() = 0;
-private:
-
-    virtual void render_caller() final;
-};
-
-
+class Renderizable;
 
 class CV //classe Canvas2D
 {

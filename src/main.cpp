@@ -102,6 +102,7 @@ void CV_render()
 }
 
 
+
 int main(void)
 {
 
@@ -139,7 +140,7 @@ int main(void)
         auto image = Mng.getSelected();
 
         if(image->getColor() == en_rgb){
-            Mng.loadImage(*image, en_redscale, image->posRelative + Vector2<float>{50.,50.});
+            Mng.loadImage(*image, en_redscale, image->getRelativePos() + Vector2<float>{50.,50.});
         }
 
 
@@ -150,7 +151,7 @@ int main(void)
         auto image = Mng.getSelected();
 
         if(image->getColor() == en_rgb){
-            Mng.loadImage(*image, en_greenscale, image->posRelative + Vector2<float>{50.,50.});
+            Mng.loadImage(*image, en_greenscale, image->getRelativePos() + Vector2<float>{50.,50.});
         }
 
 
@@ -161,7 +162,7 @@ int main(void)
         auto image = Mng.getSelected();
 
         if(image->getColor() == en_rgb){
-            Mng.loadImage(*image, en_bluescale, image->posRelative + Vector2<float>{50.,50.});
+            Mng.loadImage(*image, en_bluescale, image->getRelativePos() + Vector2<float>{50.,50.});
         }
 
 
@@ -179,7 +180,7 @@ int main(void)
             //Isto daqui gera um objeto cópia e como cópia não define o grayscale ele acaba ficando nulo
             auto a = *image;
 
-            Mng.loadImage(a, en_grayscale, image->posRelative + Vector2<float>{50.,50.});
+            Mng.loadImage(a, en_grayscale, image->getRelativePos() + Vector2<float>{50.,50.});
         }
 
 
@@ -199,6 +200,7 @@ int main(void)
 
     conteiner_btn_decomposicao.position_type = line;
     conteiner_btn_decomposicao.composer();
+    conteiner_btn_decomposicao.setRelativePos(50.,50.);
 
 
     // Histogramas e Botões de Histogramas
@@ -220,13 +222,10 @@ int main(void)
 
     conteiner_hist.elements.clear();
 
-    conteiner_hist.posRelative = {(float)screenWidth-histGray->size.x, 6.};
+    conteiner_hist.setRelativePos({(float)screenWidth-histGray->size.x, 6.});
 
     //Atualização dos Histogramas para apontar para imagem correta
-    Mng.setCallback([&histRed,        &histGreen,
-                    &histBlue,
-                    &histGray
-                     ](auto image){
+    Mng.setCallback([&histRed,&histGreen,&histBlue,&histGray](auto image){
         histRed->reset(image->get_channel_pointer(en_redscale), en_redscale);
         histGreen->reset(image->get_channel_pointer(en_greenscale), en_greenscale);
         histBlue->reset(image->get_channel_pointer(en_bluescale), en_bluescale);
