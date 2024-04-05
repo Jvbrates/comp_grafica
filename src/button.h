@@ -86,7 +86,7 @@ public:
 };
 
 
-enum {verdadeiro,
+enum {verdadeiro,   //jhgjhgjkgjkky
         falso,
         terceiro};
 #endif //SRC_BUTTON_H
