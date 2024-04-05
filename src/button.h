@@ -65,17 +65,23 @@ class SliderRangeButton: public Button {
      * O diâmetro do círculo é fixado e logo, a altura também;
      * */
 private:
-    float CIRCLE_WIDTH = 10.;
-    float MAX_VALUE = 100.;
+
     colors_enum rect_color, circle_color;
     float value = 0;
     void render() override;
 protected:
+    bool mouse_left_hold = false;
     bool mouse_left(int) override;
-
+    bool mouse_move(Vector2<float>,Vector2<float>) override;
+    void updateValue();
 public:
+    static float CIRCLE_WIDTH;
+    static float MAX_VALUE;
     SliderRangeButton(float largura, colors_enum rect_color, colors_enum circle_color);
+    void setValue(float value);
+    float getValue();
 
+    static float convert(float value, float range);
 };
 
 

@@ -108,6 +108,10 @@ int main(void)
 
     std::shared_ptr<Image> a = nullptr;
 
+    //Botão slider de brilho
+    auto btn_slider = SliderRangeButton(100, black, green);
+
+    EventListener::captureEvent[en_mouse_move] = true;
     // Agrupa todas as imagens carregadas, permine move-las e selecioná-las
     ImageSelector Mng = ImageSelector(&a);
 
@@ -225,11 +229,13 @@ int main(void)
     conteiner_hist.setRelativePos({(float)screenWidth-histGray->size.x, 6.});
 
     //Atualização dos Histogramas para apontar para imagem correta
-    Mng.setCallback([&histRed,&histGreen,&histBlue,&histGray](auto image){
+    //Atualização do Slider de brilho para receber o valor correto
+    Mng.setCallback([&histRed,&histGreen,&histBlue,&histGray, &btn_slider](auto image){
         histRed->reset(image->get_channel_pointer(en_redscale), en_redscale);
         histGreen->reset(image->get_channel_pointer(en_greenscale), en_greenscale);
         histBlue->reset(image->get_channel_pointer(en_bluescale), en_bluescale);
         histGray->reset(image->get_channel_pointer(en_grayscale), en_grayscale);
+        btn_slider.setValue(SliderRangeButton::convert(image->getBrightnessMod(), 255.f));
     });
 
 
@@ -249,9 +255,18 @@ int main(void)
     }, nullptr);
     btn_hist_red->active = true;
 
-    auto btn_slider = SliderRangeButton(100, black, green);
     btn_slider.setRelativePos(300.,300.);
 
+    btn_slider.onclick([&btn_slider, &Mng](void *inutil){
+        auto valor = btn_slider.getValue();
+        auto Imagem = Mng.getSelected();
+
+        valor = 255/SliderRangeButton::MAX_VALUE * valor;
+        Imagem->setBrightnessMod((int)valor);
+
+        return false;
+        }, nullptr);
+    btn_slider.active = true;
 
     CV::render_stack.push_back(&(Mng.images));
     CV::render_stack.push_back(&conteiner_btn_decomposicao);

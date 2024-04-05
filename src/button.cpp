@@ -93,13 +93,30 @@ bool CheckboxButton::mouse_left(int i) {
 
 //--------------------------------------------------
 
+float SliderRangeButton::CIRCLE_WIDTH = 10.f;
+float SliderRangeButton::MAX_VALUE = 100.f;
+
 SliderRangeButton::SliderRangeButton(float largura, colors_enum rect_color, colors_enum circle_color) : Button() {
     this->size = {largura, CIRCLE_WIDTH};
     this->rect_color = rect_color;
     this->circle_color = circle_color;
 
     EventListener::add_event(this, en_mouse_left);
+    EventListener::add_event(this, en_mouse_move);
 }
+
+
+//Offset é definido em relação ao centro
+// size: referente retângulo, não ao conjunto inteiro
+inline float conversion_to_value(float offset, float MAX_VALUE, float size){
+    return (MAX_VALUE/(size/2)*offset);
+}
+
+inline float conversion_to_offset(float value, float MAX_VALUE, float size){
+
+    return (size/2.f)/MAX_VALUE * value;
+}
+
 
 void SliderRangeButton::render() {
 
@@ -108,19 +125,86 @@ void SliderRangeButton::render() {
     CV::color(circle_color);
 
     // Deslocamento máximo do circulo em unidades de distância
-    float middle_pos = (size.x - CIRCLE_WIDTH / 2.f) / 2;
+    float middle_pos = (size.x/ 2.f);
 
-    float value_pos = (middle_pos / MAX_VALUE) * value;
+    float value_pos = conversion_to_offset(value, MAX_VALUE, size.x - CIRCLE_WIDTH);
 
     CV::circleFill({middle_pos + value_pos, size.y / 2.f}, CIRCLE_WIDTH / 2.f, 10);
 
 }
 
 bool SliderRangeButton::mouse_left(int state) {
-    if (!state) {
+    if (!state &&
+        colisions::rectangle(CV::get_mouse_pos(), //Posição do mouse
+                        this->getAbsolutePos() + Vector2<float>{CIRCLE_WIDTH / 2.f, 0.}, // Posições do slider
+                        this->getAbsolutePos() + this->size - Vector2<float>{CIRCLE_WIDTH / 2.f, 0.})
+        )
+    {
+        this->mouse_left_hold = true;
         std::cout << "Nothing" << state << std::endl;
         this->value = std::fmod(this->value + 10.f, this->MAX_VALUE);
-        return false;
+
+        updateValue();
+
+        return true;
+    } else {
+        if(this->mouse_left_hold)
+            this->mouse_left_hold = false;
     }
     return false;
+}
+
+
+
+void SliderRangeButton::updateValue() {
+
+    auto offset = CV::get_mouse_pos().x - (getAbsolutePos().x + size.x / 2.f);
+
+    auto size_rect = (size.x - CIRCLE_WIDTH);
+
+    auto new_value = conversion_to_value(offset, MAX_VALUE, size_rect);
+
+    if(new_value > 100.f){
+        value = 100.f;
+    } else if (new_value < -100.f){
+        value = -100.f;
+    } else {
+        value = new_value;
+    }
+
+
+    callWraper();
+}
+
+bool SliderRangeButton::mouse_move(Vector2<float> pos, Vector2<float> desloc) {
+    if(mouse_left_hold){
+        updateValue();
+        std::cout << value << std::endl;
+        return true;
+    }
+
+    return false;
+}
+
+
+void SliderRangeButton::setValue(float new_value) {
+    if(new_value > 100.f){
+        value = 100.f;
+    } else if (new_value < -100.f){
+        value = -100.f;
+    } else {
+        value = new_value;
+    }
+}
+
+
+/*
+ * Diferença entre zero e o valor máximo
+ * */
+float SliderRangeButton::convert(float value, float range) {
+    return SliderRangeButton::MAX_VALUE/ range * value;
+}
+
+float SliderRangeButton::getValue() {
+    return value;
 }
