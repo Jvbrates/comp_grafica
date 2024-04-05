@@ -70,16 +70,38 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
     this->setRelativePos(pos);
 
     EventListener::add_event(this, en_mouse_left);
-    this->size = {size, size};
-    states_t s1 = {pos, {size, size}, {-10., size}, white, label};
-    states_t s2 = {pos, {size, size}, {-10., size}, black, label};
+    this->size = {size+label.length()*10, size};
+    states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, white, label};
+    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, label};
     this->state_array.push_back(s1);
     this->state_array.push_back(s2);
 }
 
+void CheckboxButton::render() {
+    auto state_i = this->getState();
+    auto curr_state = this->state_array[state_i];
+    CV::color(curr_state.fill_color);
+    if(this->state) {
+        CV::color(curr_state.fill_color);
+        CV::rectFill({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
+        CV::color(black);
+        CV::rect({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
+    } else {
+
+        CV::color(curr_state.fill_color);
+        CV::rectFill({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
+        CV::color(black);
+        CV::rect({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
+    }
+    if (!curr_state.texto.empty()) {
+        CV::color(black);
+        CV::text({0.f, curr_state.text_offset.y-5.f}, (curr_state.texto).c_str());
+    }
+}
+
 
 bool CheckboxButton::mouse_left(int i) {
-    if (colisions::rectangle(CV::get_mouse_pos(), this->getRelativePos(), this->size + this->getRelativePos()) && i == 1) {
+    if (colisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         setState(!getState());
         std::cout << "State" << this->state << std::endl;
 

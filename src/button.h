@@ -47,6 +47,7 @@ public:
 class CheckboxButton: public Button{
 protected:
     bool mouse_left(int) override;
+    void render() override;
 
 public:
     CheckboxButton(float size, Vector2<float>pos, std::string label);

@@ -109,7 +109,7 @@ int main(void)
     std::shared_ptr<Image> a = nullptr;
 
     //Botão slider de brilho
-    auto btn_slider = SliderRangeButton(100, black, green);
+    auto btn_slider = SliderRangeButton(200, black, green);
 
     EventListener::captureEvent[en_mouse_move] = true;
     // Agrupa todas as imagens carregadas, permine move-las e selecioná-las
@@ -240,7 +240,7 @@ int main(void)
 
 
     //Criação checkbox Histogramas
-    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "R:");
+    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "Romario:");
 
     btn_hist_red->onclick([histRed, &btn_hist_red, &conteiner_hist](void * a){
         if(btn_hist_red->getState() == 1){

@@ -507,3 +507,14 @@ void CV::text(Vector2<float> pos, std::string valor) {
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, valor[c]);
     }
 }
+
+void CV::rect(Vector2<float> p1, Vector2<float> p2) {
+
+    float x1 = p1.x, x2 = p2.x, y1 = p1.y, y2 = p2.y;
+    glBegin(GL_LINE_LOOP);
+    glVertex2d(x1, y1);
+    glVertex2d(x1, y2);
+    glVertex2d(x2, y2);
+    glVertex2d(x2, y1);
+    glEnd();
+}
