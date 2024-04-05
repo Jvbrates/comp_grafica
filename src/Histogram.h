@@ -20,7 +20,6 @@ private:
     std::vector<float> normalized = std::vector<float>(0);
 
 public:
-    Vector2<float> size = {320.,172.};
     void render() override;
     HistogramRender(std::shared_ptr<color_data_t> color_channel, enum_colors colors);
     void reset(std::shared_ptr<color_data_t> color_channel, enum_colors colors);

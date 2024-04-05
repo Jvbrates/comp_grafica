@@ -63,7 +63,16 @@ public:
     }
 
 
-   //Adicionem os demais overloads de operadores aqui.
+    Vector2 operator += (const Vector2& i)
+    {
+        this->x += i.x;
+        this->y += i.y;
+
+        return *this;
+    }
+
+
+    //Adicionem os demais overloads de operadores aqui.
 
    static numeric distance(Vector2 a, Vector2 b){
        numeric x = a.x - b.x;

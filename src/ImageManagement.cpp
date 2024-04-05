@@ -158,7 +158,7 @@ Image::Image(std::string path){
     src.convertBGRtoRGB();
 
     this->bytesPerLine = src.getBytesPerLine();
-    uint colors_n = pow(2, src.getInfoHeader().bits);
+    uint colors_n = pow(2, (src.getInfoHeader().bits)/3);
     this->colors = en_rgb;
     this->width = src.getWidth();
     this->height = src.getHeight();
@@ -256,14 +256,8 @@ Vector2<T> rotate(Vector2<T> pos, double rot){
 
 void Image::render() {
 
-    //Rotações:
-    Vector2<int> pontoCentral(width/2, height/2);
-    //TODO: Troque por relative translate
-    auto pontoCentral_r = rotate(pontoCentral, this->rotation);
-    auto pontoCentral_diff =  pontoCentral - pontoCentral_r;
-
-
-    CV::relative_translate(pontoCentral_diff.x, pontoCentral_diff.y);
+    //Rotações
+    CV::relative_translate(rotate_diff.x, rotate_diff.y);
 
 
 
@@ -358,16 +352,21 @@ void Image::render() {
     /*WHY: Como rotacionar necessita mover a tranlação, ela precisa retornar para nao alterar as demais imagens
      * Para manter o posicionamento relativo funcionando, este comportamento relative(move) seguido de relative(move*-1)
      * sempre será visto */
-    CV::relative_translate(pontoCentral_diff.x*-1, pontoCentral_diff.y*-1);
-    CV::line(pontoCentral.x, pontoCentral.y, pontoCentral_r.x, pontoCentral_r.y);
+    CV::relative_translate(rotate_diff.x*-1, rotate_diff.y*-1);
 }
 
-void Image::setRotation(int degress) {
-    this->rotation = (degress*M_PI_2)/180;
+void Image::setRotation(float rads) {
+    this->rotation = rads;
+    Vector2<float> pontoCentral(width/2, height/2);
+    //TODO: Troque por relative translate
+    auto pontoCentral_r = rotate(pontoCentral, this->rotation);
+    rotate_diff =  pontoCentral - pontoCentral_r;
+
+
 }
 
-int Image::getRotation() {
-    return (this->rotation*180)/M_PI_2;
+float Image::getRotation() {
+    return this->rotation;
 }
 
 void Image::setBrightnessMod(int b) {
@@ -388,6 +387,11 @@ void Image::setVerticalFlip(bool flip) {
     this->vertical_flip = flip;
 }
 
+enum_colors Image::getColor(){
+    return this->colors;
+}
+
+
 Image::Image(const Image &src, enum_colors color) {
     this->brightness_mod = src.brightness_mod;
     this->width = src.width;
@@ -400,13 +404,14 @@ Image::Image(const Image &src, enum_colors color) {
 
     switch (color) {
         case en_rgb:{
-            if(src.colors != en_rgb){
+            if(src.colors != en_rgb){// ????????
                 throw std::invalid_argument("Object source colors need to be en_rgb");
             }
 
             this->red_channel = src.red_channel;
             this->blue_channel = src.blue_channel;
             this->green_channel = src.green_channel;
+            this->gray_channel = src.gray_channel;
             break;
         }
         case en_grayscale:{

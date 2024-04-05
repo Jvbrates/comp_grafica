@@ -499,3 +499,11 @@ void CV::run()
    glutMainLoop();
 }
 
+void CV::text(Vector2<float> pos, std::string valor) {
+    int tam = valor.size();
+    for(int c=0; c < tam; c++)
+    {
+        glRasterPos2i(pos.x + c*10, pos.y);
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, valor[c]);
+    }
+}

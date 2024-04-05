@@ -119,7 +119,6 @@ private:
     uint height;
     uint width;
     double rotation = 0;
-    void aux_render(int);
     bool horizontal_flip = false;
     bool vertical_flip = false;
 
@@ -138,13 +137,15 @@ public:
     uint getBytesPerLyne();
     int getPriority();
     void setPriority(int prio_);
+    Vector2<float> rotate_diff;
 
     explicit Image(Bmp src);
     explicit Image(std::string path);
     Image(const Image& src, enum_colors color = en_rgb);
     void setColor(enum_colors);
-    void setRotation(int degress);
-    int getRotation();
+    enum_colors getColor();
+    void setRotation(float rads);
+    float getRotation();
     void setBrightnessMod(int );
     int getBrightnessMod();
     void render() override;

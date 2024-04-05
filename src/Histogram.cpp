@@ -4,8 +4,11 @@
 
 #include "Histogram.h"
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 HistogramRender::HistogramRender(std::shared_ptr<color_data_t> color_channel, enum_colors colors){
+    this->size = {320.,172.};
     this->reset(color_channel, colors);
 }
 
@@ -15,17 +18,20 @@ void HistogramRender::render() {
     CV::rectFill({0.,0.}, {320.,172.});
 
 //Contraste Fundo
+    colors_enum  cor;
     if(color == en_bluescale) {
-        CV::color(orange);
+        cor = orange;
     } else if (color == en_greenscale){
-        CV::color(red);
+        cor = red;
     } else if (color == en_redscale){
-        CV::color(green);
+        cor = green;
     } else {
-        CV::color(white);
+        cor = white;
     }
 
-    CV::rectFill({32.5,17.}, {287.5,167.});
+    CV::color(cor);
+
+    CV::rectFill({31.5,17.}, {287.5,167.});
 
     if(!normalized.empty()) {
 
@@ -47,7 +53,16 @@ void HistogramRender::render() {
 
         }
 
-        CV::color(green);
+        if(color == en_bluescale) {
+            cor = blue;
+        } else if (color == en_greenscale){
+            cor = green;
+        } else if (color == en_redscale){
+            cor = red;
+        } else {
+            cor = black;
+        }
+        CV::color(cor);
         CV::line(32.5, 167 - (float) avg / (float) max * 150.,
                  287.5,  167 - (float) avg / (float) max * 150.);
 
@@ -57,7 +72,9 @@ void HistogramRender::render() {
     }
 
     CV::color(black);
-    std::string text = "avg: "+ std::to_string(avg)+ " max: " + std::to_string(max) + " min: "+std::to_string(min) ;
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << avg;
+    std::string text = "avg: "+ stream.str() + " max: " + std::to_string(max) + " min: "+std::to_string(min) ;
     CV::text({0.,12.}, text);
 
 
@@ -67,26 +84,27 @@ void HistogramRender::reset(std::shared_ptr<color_data_t> color_channel, enum_co
 
     this->color = colors;
 
-    if(!color_channel){
-        max = min = avg = 0;
-        return;
-    }
+    this->normalized.clear();
+    max = min = avg = 0;
 
-    this->max = *(std::max_element(color_channel->histogram.vector.begin(), color_channel->histogram.vector.end()));
-    this->min = *(std::min_element(color_channel->histogram.vector.begin(), color_channel->histogram.vector.end()));
 
-    this->avg = 0;
-    int avg_denominador = 0;
+    if(color_channel) {
+        this->max = *(std::max_element(color_channel->histogram.vector.begin(), color_channel->histogram.vector.end()));
+        this->min = *(std::min_element(color_channel->histogram.vector.begin(), color_channel->histogram.vector.end()));
 
-    for (const auto &item: color_channel->histogram.vector) {
-        if (item) {
-            avg += (float) item;
-            avg_denominador++;
+        this->avg = 0;
+        int avg_denominador = 0;
+
+        for (const auto &item: color_channel->histogram.vector) {
+            if (item) {
+                avg += (float) item;
+                avg_denominador++;
+            }
+
+            normalized.push_back(167 - (float) item / (float) max * 150.);
         }
 
-        normalized.push_back(167 - (float) item / (float) max * 150.);
+        avg /= avg_denominador;
     }
-
-    avg /= avg_denominador;
 
 }

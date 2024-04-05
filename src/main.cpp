@@ -20,10 +20,12 @@
 #include "EventListener.h"
 #include "ImageManagement.h"
 #include "ImageSelector.h"
+#include "Histogram.h"
 #include "Conteiner.h"
+#include "button.h"
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
-int screenWidth = 500, screenHeight = 500;
+int screenWidth = 1200, screenHeight = 700;
 
 
 
@@ -32,6 +34,7 @@ Image *imgAbstract, *imgAbstract2;
 
 class teste : public EventClient{
 
+    Renderizable * hist;
 public:
     colors_enum color;
 
@@ -55,41 +58,16 @@ bool teste::key_up(int state) {
 
     auto state_c = (char)state;
     switch(state_c){
-        case 'r':
-            imgAbstract->setColor(en_redscale);
+        case 'h':
+            hist = CV::render_stack[CV::render_stack.size()-1];
+            CV::render_stack.pop_back();
             break;
-        case 'g':
-            imgAbstract->setColor(en_greenscale);
-            break;
-        case 'b':
-            imgAbstract->setColor(en_bluescale);
-            break;
-        case 'u':
-            imgAbstract->setRotation(imgAbstract->getRotation()+10);
-            break;
-        case 'j':
-            imgAbstract->setRotation(imgAbstract->getRotation()-10);
-            break;
-        case '+':
-            imgAbstract->setBrightnessMod(imgAbstract->getBrightnessMod()+5);
-            break;
-        case '-':
-            imgAbstract->setBrightnessMod(imgAbstract->getBrightnessMod()-5);
-            break;
-        case '1':
-            imgAbstract->setHorizontalFlip(true);
-            break;
-        case '2':
-            imgAbstract->setHorizontalFlip(false);
-            break;
-        case '3':
-            imgAbstract->setVerticalFlip(true);
-            break;
-        case '4':
-            imgAbstract->setVerticalFlip(false);
+        case 'y':
+            CV::render_stack.push_back(hist);
             break;
         default:
-            imgAbstract->setColor(en_rgb);
+            break;
+
     }
 
 
@@ -116,22 +94,10 @@ void CV_render()
         item->render_caller();
     }
 
+    CV::line(50,50, 510,50);
+    CV::line(50,150, 51210,150);
 
-   // Usando Image
-/*   std::shared_ptr<color_data_t>green_channel  = imgAbstract->get_channel_pointer(en_greenscale);
-   std::shared_ptr<color_data_t>red_channel  = imgAbstract->get_channel_pointer(en_redscale);
-   std::shared_ptr<color_data_t>blue_channel  = imgAbstract->get_channel_pointer(en_bluescale);
 
-    uint bytes_line = imgAbstract->getBytesPerLyne();
-
-    for (uint y=imgAbstract->getHeight(); y>0; y--){
-        for (int x = 0; x < imgAbstract->getWidth(); ++x){
-
-            CV::color(255,green_channel->pixels[x+y*imgAbstract->getWidth()], 255);
-            CV::point(x,y);
-        }
-
-    }*/
 
 }
 
@@ -139,63 +105,163 @@ void CV_render()
 int main(void)
 {
 
+    std::shared_ptr<Image> a = nullptr;
 
-    ImageSelector Mng = ImageSelector();
+    // Agrupa todas as imagens carregadas, permine move-las e selecioná-las
+    ImageSelector Mng = ImageSelector(&a);
 
-    Mng.loadImage("./images/b.bmp", {0. ,100.});
+    //Carrega as Três imagens iniciais
     Mng.loadImage("./images/a.bmp", {50. ,200.});
+    Mng.loadImage("./images/b.bmp", {0. ,100.});
+    Mng.loadImage("./images/c.bmp", {0. ,100.});
+
+    //Eventos que serão esperados pela classe Mng
     EventListener::add_event(&Mng,en_mouse_left);
     EventListener::add_event(&Mng,en_mouse_move);
+    EventListener::add_event(&Mng,en_keyboard_down);
 
-    /*
-    Bmp image = Bmp("./images/b.bmp");
+    teste t = teste();
+    EventListener::add_event(&t,en_keyboard_up);
 
-    EventListener::add_event(&t_class, en_keyboard_up);
-    image.convertBGRtoRGB();
-
-    imgAbstract = new Image(image);
+    //Mng.updateQuadri();
 
 
-    //*imgAbstract2 = Image(*imgAbstract, en_greenscale);
+    //Botoes de decomposição de Canal
+    // 1 - Instancia os Botões
+    auto dec_R = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"R"});
+    auto dec_G = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"G"});
+    auto dec_B = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"B"});
+    auto dec_L = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},gray,"L"});
 
-    imgAbstract->grayChannel();
-    Image img_gray(*imgAbstract, en_grayscale);
-    Image img_red(*imgAbstract, en_redscale);
-    Image img_green(*imgAbstract, en_greenscale);
-    Image img_blue(*imgAbstract, en_bluescale);
+    // 2- Define Ação de cada botão
+    dec_R->onclick([&Mng](void * arg){
+
+        auto image = Mng.getSelected();
+
+        if(image->getColor() == en_rgb){
+            Mng.loadImage(*image, en_redscale, image->posRelative + Vector2<float>{50.,50.});
+        }
 
 
-    Conteiner conteiner = Conteiner();
-    Conteiner conteiner2 = Conteiner();
-    Conteiner conteiner3 = Conteiner();
+       return true;
+    }, nullptr);
+    dec_G->onclick([&Mng](void * arg){
 
-    conteiner.elements = std::vector<Renderizable *>();
-    conteiner2.elements = std::vector<Renderizable *>();
-    conteiner3.elements = std::vector<Renderizable *>();
+        auto image = Mng.getSelected();
 
-    conteiner.elements.push_back(imgAbstract);
-    conteiner.elements.push_back(&img_gray);
-    conteiner.elements.push_back(&img_red);
+        if(image->getColor() == en_rgb){
+            Mng.loadImage(*image, en_greenscale, image->posRelative + Vector2<float>{50.,50.});
+        }
 
-    conteiner2.elements.push_back(&img_green);
-    conteiner2.elements.push_back(&img_blue);
 
-    conteiner3.elements.push_back(&conteiner);
-    conteiner3.elements.push_back(&conteiner2);
+        return true;
+    }, nullptr);
+    dec_B->onclick([&Mng](void * arg){
 
-    conteiner.position_type = line;
-    conteiner2.position_type = column;
-    conteiner3.position_type = line;
-    conteiner.composer();
-    conteiner2.composer();
-    conteiner3.composer();
-*/
+        auto image = Mng.getSelected();
+
+        if(image->getColor() == en_rgb){
+            Mng.loadImage(*image, en_bluescale, image->posRelative + Vector2<float>{50.,50.});
+        }
+
+
+        return true;
+    }, nullptr);
+    dec_L->onclick([&Mng](void * arg){
+
+        auto image = Mng.getSelected();
+
+        if(image->getColor() == en_rgb){
+            if(image->get_channel_pointer(en_grayscale) == nullptr){
+                image->grayChannel();
+            }
+
+            //Isto daqui gera um objeto cópia e como cópia não define o grayscale ele acaba ficando nulo
+            auto a = *image;
+
+            Mng.loadImage(a, en_grayscale, image->posRelative + Vector2<float>{50.,50.});
+        }
+
+
+        return true;
+    }, nullptr);
+
+    //conteiner que conterá botões
+    auto conteiner_btn_decomposicao = Conteiner();
+    conteiner_btn_decomposicao.elements.push_back(dec_R);
+    conteiner_btn_decomposicao.elements.push_back(dec_G);
+    conteiner_btn_decomposicao.elements.push_back(dec_B);
+    conteiner_btn_decomposicao.elements.push_back(dec_L);
+    dec_R->active = true;
+    dec_G->active = true;
+    dec_B->active = true;
+    dec_L->active = true;
+
+    conteiner_btn_decomposicao.position_type = line;
+    conteiner_btn_decomposicao.composer();
+
+
+    // Histogramas e Botões de Histogramas
+    auto selectedImage = Mng.getSelected();
+    auto histRed   = std::make_shared<HistogramRender>(a->get_channel_pointer(en_redscale),   en_redscale);
+    auto histGreen = std::make_shared<HistogramRender>(a->get_channel_pointer(en_bluescale),  en_bluescale);
+    auto histBlue  = std::make_shared<HistogramRender>(a->get_channel_pointer(en_greenscale), en_greenscale);
+    auto histGray  = std::make_shared<HistogramRender>(a->get_channel_pointer(en_grayscale),  en_grayscale);
+
+    // Conteiner de Histogramas
+    auto conteiner_hist = Conteiner();
+    conteiner_hist.elements.push_back(histRed);
+    conteiner_hist.elements.push_back(histBlue);
+    conteiner_hist.elements.push_back(histGreen);
+    conteiner_hist.elements.push_back(histGray);
+
+    conteiner_hist.position_type = column;
+    conteiner_hist.composer();
+
+    conteiner_hist.elements.clear();
+
+    conteiner_hist.posRelative = {(float)screenWidth-histGray->size.x, 6.};
+
+    //Atualização dos Histogramas para apontar para imagem correta
+    Mng.setCallback([&histRed,        &histGreen,
+                    &histBlue,
+                    &histGray
+                     ](auto image){
+        histRed->reset(image->get_channel_pointer(en_redscale), en_redscale);
+        histGreen->reset(image->get_channel_pointer(en_greenscale), en_greenscale);
+        histBlue->reset(image->get_channel_pointer(en_bluescale), en_bluescale);
+        histGray->reset(image->get_channel_pointer(en_grayscale), en_grayscale);
+    });
+
+
+    //Criação checkbox Histogramas
+    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "R:");
+
+    btn_hist_red->onclick([histRed, &btn_hist_red, &conteiner_hist](void * a){
+        if(btn_hist_red->getState() == 1){
+            conteiner_hist.elements.push_back(histRed);
+        } else {
+            auto hist_vector = conteiner_hist.elements;
+            auto index = std::find(hist_vector.begin(), hist_vector.end(), histRed);
+            conteiner_hist.elements.erase(index);
+        }
+
+        return true;
+    }, nullptr);
+    btn_hist_red->active = true;
+
 
     CV::render_stack.push_back(&(Mng.images));
+    CV::render_stack.push_back(&conteiner_btn_decomposicao);
+    CV::render_stack.push_back(&conteiner_hist);
+    CV::render_stack.push_back(&(*btn_hist_red));
 
-    CV::init(screenWidth, screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
+
+
+    CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
 
 
 
 }
+

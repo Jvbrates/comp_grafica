@@ -106,6 +106,7 @@ public:
     static void text(Vector2<float> pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2<float> pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
     static void text(Vector2<float> pos, float valor);    //varias funcoes 
+    static void text(Vector2<float> pos, std::string valor);    //varias funcoes
     // ainda nao tem implementacao. Faca como exercicio
 
     //coordenada de offset para desenho de objetos.
