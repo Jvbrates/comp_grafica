@@ -249,11 +249,15 @@ int main(void)
     }, nullptr);
     btn_hist_red->active = true;
 
+    auto btn_slider = SliderRangeButton(100, black, green);
+    btn_slider.setRelativePos(300.,300.);
+
 
     CV::render_stack.push_back(&(Mng.images));
     CV::render_stack.push_back(&conteiner_btn_decomposicao);
     CV::render_stack.push_back(&conteiner_hist);
     CV::render_stack.push_back(&(*btn_hist_red));
+    CV::render_stack.push_back(&btn_slider);
 
 
 
