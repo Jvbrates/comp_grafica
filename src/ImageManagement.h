@@ -151,8 +151,10 @@ public:
     int getBrightnessMod();
     void render() override;
     void setHorizontalFlip(bool flip);
-
     void setVerticalFlip(bool flip);
+
+    bool getHorizontalFlip();
+    bool getVerticalFlip();
 
     std::shared_ptr<color_data_t> get_channel_pointer(enum_colors color);
 

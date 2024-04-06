@@ -13,8 +13,11 @@ void Button::render() {
     CV::color(curr_state.fill_color);
     CV::rectFill({0., 0.,}, curr_state.size);
     if (!curr_state.texto.empty()) {
-        CV::color(black);
-        CV::text(curr_state.text_offset, (curr_state.texto).c_str());
+        CV::color(curr_state.text_color);
+        CV::text({
+            (this->size.x - curr_state.texto.length()*PXL_STR)/2,
+            (this->size.y - PXL_STR_H)/2 + PXL_STR_H
+            }, (curr_state.texto).c_str());
     }
 
 }
@@ -40,12 +43,16 @@ int Button::getState() {
     return this->state;
 }
 
+states_t * Button::getState(int index){
+    return &(this->state_array[index]);
+}
+
 void Button::setState(int state_) {
     this->state = state_;
 }
 
 void Button::addState(states_t state_) {
-
+    this->state_array.push_back(state_);
 }
 
 bool Button::callWraper() {
@@ -71,8 +78,8 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
 
     EventListener::add_event(this, en_mouse_left);
     this->size = {size+label.length()*10, size};
-    states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, white, label};
-    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, label};
+    states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, green,label};
+    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, green,label};
     this->state_array.push_back(s1);
     this->state_array.push_back(s2);
 }
@@ -84,17 +91,17 @@ void CheckboxButton::render() {
     if(this->state) {
         CV::color(curr_state.fill_color);
         CV::rectFill({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
-        CV::color(black);
+        CV::color(curr_state.text_color);
         CV::rect({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
     } else {
 
         CV::color(curr_state.fill_color);
         CV::rectFill({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
-        CV::color(black);
+        CV::color(curr_state.text_color);
         CV::rect({curr_state.text_offset.x, 0.,}, curr_state.size + Vector2{curr_state.text_offset.x,0.f});
     }
     if (!curr_state.texto.empty()) {
-        CV::color(black);
+        CV::color(curr_state.text_color);
         CV::text({0.f, curr_state.text_offset.y-5.f}, (curr_state.texto).c_str());
     }
 }
@@ -175,7 +182,6 @@ bool SliderRangeButton::mouse_left(int state) {
     }
     return false;
 }
-
 
 
 void SliderRangeButton::updateValue() {

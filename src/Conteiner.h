@@ -24,6 +24,7 @@ private:
 public:
     Vector2<float> size {0.,0.};
     int priority = 0;
+    bool visible = true;
     virtual void render() = 0;
     Vector2<float> getAbsolutePos();
     Vector2<float> getRelativePos();
@@ -38,12 +39,13 @@ private:
 
 
 class Conteiner : public Renderizable{
-
-    void render() override;
-
+    colors_enum color = black;
 public:
+    void backgroundColor(colors_enum);
+    void render() override;
     std::vector<std::shared_ptr<Renderizable>> elements;
     position_enum position_type = relative;
+    bool visible = false;
     void composer();
     void push(std::shared_ptr<Renderizable> item);
     void findRemove(std::shared_ptr<Renderizable> item);

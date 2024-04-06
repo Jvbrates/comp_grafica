@@ -11,8 +11,8 @@
 #include "string"
 
 typedef struct states{
-    Vector2<float> position, size, text_offset;
-    colors_enum fill_color = gray;
+    Vector2<float> position, size, text_offset; // FIXME text offset não é util
+    colors_enum fill_color = gray, text_color = black;
     std::string texto;
 } states_t;
 
@@ -37,6 +37,7 @@ public:
 
     void addState(states_t state);
     void setState(int state);
+    states_t * getState(int index);
     int getState();
     void onclick(std::function<bool(void *)> f, void *argument);
     void setArgument(void * arg);
@@ -86,7 +87,4 @@ public:
 };
 
 
-enum {verdadeiro,   //jhgjhgjkgjkky
-        falso,
-        terceiro};
 #endif //SRC_BUTTON_H

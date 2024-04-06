@@ -9,11 +9,17 @@
 
 void Renderizable::render_caller() {
     CV::relative_translate(posRelative);
-    render();
+    if(visible) {
+        render();
+    }
     CV::relative_translate(posRelative * -1);
 }
 
 void Conteiner::composer(){
+
+    if(elements.size() == 0) return;
+
+
     switch (this->position_type) {
         case relative: {
 
@@ -34,12 +40,15 @@ void Conteiner::composer(){
         }
         case column: {
 
-            elements[0]->posRelative = {0.,0};
+            if(elements.size() == 0) return;
+
+
+            elements[0]->setRelativePos(0.,0.);
             float max_x = elements[0]->size.x;
             float y_acm = 0;
             for (int i = 1; i < elements.size(); ++i) {
                 y_acm += elements[i-1]->size.y;
-                elements[i]->posRelative = {0.,y_acm};
+                elements[i]->setRelativePos({0.,y_acm});
 
                 if(elements[i]->size.x > max_x)
                     max_x = elements[i]->size.x;
@@ -51,13 +60,15 @@ void Conteiner::composer(){
         }
         case line: {
 
-            elements[0]->posRelative = {0.,0};
+            if(elements.size() == 0) return;
+
+            elements[0]->setRelativePos(0.,0);
             float max_y = elements[0]->size.y;
 
             float x_acm = 0;
             for (int i = 1; i < elements.size(); ++i) {
                 x_acm += elements[i-1]->size.x;
-                elements[i]->posRelative = {x_acm,0.};
+                elements[i]->setRelativePos(x_acm,0.);
 
                 if(elements[i]->size.x > max_y)
                     max_y = elements[i]->size.y;
@@ -71,6 +82,11 @@ void Conteiner::composer(){
 }
 
 void Conteiner::render() {
+    if(visible) {
+        CV::color(color);
+        CV::rectFill({0.,0.}, this->size);
+    }
+
     for (auto &item: elements) {
         item->render_caller();
     }
@@ -109,7 +125,9 @@ void Conteiner::findRemove(std::shared_ptr<Renderizable> item) {
 }
 
 std::shared_ptr<Renderizable> Conteiner::lastElement() {
-    return elements[elements.size()-1];
+    if(this->elements.size()) {
+        return elements[elements.size() - 1];
+    }
 }
 
 Conteiner::~Conteiner() {
@@ -149,3 +167,8 @@ void Conteiner::setRelativePos(Vector2<float> pos) {
     this->posRelative = pos;
     updateElementsPos();
 }
+
+void Conteiner::backgroundColor(colors_enum c) {
+    this->color = c;
+}
+

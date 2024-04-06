@@ -145,9 +145,6 @@ INFOHEADER Bmp::getInfoHeader(void) {
 }
 
 
-
-
-
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 
@@ -208,9 +205,6 @@ Image::Image(Bmp src) {
     }
 
 }
-
-
-
 
 uint Image::getHeight() { return this->height; }
 
@@ -416,6 +410,13 @@ Image::Image(const Image &src, enum_colors color) {
         }
         case en_grayscale:{
             if(src.gray_channel != nullptr){
+
+                //Adicionado para manter coerência
+                this->red_channel = src.red_channel;
+                this->blue_channel = src.blue_channel;
+                this->green_channel = src.green_channel;
+
+
                 this->gray_channel = src.gray_channel;
             } else
             {
@@ -485,4 +486,12 @@ void Image::setPriority(int prio_) {
 
 int Image::getPriority() {
     return this->priority;
+}
+
+bool Image::getHorizontalFlip() {
+    return horizontal_flip;
+}
+
+bool Image::getVerticalFlip() {
+    return vertical_flip;
 }
