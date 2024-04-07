@@ -128,6 +128,8 @@ std::shared_ptr<Renderizable> Conteiner::lastElement() {
     if(this->elements.size()) {
         return elements[elements.size() - 1];
     }
+
+    return nullptr;
 }
 
 Conteiner::~Conteiner() {

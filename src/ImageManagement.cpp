@@ -351,7 +351,7 @@ void Image::render() {
 
 void Image::setRotation(float rads) {
     this->rotation = rads;
-    Vector2<float> pontoCentral(width/2, height/2);
+    Vector2<float> pontoCentral(width/2.f, height/2.f);
     //TODO: Troque por relative translate
     auto pontoCentral_r = rotate(pontoCentral, this->rotation);
     rotate_diff =  pontoCentral - pontoCentral_r;
@@ -391,6 +391,7 @@ Image::Image(const Image &src, enum_colors color) {
     this->width = src.width;
     this->height = src.height;
     this->rotation = src.rotation;
+    this->rotate_diff = src.rotate_diff;
     this->bytesPerLine = src.bytesPerLine; // TODO: Por enquanto, inútil;
     this->size = src.size;
 

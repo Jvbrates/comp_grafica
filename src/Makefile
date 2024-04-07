@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -Wall -Werror -g
 LDLIBS = -lglut -lGL -lGLU
 
-OBJS = gl_canvas2d.o Conteiner.o ImageSelector.o ImageManagement.o Histogram.o colisions.o button.o TextBox.o EventListener.o Relogio.o  \
+OBJS = gl_canvas2d.o Conteiner.o ImageSelector.o ImageManagement.o Histogram.o button.o TextBox.o EventListener.o Relogio.o  \
 			 main.o
 
 TARGETS = main

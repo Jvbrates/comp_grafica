@@ -44,6 +44,10 @@ public:
        y /= norm;
    }
 
+   float nomr(){
+       return (numeric)sqrt(x*x + y*y);
+   }
+
    Vector2 operator - (const Vector2& v)
    {
         Vector2 aux( x - (numeric)v.x, y - (numeric)v.y);
@@ -62,6 +66,17 @@ public:
         return( aux );
     }
 
+    Vector2 operator / (const float& i)
+    {
+        Vector2 aux( x/i, y/i);
+        return( aux );
+    }
+
+    float operator ^ (const Vector2& i)
+    {
+
+       return (this->x*i.x + this->y*i.y);
+    }
 
     Vector2 operator += (const Vector2& i)
     {

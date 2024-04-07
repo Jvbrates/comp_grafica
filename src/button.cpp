@@ -3,7 +3,7 @@
 //
 
 #include "button.h"
-#include "colisions.h"
+#include "collisions.h"
 
 
 void Button::render() {
@@ -63,7 +63,8 @@ bool Button::callWraper() {
 }
 
 bool Button::mouse_left(int i) {
-    if (colisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
+
+    if (collisions::rectangle<float>(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         return callWraper();
     }
     return false;
@@ -108,7 +109,7 @@ void CheckboxButton::render() {
 
 
 bool CheckboxButton::mouse_left(int i) {
-    if (colisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
+    if (collisions::rectangle<float>(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         setState(!getState());
         std::cout << "State" << this->state << std::endl;
 
@@ -164,7 +165,7 @@ void SliderRangeButton::render() {
 
 bool SliderRangeButton::mouse_left(int state) {
     if (!state &&
-        colisions::rectangle(CV::get_mouse_pos(), //Posição do mouse
+        collisions::rectangle<float>(CV::get_mouse_pos(), //Posição do mouse
                         this->getAbsolutePos() + Vector2<float>{CIRCLE_WIDTH / 2.f, 0.}, // Posições do slider
                         this->getAbsolutePos() + this->size - Vector2<float>{CIRCLE_WIDTH / 2.f, 0.})
         )

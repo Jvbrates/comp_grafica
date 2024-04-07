@@ -370,9 +370,13 @@ int main()
     Menu.composer();
     Menu.visible = true;
 
+    dbg dbg_instance = dbg(&Mng);
+
     CV::render_stack.push_back(&(Mng.images));
     CV::render_stack.push_back(&Menu);
     CV::render_stack.push_back(&conteiner_hist);
+    CV::render_stack.push_back(&dbg_instance);
+
 
 
     //Eventos que serão esperados pela classe Mng

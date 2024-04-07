@@ -59,6 +59,8 @@ public:
 
     static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
     static void line(Vector2<int> p1, Vector2<float> p2 ); //coordenadas da linha (p1, p2)
+    static void line(Vector2<float> p1, Vector2<float> p2 ); //coordenadas da linha (p1, p2)
+
 
     //desenha um retangulo alinhado nos eixos x e y
     static void rect( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
