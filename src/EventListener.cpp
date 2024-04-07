@@ -54,7 +54,8 @@ void EventListener::add_event(EventClient *client, enum_event event){
 }
 
  void EventListener::key_press(int caractere){
-    for (const  auto item: EventListener::EventMatrix[en_keyboard_down]){
+
+     for (const  auto item: EventListener::EventMatrix[en_keyboard_down]){
         bool stop = item.second->key_press(caractere);
 
         if(stop && EventListener::captureEvent[en_keyboard_down]){

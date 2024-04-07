@@ -50,11 +50,17 @@ int main()
     // Agrupa todas as imagens carregadas, permine move-las e selecioná-las
     ImageSelector Mng = ImageSelector();
 
-    //Carrega as Três imagens iniciais
-    Mng.loadImage("./images/a.bmp", {50. ,200.});
-    Mng.loadImage("./images/b.bmp", {0. ,100.});
-    Mng.loadImage("./images/c.bmp", {0. ,300.});
 
+    //Carrega as Três imagens iniciais
+#ifdef _WIN32
+    Mng.loadImage("..\\images\\a.bmp", {50. ,200.});
+    Mng.loadImage("..\\images\\b.bmp", {100. ,100.});
+    Mng.loadImage("..\\images\\c.bmp", {200. ,300.});
+#else
+    Mng.loadImage("../images/a.bmp", {50. ,200.});
+    Mng.loadImage("../images/b.bmp", {100. ,100.});
+    Mng.loadImage("../images/c.bmp", {200. ,300.});
+#endif
 
 
 
