@@ -3,7 +3,7 @@
 //
 
 #include "Conteiner.h"
-
+#include "collisions.h"
 
 
 
@@ -174,3 +174,26 @@ void Conteiner::backgroundColor(colors_enum c) {
     this->color = c;
 }
 
+
+bool Conteiner::mouse_left(int state) {
+
+    if(state == 0 && collisions::rectangle(CV::get_mouse_pos(),
+    getAbsolutePos(),
+    getAbsolutePos() + size)){
+        return true;
+    }
+
+    return false;
+}
+
+
+bool Conteiner::mouse_right(int state) {
+
+    if(state == 0 && collisions::rectangle(CV::get_mouse_pos(),
+        getAbsolutePos(),
+                getAbsolutePos() + size)){
+        return true;
+    }
+
+    return false;
+}

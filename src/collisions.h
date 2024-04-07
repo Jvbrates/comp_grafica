@@ -155,7 +155,8 @@ bool collisions::circle(Vector2<T>point, Vector2<T>circle_pos, T radius){
 
     T dist = std::sqrt(pow(x_diff,2)+pow(y_diff,2));
 
-    return dist < radius
+    return dist < radius;
+}
 
 
 #endif //COMP_GRAFICA_collisions_H

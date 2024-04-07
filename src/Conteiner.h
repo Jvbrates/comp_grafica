@@ -7,7 +7,7 @@
 #include "gl_canvas2d.h"
 #include <vector>
 #include <memory>
-
+#include "EventListener.h"
 #include "Vector2.h"
 typedef enum {relative, line, column}position_enum;
 
@@ -38,7 +38,7 @@ private:
 
 
 
-class Conteiner : public Renderizable{
+class Conteiner : public Renderizable, public EventClient {
     colors_enum color = black;
 public:
     void backgroundColor(colors_enum);
@@ -55,6 +55,12 @@ public:
     void setRelativePos(Vector2<float> pos) override;
     void setRelativePos(float x, float y) override;
     ~Conteiner();
+
+
+    //Evitar clicks por detrás do conteiner; ISSUE #8
+    bool mouse_left(int state);
+    bool mouse_right(int state);
+
 
 };
 

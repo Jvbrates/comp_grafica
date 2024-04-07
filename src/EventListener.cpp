@@ -5,7 +5,7 @@
 #include "EventListener.h"
 
 std::vector<bool> EventListener::captureEvent = std::vector<bool>
-        (num_of_events);
+        (num_of_events, false);
 
 std::vector<std::map<int, EventClient*> >  EventListener::EventMatrix =
         std::vector<std::map<int, EventClient *>>(num_of_events);

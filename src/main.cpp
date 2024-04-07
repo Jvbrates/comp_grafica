@@ -260,8 +260,14 @@ int main()
 
         return true;
     }, nullptr);
-    btn_hist_gray->onclick([&histGray, &btn_hist_gray](void * a){
+    btn_hist_gray->onclick([&histGray, &btn_hist_gray, &Mng](void * a){
         if(btn_hist_gray->getState() == 1){
+
+            auto image = Mng.getSelected();
+            if(image->get_channel_pointer(en_grayscale) == nullptr){
+                image->grayChannel();
+                histGray->reset(image->get_channel_pointer(en_grayscale), en_grayscale);
+            }
             histGray->visible = true;
         } else {
             histGray->visible = false;
@@ -335,12 +341,17 @@ int main()
     //Atualização do Slider de brilho para receber o valor correto
     //Atualização do Flip/espelhamento de brilho para receber o valor correto
 
-    Mng.setCallback([&histRed,&histGreen,&histBlue,&histGray, &brightness_slider, &flip_vertical_check, &flip_horizontal_check]
+    Mng.setCallback([&histRed,&histGreen,&histBlue,&histGray,
+                     &brightness_slider, &flip_vertical_check,
+                     &flip_horizontal_check, &btn_hist_gray]
     (auto image){
 
         histRed->reset(image->get_channel_pointer(en_redscale), en_redscale);
         histGreen->reset(image->get_channel_pointer(en_greenscale), en_greenscale);
         histBlue->reset(image->get_channel_pointer(en_bluescale), en_bluescale);
+
+        //caso especial, luminancia
+        if(image->get_channel_pointer(en_grayscale) == nullptr && btn_hist_gray->getState()) image->grayChannel();
         histGray->reset(image->get_channel_pointer(en_grayscale), en_grayscale);
 
         brightness_slider->setValue(SliderRangeButton::convert(image->getBrightnessMod(), 255.f));
@@ -378,6 +389,9 @@ int main()
     CV::render_stack.push_back(&dbg_instance);
 
 
+    //Evitar clicks atrás do menu
+    EventListener::add_event(&Menu, en_mouse_left);
+
 
     //Eventos que serão esperados pela classe Mng
     EventListener::add_event(&Mng,en_mouse_left);
@@ -385,6 +399,9 @@ int main()
     EventListener::add_event(&Mng,en_mouse_move);
     EventListener::add_event(&Mng,en_keyboard_down);
 
+
+    //Permitir a captura de eventos por um EventClient
+    EventListener::captureEvent[en_mouse_left] = true;
 
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
