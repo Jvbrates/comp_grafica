@@ -118,7 +118,7 @@ bool ImageSelector::mouse_left(int state){
             if(result){
 
                 if(i != this->images.elements.size() -1){
-                    std::cout << "Bring to front" << std::endl;
+                    ////std::cout  << "Bring to front" << std::endl;
                     swap(i);
                 }
                 mouse_left_press = true;

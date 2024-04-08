@@ -260,10 +260,10 @@ int main()
 
 
     //2.2 Criação checkbox Histogramas
-    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "R:");
-    std::shared_ptr<CheckboxButton> btn_hist_green = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "G:");
-    std::shared_ptr<CheckboxButton> btn_hist_blue = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "B:");
-    std::shared_ptr<CheckboxButton> btn_hist_gray = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "L:");
+    std::shared_ptr<CheckboxButton> btn_hist_red = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "  R:");
+    std::shared_ptr<CheckboxButton> btn_hist_green = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "  G:");
+    std::shared_ptr<CheckboxButton> btn_hist_blue = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "  B:");
+    std::shared_ptr<CheckboxButton> btn_hist_gray = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "  L:");
 
     // 2.3 Definição da ação dos checkbox
     btn_hist_red->onclick([&histRed, &btn_hist_red](void * a){

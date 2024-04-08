@@ -64,32 +64,32 @@ public:
     ~EventClient();
 
     virtual bool mouse_right(int) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 
     virtual bool mouse_left(int) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 
     virtual bool mouse_scroll(int) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 
     virtual bool mouse_move(Vector2<float> pos, Vector2<float> desloc) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 
     virtual bool key_press(int) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 
     virtual bool key_up(int) {
-        std::cout << "Está função deveria ser sobrescrita";
+        //std::cout  << "Está função deveria ser sobrescrita";
         return false;
     }
 

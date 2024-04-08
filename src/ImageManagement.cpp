@@ -20,7 +20,7 @@ Bmp::Bmp(const char *fileName) {
     if (fileName != NULL && strlen(fileName) > 0) {
         load(fileName);
     } else {
-        printf("Error: Invalid BMP filename");
+        //printf("Error: Invalid BMP filename");
     }
 }
 
@@ -58,11 +58,11 @@ void Bmp::convertBGRtoRGB() {
 void Bmp::load(const char *fileName) {
     FILE *fp = fopen(fileName, "rb");
     if (fp == NULL) {
-        printf("\nErro ao abrir arquivo %s para leitura", fileName);
+        //printf("\nErro ao abrir arquivo %s para leitura", fileName);
         return;
     }
 
-    printf("\n\nCarregando arquivo %s", fileName);
+    //printf("\n\nCarregando arquivo %s", fileName);
 
     //le o HEADER componente a componente devido ao problema de alinhamento de bytes. Usando
     //o comando fread(header, sizeof(HEADER),1,fp) sao lidos 16 bytes ao inves de 14
@@ -92,38 +92,38 @@ void Bmp::load(const char *fileName) {
     imagesize = bytesPerLine * height;
     int delta = bytesPerLine - (3 * width);
 
-    printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
-    printf("\nbytesPerLine: %d", bytesPerLine);
-    printf("\nbytesPerLine: %d", width * 3);
-    printf("\ndelta: %d", delta);
-    printf("\nimagesize: %d %d", imagesize, info.imagesize);
+    //printf("\nImagem: %dx%d - Bits: %d", width, height, bits);
+    //printf("\nbytesPerLine: %d", bytesPerLine);
+    //printf("\nbytesPerLine: %d", width * 3);
+    //printf("\ndelta: %d", delta);
+    //printf("\nimagesize: %d %d", imagesize, info.imagesize);
 
 
     //realiza diversas verificacoes de erro e compatibilidade
     if (header.type != 19778) {
-        printf("\nError: Arquivo BMP invalido");
+        //printf("\nError: Arquivo BMP invalido");
         getchar();
         exit(0);
     }
 
     if (width * height * 3 != imagesize) {
-        printf("\nWarning: Arquivo BMP nao tem largura multipla de 4\n");
+        //printf("\nWarning: Arquivo BMP nao tem largura multipla de 4\n");
         //getchar();
     }
 
     if (info.compression != 0) {
-        printf("\nError: Formato BMP comprimido nao suportado");
+        //printf("\nError: Formato BMP comprimido nao suportado");
         getchar();
         return;
     }
     if (bits != 24) {
-        printf("\nError: Formato BMP com %d bits/pixel nao suportado", bits);
+        //printf("\nError: Formato BMP com %d bits/pixel nao suportado", bits);
         getchar();
         return;
     }
 
     if (info.planes != 1) {
-        printf("\nError: Numero de Planes nao suportado: %d", info.planes);
+        //printf("\nError: Numero de Planes nao suportado: %d", info.planes);
         getchar();
         return;
     }

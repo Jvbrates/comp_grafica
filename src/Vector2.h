@@ -34,8 +34,8 @@ public:
 
        if(norm==0.0)
        {
-          //printf("\n\nNormalize::Divisao por zero");
-          std::cout << "\n\nNormalize::Divisao por zero\n";
+          ////printf("\n\nNormalize::Divisao por zero");
+          ////std::cout  << "\n\nNormalize::Divisao por zero\n";
           x = 1;
           y = 1;
           return;

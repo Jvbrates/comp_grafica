@@ -47,7 +47,7 @@ void EventListener::add_event(EventClient *client, enum_event event){
         }
 
         default:
-            std::cout << "Evento não definido";
+            //std::cout  << "Evento não definido";
             throw;
 
     }

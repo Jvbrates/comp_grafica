@@ -111,7 +111,7 @@ void CheckboxButton::render() {
 bool CheckboxButton::mouse_left(int i) {
     if (collisions::rectangle<float>(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         setState(!getState());
-        std::cout << "State" << this->state << std::endl;
+        //std::cout  << "State" << this->state << std::endl;
 
 
         return callWraper();
@@ -171,7 +171,7 @@ bool SliderRangeButton::mouse_left(int state) {
         )
     {
         this->mouse_left_hold = true;
-        std::cout << "Nothing" << state << std::endl;
+        //std::cout  << "Nothing" << state << std::endl;
         this->value = std::fmod(this->value + 10.f, this->MAX_VALUE);
 
         updateValue();
