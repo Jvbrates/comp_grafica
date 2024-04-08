@@ -44,6 +44,8 @@
 
 		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/collisions.h" />
+		<Unit filename="src/Renderizable.cpp" />
+		<Unit filename="src/Renderizable.h" />
 		<Unit filename="src/Conteiner.cpp" />
 		<Unit filename="src/Conteiner.h" />
 		<Unit filename="src/button.cpp" />
