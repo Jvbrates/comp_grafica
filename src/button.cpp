@@ -79,8 +79,24 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
 
     EventListener::add_event(this, en_mouse_left);
     this->size = {size+label.length()*10, size};
-    states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, green,label};
-    states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, green,label};
+    //states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, green,label};
+    states_t s1;
+    s1.position = pos;
+    s1.size = Vector2<float>{size,size};
+    s1.text_offset = Vector2<float>{label.length()*PXL_STR, size};
+    s1.fill_color = black;
+    s1.text_color = green;
+    s1.texto = label;
+
+
+    //states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, green,label};
+    states_t s2;
+    s2.position = pos;
+    s2.size = Vector2<float>{size,size};
+    s2.text_offset = Vector2<float>{label.length()*PXL_STR, size};
+    s2.fill_color = green;
+    s2.text_color = green;
+    s2.texto = label;
     this->state_array.push_back(s1);
     this->state_array.push_back(s2);
 }

@@ -5,6 +5,7 @@
 #include "Histogram.h"
 #include <string>
 #include <sstream>
+#include <algorithm>
 #include <iomanip>
 
 HistogramRender::HistogramRender(std::shared_ptr<color_data_t> color_channel, enum_colors colors){

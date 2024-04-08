@@ -4,6 +4,8 @@
 #include <cmath>
 #include <iostream>
 
+typedef unsigned int uint;
+
 template< typename numeric>
 class Vector2
 {
