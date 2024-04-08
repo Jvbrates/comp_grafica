@@ -1,3 +1,16 @@
+/*
+ * Quadrilatero:
+ * Classe auxiliar para desenhar um retângulo atrás da imagem selecionada
+ *
+ * ImagemSelector:
+ *  é responsável por gerenciar a seleção e exibição de imagens, oferecendo
+ *  funcionalidades para carregar imagens a partir de arquivos ou diretamente
+ *  de objetos ImageManagement.
+ *  Ela também inclui métodos para interagir com o mouse e o teclado, como
+ *  detectar cliques e movimentos do mouse, além de fornecer um menu de comunicação
+ *  para obter a imagem selecionada.
+ *
+ * */
 //
 // Created by jvbrates on 3/28/24.
 //

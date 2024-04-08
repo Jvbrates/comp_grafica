@@ -1,3 +1,10 @@
+/*
+ * Namespace collisions:
+ * rotate: rotaciona um Vector2 em radianos;
+ * rectangle: Determina se um ponto está dentro de um retângulo
+ * polygon:   Determina se um ponto está dentro de um poligono
+ * circle:    Determina se um ponto está dentro de um circulo
+ * */
 //
 // Created by jvbrates on 3/24/24.
 //

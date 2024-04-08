@@ -5,16 +5,6 @@
 #include "Conteiner.h"
 #include "collisions.h"
 
-
-
-void Renderizable::render_caller() {
-    CV::relative_translate(posRelative);
-    if(visible) {
-        render();
-    }
-    CV::relative_translate(posRelative * -1);
-}
-
 void Conteiner::composer(){
 
     if(elements.size() == 0) return;
@@ -92,21 +82,10 @@ void Conteiner::render() {
     }
 }
 
-
-Vector2<float> Renderizable::getAbsolutePos() {
-    return this->posRelative + this->posAbsoluteSuper;
-}
-
-Vector2<float> Renderizable::getRelativePos() {
-    return this->posRelative;
-}
-
-
 void Conteiner::push(std::shared_ptr<Renderizable> item) {
     this->elements.push_back(item);
     item->posAbsoluteSuper = this->getAbsolutePos();
 }
-
 
 void Conteiner::pop() {
     auto ultimo = this->elements[this->elements.size() -1];
@@ -138,17 +117,6 @@ Conteiner::~Conteiner() {
     }
 }
 
-
-void Renderizable::setRelativePos(Vector2<float> pos) {
-    this->posRelative = pos;
-
-}
-
-void Renderizable::setRelativePos(float x, float y) {
-    this->posRelative = Vector2<float>(x,y);
-
-}
-
 void Conteiner::setRelativePos(float x, float y) {
     this->posRelative = Vector2<float>{x,y};
     updateElementsPos();
@@ -174,7 +142,6 @@ void Conteiner::backgroundColor(colors_enum c) {
     this->color = c;
 }
 
-
 bool Conteiner::mouse_left(int state) {
 
     if(state == 0 && collisions::rectangle(CV::get_mouse_pos(),
@@ -185,7 +152,6 @@ bool Conteiner::mouse_left(int state) {
 
     return false;
 }
-
 
 bool Conteiner::mouse_right(int state) {
 

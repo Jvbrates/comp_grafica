@@ -1,3 +1,17 @@
+/*
+ * A classe Button representa um botão genérico em uma interface gráfica,
+ * com suporte para diferentes estados (como pressionado, desativado, etc.) e
+ * capacidade de resposta a eventos de clique do mouse. Ela possui métodos
+ * para renderizar o botão na tela, configurar sua função de clique e estado atual,
+ * além de verificar se houve clique sobre ele.
+ *
+ * A classe CheckboxButton é uma especialização de Button para representar um botão de
+ * seleção (checkbox), com suporte para renderizar o botão de acordo com o estado de seleção.
+ *
+ * Já a classe SliderRangeButton representa um botão deslizante que permite selecionar um
+ * valor dentro de um intervalo predefinido, com métodos para atualizar o valor do botão
+ * com base no movimento do mouse e renderizar o botão na tela de acordo com o valor selecionado.
+ * */
 //
 // Created by jvbrates on 3/18/24.
 //

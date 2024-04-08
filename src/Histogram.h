@@ -1,3 +1,13 @@
+/*
+ * Histogram:
+ *A classe HistogramRender é responsável por renderizar um histograma de cores;
+ * Ela inclui métodos para desenhar o histograma com base nos dados fornecidos,
+ * como a cor do canal e um vetor de dados de histograma.
+ * O método render desenha o histograma na tela, usando diferentes cores para
+ * representar diferentes canais de cores (vermelho, verde, azul) e inclui
+ * informações como média, máximo e mínimo dos dados. O método reset é utilizado
+ * para atualizar os dados do histograma a serem renderizados.
+ * */
 //
 // Created by jvbrates on 4/1/24.
 //

@@ -1,3 +1,30 @@
+/*
+ * EventListener: Faz a administração dos eventos de teclado e mouse
+ *
+ * enum enum_event:tipo enumerate que define cada um dos evemtos possíveis
+ *
+ * std::vector<std::map<int, EventClient *>> EventMatrix: Matriz que possuí uma linha para cada evento,
+ * as colunas representam pointeiros para EventClient(explicado abaixo) associada com um ID;
+ *
+ * add_event(EventClient *client, enum_event event): Adiciona um EventClient a EventMatrix na linha de
+ * evento correspondente e define seu ID;
+ *
+ * demais funções: São callbacks das funções correspondentes do GLUT. Quando uma função destas é
+ * chamada a linha correspondente ao evento é percorrida em EventMatrix então para cada EventClient
+ * é chamada a função correspondente ao evento, estas funções são booleanas. Caso uma delas retorne
+ * true e a flag correspondente(captureEvent) também true a linha deixa de ser percorrida.
+ *
+ * captureEvent: Vetor de booleanos referente a flag acima
+ *
+ *
+ *
+ * EventClient: Usada para comunicar-se com EventListener, não é usada diretamente; Feita para ser herdada
+ * - int events_id[num_of_events]: Quando é adicionada para receber um evento de EventListener recebe um id, ao ser
+ * destruida excluí sua propria entrada na tabela de eventos (através de EventListener::removeEvent),
+ * assim evitando dinâmicamente um SEGFAULT.
+ *
+ * */
+
 //
 // Created by jvbrates on 3/14/24.
 //

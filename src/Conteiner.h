@@ -1,3 +1,34 @@
+/*
+ * Conteiner:
+ * - subclasse de EventClient e Renderizable
+ * - Agrupa e organiza instancias de Renderizable;
+ * - usa EventClient para capturar clicks e evitar que sejam passados para outros objetos posicionados atrás de si;
+ *
+ * std::vector<std::shared_ptr<Renderizable>> elements: Vetor de Pointeiros para instâncias de Renderizable;
+ *
+ * push(): Insere em elements;
+ *
+ * pop(): Remove o último item de elements;
+ *
+ * lasElement(): Retorna último item de elements;
+ *
+ * findRemove(): Busca e remove de elements;
+ *
+ * position_type: Leia composer();
+ *
+ * composer(): Organiza os itens contidos(elements) com base em position_type:
+ * - relative: Não altera o posicionamentos dos itens;
+ * - line: Altera a posição relativa para que os itens fiquem organizados lado a lado;
+ * - column: Altera a posição relativa para que os itens fiquem organizados em coluna, de cima para baixo;
+ * Ao fim altera seu size para emoldurar os itens;
+ *
+ *
+ * color: Leia render()
+ *
+ * render(): Caso visible, desenha um retângulo de cor color e do seu tamanho e posição (Usado para desenhar fundo)
+ * Chama render_caller() para cada um dos itens em elements.
+ * */
+
 //
 // Created by jvbrates on 3/27/24.
 //
@@ -8,33 +39,11 @@
 #include <vector>
 #include <memory>
 #include "EventListener.h"
+#include "Renderizable.h"
 #include "Vector2.h"
 typedef enum {relative, line, column}position_enum;
 
 
-class Renderizable {
-
-private:
-    friend void CV_render();
-    friend class Conteiner;
-
-    Vector2<float> posAbsoluteSuper = {0.,0.};
-    Vector2<float> posRelative {0., 0.};
-
-public:
-    Vector2<float> size {0.,0.};
-    int priority = 0;
-    bool visible = true;
-    virtual void render() = 0;
-    Vector2<float> getAbsolutePos();
-    Vector2<float> getRelativePos();
-    virtual void setRelativePos(Vector2<float> pos);
-    virtual void setRelativePos(float x, float y);
-
-private:
-
-    virtual void render_caller() final;
-};
 
 
 

@@ -1,3 +1,21 @@
+/*
+ * - Adicionado a estrutura colors_enum para dar nome as cores
+ *
+ * - Vector2<float> current_translate: Armazena a translação atual
+ * - void relativeTranslate(Vector2<float> t): Aplica uma translação a partir da translacao atual,
+ * isto é, current_translate += t; translate(current_translate)
+ * - Vector2<float> mouse_pos e get_mouse_pos(): posição atual do mouse e respectivo getter.
+ * - Vector2<float> mouse_displacement e get_mouse_displacement(): deslocamento atual do mouse e
+ * respectivo getter.
+ *
+ * - static std::vector<Renderizable *> render_stack: Array de ponteiros para objetos renderizaveis
+ * - CV_render():
+ * Antiga função render. Percorre o vetor render_stack e para cada objeto renderizável chama a
+ * função render_caller()
+ *
+ * - As callbacks de eventos do mouse e teclado são passadas para métodos estáticos de EventListener
+ *
+ * */
 #ifndef __CANVAS_2D__H__
 #define __CANVAS_2D__H__
 

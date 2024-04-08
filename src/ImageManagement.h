@@ -1,13 +1,16 @@
-//*********************************************************
-//
-// classe para fazer o carregamento de arquivos no formato BMP
-// Autor: Cesar Tadeu Pozzer
-//        pozzer@inf.ufsm.br
-//
-//  Referencia:  http://astronomy.swin.edu.au/~pbourke/dataformats/bmp/
-//  Versao 09/2010
-//
-//**********************************************************
+/*
+ *
+ * histogram_t: Contagem de cores de um determinado canal
+ *
+ * color_data_t: Armazena valores de cores dos pixels, só armazena informações de uma cor
+ * contém também um histogram_t
+ *
+ * ImageManagement: Adiministra imagens individualmente
+ * Quando uma imagem é decomposta em um canal de cor variante seus pixeis não são copiados,
+ * estes são acessados via ponteiros compartilhados;
+ *
+ *
+ * */
 
 #ifndef ___BMP__H___
 #define ___BMP__H___
@@ -113,7 +116,6 @@ typedef enum {
 
 class Image : public Renderizable{
 private:
-    int priority = 0;               //Não faz muito sentido isto estar aqui, mas ok
     enum_colors colors = en_rgb;
     int brightness_mod = 0;
     uint bytesPerLine = 0;

@@ -1,3 +1,12 @@
+/*
+ * A classe TextBox representa uma caixa de texto em uma interface gráfica,
+ * capaz de renderizar um texto com quebras de linha e alinhamento específico.
+ * Ela possui métodos para configurar o texto, alinhamento, cor de fundo e cor do texto,
+ * além de calcular o tamanho necessário para renderizar o texto corretamente.
+ * A classe inclui um método parseLines para separar o texto em linhas, levando em
+ * consideração as quebras de linha implícitas no texto. O método render desenha a caixa
+ * de texto na tela, alinhando o texto de acordo com a configuração especificada.
+ * */
 //
 // Created by jvbrates on 4/5/24.
 //

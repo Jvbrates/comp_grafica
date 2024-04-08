@@ -1,18 +1,48 @@
-/*********************************************************************
-// Canvas para desenho, criada sobre a API OpenGL. Nao eh necessario conhecimentos de OpenGL para usar.
-//  Autor: Cesar Tadeu Pozzer
-//         05/2024
-//
-//  Pode ser utilizada para fazer desenhos, animacoes, e jogos simples.
-//  Tem tratamento de mouse e teclado
-//  Estude o OpenGL antes de tentar compreender o arquivo gl_canvas.cpp
-//
-//  Versao 2.0
-//
-//  Instru��es:
-//	  Para alterar a animacao, digite numeros entre 1 e 3
-// *********************************************************************/
-
+/*
+ * Funcionalidades Implementadas:
+ *  - Selecionar Imagens: Click com botão esquerdo do mouse
+ *  - Arrastar Imagens: Mover mouse com botão esquerdo pressionado
+ *  - Rotacionar Imagens: Mover mouse com botão direito pressionado
+ *  - Gerar nova em imagem com canal de cores decomposto:
+ *      No menu a direita clicar em um dos botões abaixo do título "Canais de Cores"
+ *      R: Gerar imagem vermelho
+ *      G: Gerar imagem verde
+ *      B: Gerar imagem azul
+ *      L: Gerar imagem em tons de luminância(ao longo do código foi usado a palavra
+ *      grayscale)
+ *  - Alterar brilho: Modifica a imagem selecionada ao interagir com o slider abaixo
+ *  do título "Brilho:"
+ *  - Visualizar histogramas: Interação com os checkbox na seção Histogramas
+ *  - Espelhamento: Interação com os checkbox na seção Espelhamento
+ *  - Mover "Câmera": Todas as imagens podem ser movidas conjuntamente pressionando
+ *  as setas do teclado.
+ *
+ *
+ *  Como requerido todo arquivo header possuí uma descrição, para um melhor
+ *  entendimento do código sugere-se que sejam lidos na seguinte ordem
+ *
+ *  - gl_canvas2d.h (Descrito as modificações)
+ *  - EventListener.h
+ *  - collisions.h
+ *  - Renderizable.h
+ *  - Conteiner.h
+ *  - ImageManagement.h
+ *  - ImageSelector.h
+ *  - Histogram.h
+ *  - Button.h
+ *  - TextBox.h
+ *
+ *  main.cpp
+ *  - Instancia a classe que possuí as imagens (ImageSelector)
+ *  - Cria o Menu e seus botões e define sua organização(posicionamento);
+ *  - Cria os Histogramas e define sua organização
+ *  - Confere interação com usuário e comunicação entre as partes
+ *  Menu->Imagens, Menu->Histogramas;
+ *
+ *  A função render foi renomeada para CV_render a fim de evitar a colisão
+ *  de nomes, ela será descrita em gl_canvas2d.h;
+ *
+ * */
 
 #include "gl_canvas2d.h"
 #include "EventListener.h"
@@ -35,8 +65,6 @@ void CV_render()
         CV::color(black);
         item->render_caller();
     }
-
-
 }
 
 
@@ -65,9 +93,7 @@ int main()
 
 
 
-    //DECOMPOSICAO DE CANAL
-
-    // 0 - Titulos
+    // 0 - Titulos (TextBox)
 
     auto decomposicao_text =std::make_shared<TextBox>("Canais de Cores", center_center,
                                                       Vector2<float>{0.,0.}, Vector2<float>{200., 2*PXL_STR_H});
@@ -79,12 +105,12 @@ int main()
     brigthness_text->setBackground(black);
     brigthness_text->setTextColor(green);
 
-    auto hisogram_text =std::make_shared<TextBox>("Histogramas", center_center,
+    auto hisogram_text =std::make_shared<TextBox>("Histogramas:", center_center,
                                                       Vector2<float>{0.,0.}, Vector2<float>{200., 2*PXL_STR_H});
     hisogram_text->setBackground(black);
     hisogram_text->setTextColor(green);
 
-    auto flip_text =std::make_shared<TextBox>("Espelhamento ", center_center,
+    auto flip_text =std::make_shared<TextBox>("Espelhamento:", center_center,
                                                   Vector2<float>{0.,0.}, Vector2<float>{200., 2*PXL_STR_H});
     flip_text->setBackground(black);
     flip_text->setTextColor(green);
@@ -111,6 +137,7 @@ int main()
 
 
     // Botoes Canais de Cores
+
     // 1.1 - Instancia os Botões
     auto dec_R = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},black, red, "R"});
     auto dec_G = std::make_shared<Button>((states_t){{10.,0},{50.,50},{10.,45},black,green,"G"});
@@ -238,7 +265,7 @@ int main()
     std::shared_ptr<CheckboxButton> btn_hist_blue = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "B:");
     std::shared_ptr<CheckboxButton> btn_hist_gray = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "L:");
 
-    // 2.3 Definição da acção dos checkbox
+    // 2.3 Definição da ação dos checkbox
     btn_hist_red->onclick([&histRed, &btn_hist_red](void * a){
         if(btn_hist_red->getState() == 1){
             histRed->visible = true;
@@ -309,7 +336,8 @@ int main()
     conteiner_check_hist->composer();
 
 
-    // Espelhamento
+    // Espelhamento ou Flip
+
     //3.0 Criando botoes Checkbox
     std::shared_ptr<CheckboxButton> flip_vertical_check = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "Vertical:  ");
     std::shared_ptr<CheckboxButton> flip_horizontal_check = std::make_shared<CheckboxButton>(20., Vector2<float>{20.,200.}, "Horizontal:");
@@ -387,12 +415,11 @@ int main()
     Menu.composer();
     Menu.visible = true;
 
-    dbg dbg_instance = dbg(&Mng);
 
-    CV::render_stack.push_back(&(Mng.images));
-    CV::render_stack.push_back(&Menu);
-    CV::render_stack.push_back(&conteiner_hist);
-    CV::render_stack.push_back(&dbg_instance);
+    //Adicionando objetos a serem renderizaveis
+    CV::render_stack.push_back(&(Mng.images)); // <-- Imagens
+    CV::render_stack.push_back(&Menu);         // <-- Menu
+    CV::render_stack.push_back(&conteiner_hist);//<-- Histogramas
 
 
     //Evitar clicks atrás do menu
@@ -407,11 +434,13 @@ int main()
 
 
     //Permitir a captura de eventos por um EventClient
+    //Também usado para evitar clicks atrás do menu
     EventListener::captureEvent[en_mouse_left] = true;
 
+
+    //INIT
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
-
 
 
 }
