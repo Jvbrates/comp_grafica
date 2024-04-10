@@ -95,7 +95,7 @@ void EventListener::mouse_left(int state) {
     }
 }
 
-void EventListener::mouse_move(Vector2<float> pos, Vector2<float> disp) {
+void EventListener::mouse_move(Vector2  pos, Vector2  disp) {
     for (const  auto item: EventListener::EventMatrix[en_mouse_move]){
         bool stop = item.second->mouse_move(pos, disp);
 

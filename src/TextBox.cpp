@@ -5,7 +5,7 @@
 #include "TextBox.h"
 #include <sstream>
 
-TextBox::TextBox(std::string text, text_align_t align, Vector2<float> pos, Vector2<float> size){
+TextBox::TextBox(std::string text, text_align_t align, Vector2  pos, Vector2  size){
     parseLines(text);
     this->align = align;
     this->size  = size;
@@ -13,7 +13,7 @@ TextBox::TextBox(std::string text, text_align_t align, Vector2<float> pos, Vecto
 
 }
 
-TextBox::TextBox(std::string text, text_align_t align, Vector2<float> pos){
+TextBox::TextBox(std::string text, text_align_t align, Vector2  pos){
     parseLines(text);
     this->align = align;
     this->setRelativePos(pos);

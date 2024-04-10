@@ -49,9 +49,9 @@ void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
 
 
-Vector2<float> CV::mouse_pos {0,0};   // Jeito legal de declarar variável
-Vector2<float> CV::mouse_displacement {0,0};
-Vector2<float> CV::current_translate {0,0};
+Vector2  CV::mouse_pos {0,0};   // Jeito legal de declarar variável
+Vector2  CV::mouse_displacement {0,0};
+Vector2  CV::current_translate {0,0};
 
 
 void CV::point(float x, float y)
@@ -61,7 +61,7 @@ void CV::point(float x, float y)
    glEnd();
 }
 
-void CV::point(Vector2<float> p)
+void CV::point(Vector2  p)
 {
    glBegin(GL_POINTS);
       glVertex2d(p.x, p.y);
@@ -77,7 +77,7 @@ void CV::line( float x1, float y1, float x2, float y2 )
 }
 
 
-void CV::line(Vector2<float> p1, Vector2<float> p2) {
+void CV::line(Vector2  p1, Vector2  p2) {
     glBegin(GL_LINES);
     glVertex2d(p1.x, p1.y);
     glVertex2d(p2.x, p2.y);
@@ -103,7 +103,7 @@ void CV::rectFill( float x1, float y1, float x2, float y2 )
       glVertex2d(x2, y1);
    glEnd();
 }
-void CV::rectFill( Vector2<float> p1, Vector2<float> p2 )
+void CV::rectFill( Vector2  p1, Vector2  p2 )
 {
    glBegin(GL_QUADS);
       glVertex2d(p1.x, p1.y);
@@ -113,7 +113,7 @@ void CV::rectFill( Vector2<float> p1, Vector2<float> p2 )
    glEnd();
 }
 
-void CV::rectFill(Vector2<float> p2 )
+void CV::rectFill(Vector2  p2 )
 {
     glBegin(GL_QUADS);
     glVertex2d(0, 0);
@@ -147,7 +147,7 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 }
 
 
-void CV::polygonFill(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges)
+void CV::polygonFill(std::vector<std::tuple<Vector2 , Vector2 >> edges)
 {
     glBegin(GL_POLYGON);
     for (const auto &item: edges)
@@ -159,7 +159,7 @@ void CV::polygonFill(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edg
 }
 
 
-void CV::polygon(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges)
+void CV::polygon(std::vector<std::tuple<Vector2 , Vector2 >> edges)
 {
     glBegin(GL_LINE_LOOP);
     for (const auto &item: edges)
@@ -188,7 +188,7 @@ void CV::text(float x, float y, const char *t)
     }
 }
 
-void CV::text(Vector2<float> pos, const char *t)
+void CV::text(Vector2  pos, const char *t)
 {
     int tam = (int)strlen(t);
     for(int c=0; c < tam; c++)
@@ -218,7 +218,7 @@ void CV::circle( float x, float y, float radius, int div )
    glEnd();
 }
 
-void CV::circle( Vector2<float> pos, float radius, int div )
+void CV::circle( Vector2  pos, float radius, int div )
 {
     float ang = 0, x1, y1;
     float inc = PI_2/div;
@@ -249,7 +249,7 @@ void CV::circleFill( float x, float y, float radius, int div )
     glEnd();
 }
 
-void CV::circleFill( Vector2<float> pos, float radius, int div )
+void CV::circleFill( Vector2  pos, float radius, int div )
 {
    float ang = 0, x1, y1;
    float inc = PI_2/div;
@@ -278,13 +278,13 @@ void CV::translate(float offsetX, float offsetY)
 
 void CV::relative_translate(float x_, float y_) {
     //TODO criar overload para +=
-    current_translate = current_translate + Vector2<float>{x_,y_};
+    current_translate = current_translate + Vector2 {x_,y_};
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslated(current_translate.x, current_translate.y, 0);
 }
 
-void CV::translate(Vector2<float> offset)
+void CV::translate(Vector2  offset)
 {
    current_translate = offset;
    glMatrixMode(GL_MODELVIEW);
@@ -292,7 +292,7 @@ void CV::translate(Vector2<float> offset)
    glTranslated(offset.x, offset.y, 0);
 }
 
-void CV::relative_translate(Vector2<float> move){
+void CV::relative_translate(Vector2  move){
     current_translate = current_translate + move;
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -371,9 +371,9 @@ void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, i
    //nao faz nada.
 #endif
 
-    CV::mouse_displacement = Vector2<float>(x,y) - CV::mouse_pos;
-    CV::mouse_pos = Vector2<float>(x,y);
-    CV::current_translate = Vector2<float>{0., 0.};
+    CV::mouse_displacement = Vector2 (x,y) - CV::mouse_pos;
+    CV::mouse_pos = Vector2 (x,y);
+    CV::current_translate = Vector2 {0., 0.};
 
     mouse(button, state, wheel, direction, x, y);
 }
@@ -423,11 +423,11 @@ void display (void)
 }
 
 
-Vector2<float> CV::get_mouse_pos() {
+Vector2  CV::get_mouse_pos() {
     return CV::mouse_pos;
 }
 
-Vector2<float> CV::get_mouse_displacement() {
+Vector2  CV::get_mouse_displacement() {
     return CV::mouse_displacement;
 }
 
@@ -508,7 +508,7 @@ void CV::run()
    glutMainLoop();
 }
 
-void CV::text(Vector2<float> pos, std::string valor) {
+void CV::text(Vector2  pos, std::string valor) {
     int tam = valor.size();
     for(int c=0; c < tam; c++)
     {
@@ -517,7 +517,7 @@ void CV::text(Vector2<float> pos, std::string valor) {
     }
 }
 
-void CV::rect(Vector2<float> p1, Vector2<float> p2) {
+void CV::rect(Vector2  p1, Vector2  p2) {
 
     float x1 = p1.x, x2 = p2.x, y1 = p1.y, y2 = p2.y;
     glBegin(GL_LINE_LOOP);

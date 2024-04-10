@@ -118,7 +118,7 @@ Conteiner::~Conteiner() {
 }
 
 void Conteiner::setRelativePos(float x, float y) {
-    this->posRelative = Vector2<float>{x,y};
+    this->posRelative = Vector2 {x,y};
     updateElementsPos();
 }
 
@@ -133,7 +133,7 @@ void Conteiner::updateElementsPos(){
     }
 }
 
-void Conteiner::setRelativePos(Vector2<float> pos) {
+void Conteiner::setRelativePos(Vector2  pos) {
     this->posRelative = pos;
     updateElementsPos();
 }

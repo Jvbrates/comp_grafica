@@ -140,7 +140,7 @@ public:
     uint getBytesPerLyne();
     int getPriority();
     void setPriority(int prio_);
-    Vector2<float> rotate_diff;
+    Vector2  rotate_diff;
 
     explicit Image(Bmp src);
     explicit Image(std::string path);

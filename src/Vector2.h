@@ -6,25 +6,62 @@
 
 typedef unsigned int uint;
 
-template< typename numeric>
 class Vector2
 {
 public:
-   numeric x, y;
+   float x, y;
 
    Vector2()
    {
       x = y = 0;
    }
 
-   Vector2(numeric _x, numeric _y)
+   Vector2(float _x, float _y)
     {
         x = _x;
         y = _y;
     }
 
+    explicit Vector2(std::tuple<float, float> vec){
+       this->x = std::get<0>(vec);
+       this->y = std::get<1>(vec);
+   }
 
-   void set(numeric _x, numeric _y)
+    static std::tuple<float, float>polar(float ray, double ang){
+        std::tuple<float, float> ret = std::tuple<float, float>();
+        std::get<0>(ret) = ray* cos(ang);
+        std::get<1>(ret) = ray* sin(ang);
+
+        return ret;
+   }
+
+    std::tuple<float, double> getPolar(){
+       auto ray = std::sqrt(x*x+y*y);
+       double ang = std::acos(x/ray);
+        return {ray, ang};
+   }
+
+   std::tuple<float, float> getCartesian(){
+       return {x, y};
+   }
+
+   void setAngle(double ang){
+       auto ray = std::sqrt(x*x+y*y);
+
+       this->x = ray*cos(ang);
+       this->y = ray*sin(ang);
+
+   }
+
+   void setRay(float ray){
+       double ang = std::acos(x/ray);
+
+       this->x = ray*cos(ang);
+       this->y = ray*sin(ang);
+
+   }
+
+   void set(float _x, float _y)
    {
        x = _x;
        y = _y;
@@ -32,7 +69,7 @@ public:
 
    void normalize()
    {
-       auto norm = (numeric)sqrt(x*x + y*y);
+       auto norm = (float)sqrt(x*x + y*y);
 
        if(norm==0.0)
        {
@@ -47,18 +84,18 @@ public:
    }
 
    float nomr(){
-       return (numeric)sqrt(x*x + y*y);
+       return (float)sqrt(x*x + y*y);
    }
 
    Vector2 operator - (const Vector2& v)
    {
-        Vector2 aux( x - (numeric)v.x, y - (numeric)v.y);
+        Vector2 aux( x - (float)v.x, y - (float)v.y);
         return( aux );
    }
 
    Vector2 operator + (const Vector2& v)
    {
-       Vector2 aux( x + (numeric)v.x, y + (numeric)v.y);
+       Vector2 aux( x + (float)v.x, y + (float)v.y);
        return( aux );
    }
 
@@ -91,9 +128,9 @@ public:
 
     //Adicionem os demais overloads de operadores aqui.
 
-   static numeric distance(Vector2 a, Vector2 b){
-       numeric x = a.x - b.x;
-       numeric y = a.y - b.y;
+   static float distance(Vector2 a, Vector2 b){
+       float x = a.x - b.x;
+       float y = a.y - b.y;
 
        return sqrt(x*x+y*y);
    }
