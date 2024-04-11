@@ -34,15 +34,15 @@ protected:
     std::vector<std::string> text;
     float whithText;
     text_align_t align;
-    Vector2<float> textPos = {0.,0.};
+    Vector2  textPos = {0.,0.};
     void parseLines(std::string string);
     colors_enum color = n_of_colors;
     colors_enum textColor = black;
     void render() override;
 
 public:
-    TextBox(std::string text, text_align_t align, Vector2<float> pos, Vector2<float> size);
-    TextBox(std::string text, text_align_t, Vector2<float> pos);
+    TextBox(std::string text, text_align_t align, Vector2  pos, Vector2  size);
+    TextBox(std::string text, text_align_t, Vector2  pos);
     void resize();
     void setBackground(colors_enum color);
     void setTextColor(colors_enum color);

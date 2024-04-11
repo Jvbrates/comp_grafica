@@ -1,11 +1,11 @@
 /*
  * - Adicionado a estrutura colors_enum para dar nome as cores
  *
- * - Vector2<float> current_translate: Armazena a translação atual
- * - void relativeTranslate(Vector2<float> t): Aplica uma translação a partir da translacao atual,
+ * - Vector2  current_translate: Armazena a translação atual
+ * - void relativeTranslate(Vector2  t): Aplica uma translação a partir da translacao atual,
  * isto é, current_translate += t; translate(current_translate)
- * - Vector2<float> mouse_pos e get_mouse_pos(): posição atual do mouse e respectivo getter.
- * - Vector2<float> mouse_displacement e get_mouse_displacement(): deslocamento atual do mouse e
+ * - Vector2  mouse_pos e get_mouse_pos(): posição atual do mouse e respectivo getter.
+ * - Vector2  mouse_displacement e get_mouse_displacement(): deslocamento atual do mouse e
  * respectivo getter.
  *
  * - static std::vector<Renderizable *> render_stack: Array de ponteiros para objetos renderizaveis
@@ -68,37 +68,36 @@ class CV //classe Canvas2D
 public:
     static std::vector<Renderizable *> render_stack;
     //Posições do Mouse
-    static Vector2<float> get_mouse_pos();
-    static Vector2<float> get_mouse_displacement();
+    static Vector2  get_mouse_pos();
+    static Vector2  get_mouse_displacement();
 
     //funcoes para desenho de ponto e linha
     static void point(float x, float y); //coordeandas do ponto
-    static void point(Vector2<float> pos); //coordeandas do ponto
+    static void point(Vector2  pos); //coordeandas do ponto
 
     static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
-    static void line(Vector2<int> p1, Vector2<float> p2 ); //coordenadas da linha (p1, p2)
-    static void line(Vector2<float> p1, Vector2<float> p2 ); //coordenadas da linha (p1, p2)
+    static void line(Vector2  p1, Vector2  p2 ); //coordenadas da linha (p1, p2)
 
 
     //desenha um retangulo alinhado nos eixos x e y
     static void rect( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
-    static void rect( Vector2<float> p1, Vector2<float> p2 ); //coordenadas do retangulo (p1, p2) - TO DO
+    static void rect( Vector2  p1, Vector2  p2 ); //coordenadas do retangulo (p1, p2) - TO DO
 
     static void rectFill( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
-    static void rectFill( Vector2<float> p1, Vector2<float> p2 ); //coordenadas do retangulo (p1, p2)
-    static void rectFill( Vector2<float> p1); //coordenadas do retangulo (p1, p2)
+    static void rectFill( Vector2  p1, Vector2  p2 ); //coordenadas do retangulo (p1, p2)
+    static void rectFill( Vector2  p1); //coordenadas do retangulo (p1, p2)
 
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(float vx[], float vy[], int n_elems);
-    static void polygon(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges);
+    static void polygon(std::vector<std::tuple<Vector2 , Vector2 >> edges);
     static void polygonFill(float vx[], float vy[], int n_elems);
-    static void polygonFill(std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges);
+    static void polygonFill(std::vector<std::tuple<Vector2 , Vector2 >> edges);
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div );
-    static void circle( Vector2<float> pos, float radius, int div );
+    static void circle( Vector2  pos, float radius, int div );
 
     static void circleFill( float x, float y, float radius, int div );
-    static void circleFill( Vector2<float> pos, float radius, int div );
+    static void circleFill( Vector2  pos, float radius, int div );
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);
@@ -110,19 +109,19 @@ public:
 
     //desenha texto na coordenada (x,y)
     static void text(float x, float y, const char *t);
-    static void text(Vector2<float> pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2<float> pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2<float> pos, float valor);    //varias funcoes 
-    static void text(Vector2<float> pos, std::string valor);    //varias funcoes
+    static void text(Vector2  pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
+    static void text(Vector2  pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
+    static void text(Vector2  pos, float valor);    //varias funcoes
+    static void text(Vector2  pos, std::string valor);    //varias funcoes
     // ainda nao tem implementacao. Faca como exercicio
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);
-    static void translate(Vector2 <float>pos);
+    static void translate(Vector2 pos);
     static void relative_translate(float x, float y);
 
 
-    static void relative_translate(Vector2 <float>pos);
+    static void relative_translate(Vector2 pos);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
     static void init(int w, int h, const char *title);
@@ -131,9 +130,9 @@ public:
     static void run();
 
 private:
-    static Vector2<float> current_translate;
-    static Vector2 <float>mouse_pos;
-    static Vector2 <float>mouse_displacement;
+    static Vector2  current_translate;
+    static Vector2 mouse_pos;
+    static Vector2 mouse_displacement;
 };
 
 void CV_render();

@@ -8,7 +8,7 @@
 
 
 
-void ImageSelector::loadImage(std::string path, Vector2<float> position) {
+void ImageSelector::loadImage(std::string path, Vector2  position) {
 
     //auto Img = Image(path);
 
@@ -27,7 +27,7 @@ void ImageSelector::loadImage(std::string path, Vector2<float> position) {
 
 }
 
-void ImageSelector::loadImage(Image Img, enum_colors channel, Vector2<float> position) {
+void ImageSelector::loadImage(Image Img, enum_colors channel, Vector2  position) {
 
 
     auto Img_cpy = std::make_shared<Image>(Img, channel);
@@ -92,14 +92,14 @@ bool ImageSelector::mouse_left(int state){
             // Mesmos pontos rotacionados:
 
 
-            collisions::rotate<float>({0.,0.}, 50);
-            auto rot_x1_y1 = collisions::rotate<float>({x1,y1}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
-            auto rot_x2_y2 = collisions::rotate<float>({x2,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
-            auto rot_x1_y2 = collisions::rotate<float>({x1,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
-            auto rot_x2_y1 = collisions::rotate<float>({x2,y1}, item->getRotation())+ item->rotate_diff + item->getRelativePos() + images.getRelativePos();
+            collisions::rotate({0.,0.}, 50);
+            auto rot_x1_y1 = collisions::rotate({x1,y1}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
+            auto rot_x2_y2 = collisions::rotate({x2,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
+            auto rot_x1_y2 = collisions::rotate({x1,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos() + images.getRelativePos();
+            auto rot_x2_y1 = collisions::rotate({x2,y1}, item->getRotation())+ item->rotate_diff + item->getRelativePos() + images.getRelativePos();
 
 
-            std::vector<std::tuple<Vector2<float>, Vector2<float>>> edges =
+            std::vector<std::tuple<Vector2 , Vector2 >> edges =
                     {{rot_x1_y1,rot_x2_y1},
                      {rot_x2_y1,rot_x2_y2},
                      {rot_x2_y2,rot_x1_y2},
@@ -109,7 +109,7 @@ bool ImageSelector::mouse_left(int state){
 
 
 
-            auto result = collisions::polygon<float>(Vector2<float>{
+            auto result = collisions::polygon(Vector2 {
                                                             static_cast<float>(CV::get_mouse_pos().x),
                                                             static_cast<float>(CV::get_mouse_pos().y)},
                                                     edges);
@@ -140,7 +140,7 @@ bool ImageSelector::mouse_right(int state) {
     } else {
         mouse_right_press = true;
         auto selected = getSelected();
-        auto middle= getSelected()->getAbsolutePos() + Vector2<float>{static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2;
+        auto middle= getSelected()->getAbsolutePos() + Vector2 {static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2;
 
         vec_mouse_rigth_click = CV::get_mouse_pos() - middle;
         save_rotate = getSelected()->getRotation();
@@ -181,10 +181,10 @@ void ImageSelector::updateQuadri(){
         auto y2 = item->getHeight() + y1 + 30;
 
         // Mesmos pontos rotacionados:
-        auto rot_x1_y1 = collisions::rotate<float>({x1,y1}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
-        auto rot_x2_y2 = collisions::rotate<float>({x2,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
-        auto rot_x1_y2 = collisions::rotate<float>({x1,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
-        auto rot_x2_y1 = collisions::rotate<float>({x2,y1}, item->getRotation())+ item->rotate_diff + item->getRelativePos();
+        auto rot_x1_y1 = collisions::rotate({x1,y1}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
+        auto rot_x2_y2 = collisions::rotate({x2,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
+        auto rot_x1_y2 = collisions::rotate({x1,y2}, item->getRotation()) + item->rotate_diff + item->getRelativePos();
+        auto rot_x2_y1 = collisions::rotate({x2,y1}, item->getRotation())+ item->rotate_diff + item->getRelativePos();
 
 
         quadri->p1 = rot_x1_y1;
@@ -222,7 +222,7 @@ ImageSelector::ImageSelector(std::function<void(std::shared_ptr<Image>)> callbac
 }
 
 
-bool ImageSelector::mouse_move(Vector2<float> pos, Vector2<float> desloc) {
+bool ImageSelector::mouse_move(Vector2  pos, Vector2  desloc) {
     updateQuadri();
 
     if(mouse_left_press && !mouse_right_press){
@@ -234,7 +234,7 @@ bool ImageSelector::mouse_move(Vector2<float> pos, Vector2<float> desloc) {
     if(mouse_right_press){
         auto selected = getSelected();
 
-        auto middle= selected->getAbsolutePos() + Vector2<float>{static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2;
+        auto middle= selected->getAbsolutePos() + Vector2 {static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2;
 
         auto vec_mouse_image = (CV::get_mouse_pos() - middle);
         vec_mouse_image.normalize();
@@ -309,7 +309,7 @@ void ImageSelector::setCallback(std::function<void(std::shared_ptr<Image>)> func
 void dbg::render() {
     auto selected = img->getSelected();
 
-    auto middle= selected->getAbsolutePos() + Vector2<float>{static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2.f;
+    auto middle= selected->getAbsolutePos() + Vector2 {static_cast<float>(selected->getWidth()), static_cast<float>(selected->getHeight())}/2.f;
 
     auto vec_mouse_image = (CV::get_mouse_pos() - middle);
     vec_mouse_image.normalize();

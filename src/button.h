@@ -25,7 +25,7 @@
 #include "string"
 
 typedef struct states{
-    Vector2<float> position, size, text_offset; // FIXME text offset não é util
+    Vector2  position, size, text_offset; // FIXME text offset não é util
     colors_enum fill_color = gray, text_color = black;
     std::string texto;
 } states_t;
@@ -65,7 +65,7 @@ protected:
     void render() override;
 
 public:
-    CheckboxButton(float size, Vector2<float>pos, std::string label);
+    CheckboxButton(float size, Vector2 pos, std::string label);
 };
 
 class SliderRangeButton: public Button {
@@ -88,7 +88,7 @@ private:
 protected:
     bool mouse_left_hold = false;
     bool mouse_left(int) override;
-    bool mouse_move(Vector2<float>,Vector2<float>) override;
+    bool mouse_move(Vector2 ,Vector2 ) override;
     void updateValue();
 public:
     static float CIRCLE_WIDTH;

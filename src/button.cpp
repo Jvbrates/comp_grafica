@@ -64,7 +64,7 @@ bool Button::callWraper() {
 
 bool Button::mouse_left(int i) {
 
-    if (collisions::rectangle<float>(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
+    if (collisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         return callWraper();
     }
     return false;
@@ -74,7 +74,7 @@ bool Button::mouse_left(int i) {
 Button::Button() {}
 
 //FIXME porque este initialize nao funciona?
-CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label) : Button() {
+CheckboxButton::CheckboxButton(float size, Vector2  pos, std::string label) : Button() {
     this->setRelativePos(pos);
 
     EventListener::add_event(this, en_mouse_left);
@@ -82,8 +82,8 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
     //states_t s1 = {pos, {size, size}, {label.length()*PXL_STR, size}, black, green,label};
     states_t s1;
     s1.position = pos;
-    s1.size = Vector2<float>{size,size};
-    s1.text_offset = Vector2<float>{label.length()*PXL_STR, size};
+    s1.size = Vector2 {size,size};
+    s1.text_offset = Vector2 {label.length()*PXL_STR, size};
     s1.fill_color = black;
     s1.text_color = green;
     s1.texto = label;
@@ -92,8 +92,8 @@ CheckboxButton::CheckboxButton(float size, Vector2<float> pos, std::string label
     //states_t s2 = {pos, {size, size}, {label.length()*PXL_STR, size}, green, green,label};
     states_t s2;
     s2.position = pos;
-    s2.size = Vector2<float>{size,size};
-    s2.text_offset = Vector2<float>{label.length()*PXL_STR, size};
+    s2.size = Vector2 {size,size};
+    s2.text_offset = Vector2 {label.length()*PXL_STR, size};
     s2.fill_color = green;
     s2.text_color = green;
     s2.texto = label;
@@ -125,7 +125,7 @@ void CheckboxButton::render() {
 
 
 bool CheckboxButton::mouse_left(int i) {
-    if (collisions::rectangle<float>(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
+    if (collisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         setState(!getState());
         std::cout << "State" << this->state << std::endl;
 
@@ -181,9 +181,9 @@ void SliderRangeButton::render() {
 
 bool SliderRangeButton::mouse_left(int state) {
     if (!state &&
-        collisions::rectangle<float>(CV::get_mouse_pos(), //Posição do mouse
-                        this->getAbsolutePos() + Vector2<float>{CIRCLE_WIDTH / 2.f, 0.}, // Posições do slider
-                        this->getAbsolutePos() + this->size - Vector2<float>{CIRCLE_WIDTH / 2.f, 0.})
+        collisions::rectangle(CV::get_mouse_pos(), //Posição do mouse
+                        this->getAbsolutePos() + Vector2 {CIRCLE_WIDTH / 2.f, 0.}, // Posições do slider
+                        this->getAbsolutePos() + this->size - Vector2 {CIRCLE_WIDTH / 2.f, 0.})
         )
     {
         this->mouse_left_hold = true;
@@ -221,7 +221,7 @@ void SliderRangeButton::updateValue() {
     callWraper();
 }
 
-bool SliderRangeButton::mouse_move(Vector2<float> pos, Vector2<float> desloc) {
+bool SliderRangeButton::mouse_move(Vector2  pos, Vector2  desloc) {
     if(mouse_left_hold){
         updateValue();
         return true;

@@ -26,7 +26,7 @@
 class Quadrilatero : public Renderizable{
 public:
     colors_enum color = yellow;
-    Vector2<float> p1 = {0., 0.},
+    Vector2  p1 = {0., 0.},
             p2 = {0., 0.},
             p3 = {0., 0.},
             p4 = {0., 0.};
@@ -62,7 +62,7 @@ private:
     uint posImages = -1;
     bool mouse_left_press = false;
     bool mouse_right_press = false;
-    Vector2<float> vec_mouse_rigth_click = {0.,0.};
+    Vector2  vec_mouse_rigth_click = {0.,0.};
     float save_rotate;
 
     std::shared_ptr<Quadrilatero> quadri;
@@ -79,13 +79,13 @@ public:
     void setCallback(std::function<void(std::shared_ptr<Image>)> function);
     void select();
 
-    void loadImage(Image Img, enum_colors channel, Vector2<float> position);
-    void loadImage(std::string path, Vector2<float> position);
+    void loadImage(Image Img, enum_colors channel, Vector2  position);
+    void loadImage(std::string path, Vector2  position);
 
     void render() override;
     bool mouse_left(int state) override;
     bool mouse_right(int state) override;
-    bool mouse_move(Vector2<float> pos, Vector2<float> desloc) override;
+    bool mouse_move(Vector2  pos, Vector2  desloc) override;
     bool key_press(int) override;
     void updateQuadri();
 

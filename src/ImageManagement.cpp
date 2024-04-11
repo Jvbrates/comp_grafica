@@ -240,13 +240,8 @@ void Image::setColor(enum_colors colors_) {
     this->colors = colors_;
 }
 
-template<class T>
-Vector2<T> rotate(Vector2<T> pos, double rot){
-    return Vector2<T>{
-            static_cast<T>(pos.x * cos(rot) - pos.y * sin(rot)),
-            static_cast<T>(pos.x* sin(rot) + pos.y * cos(rot))};
-}
-
+#include "collisions.h"
+using namespace collisions;
 
 void Image::render() {
 
@@ -331,7 +326,7 @@ void Image::render() {
 
 
             if(rotation) {
-                auto pixel_rot = rotate(Vector2<float>(x, y), this->rotation);
+                auto pixel_rot = rotate(Vector2 (x, y), this->rotation);
 
                 CV::rectFill(pixel_rot.x, pixel_rot.y,pixel_rot.x+1, pixel_rot.y+1);
             } else {
@@ -351,7 +346,7 @@ void Image::render() {
 
 void Image::setRotation(float rads) {
     this->rotation = rads;
-    Vector2<float> pontoCentral(width/2.f, height/2.f);
+    Vector2  pontoCentral(width/2.f, height/2.f);
     //TODO: Troque por relative translate
     auto pontoCentral_r = rotate(pontoCentral, this->rotation);
     rotate_diff =  pontoCentral - pontoCentral_r;

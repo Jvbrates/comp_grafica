@@ -61,7 +61,7 @@ public:
     void pop();
     std::shared_ptr<Renderizable> lastElement();
     void updateElementsPos();
-    void setRelativePos(Vector2<float> pos) override;
+    void setRelativePos(Vector2  pos) override;
     void setRelativePos(float x, float y) override;
     ~Conteiner();
 
