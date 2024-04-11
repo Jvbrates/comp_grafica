@@ -61,6 +61,16 @@ public:
 
    }
 
+   float getRay(){
+       return std::sqrt(x*x+y*y);
+
+   }
+
+   double  getAngle(){
+       auto ray = std::sqrt(x*x+y*y);
+       return std::acos(x/ray);
+   }
+
    void set(float _x, float _y)
    {
        x = _x;
@@ -136,5 +146,6 @@ public:
    }
 
 };
+
 
 #endif
