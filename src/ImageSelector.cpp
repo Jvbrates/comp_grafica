@@ -241,7 +241,7 @@ bool ImageSelector::mouse_move(Vector2  pos, Vector2  desloc) {
         vec_mouse_rigth_click.normalize();
 
         auto cosseno = (vec_mouse_image^vec_mouse_rigth_click)/(
-                vec_mouse_image.nomr()*vec_mouse_rigth_click.nomr()
+                vec_mouse_image.norma()*vec_mouse_rigth_click.norma()
                 );
 
 
