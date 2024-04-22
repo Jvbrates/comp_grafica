@@ -527,3 +527,11 @@ void CV::rect(Vector2  p1, Vector2  p2) {
     glVertex2d(x2, y1);
     glEnd();
 }
+
+Vector2 CV::getMouseRelative() {
+    return CV::mouse_pos - CV::current_translate;
+}
+
+Vector2 CV::getTranslate() {
+    return current_translate;
+}

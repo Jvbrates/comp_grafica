@@ -6,6 +6,8 @@
 
 typedef unsigned int uint;
 
+
+
 class Vector2 {
 public:
     float x, y;
@@ -74,8 +76,22 @@ public:
     // Retorna o angulo
     double getAngle() {
         auto ray = std::sqrt(x * x + y * y);
-        return std::acos(x / ray);
+        auto angle =  std::acos(x / ray);
+
+        if(y <= 0) return angle;
+        else return (2*M_PI)-angle;
+
     }
+
+    //Angulo em relação ao vetor argumento
+    double getAngle(Vector2 vec) {
+
+        auto angle = Vector2::angle(*this, vec);
+
+        return angle;
+
+    }
+
 
     // Define x e y
     void set(float _x, float _y) {
@@ -129,6 +145,11 @@ public:
         return (aux);
     }
 
+    Vector2 operator*(const float &i) {
+        Vector2 aux(x * i, y * i);
+        return (aux);
+    }
+
     //Divisao escalar
     Vector2 operator/(const float &i) {
         Vector2 aux(x / i, y / i);
@@ -160,7 +181,7 @@ public:
     }
 
 
-    //Adicionem os demais overloads de operadores aqui.
+    //Funcoes estaticas
 
     static float distance(Vector2 a, Vector2 b) {
         float x = a.x - b.x;
@@ -173,10 +194,63 @@ public:
         a.normalize();
         b.normalize();
         auto p_intern = a ^ b;
-        return acos(p_intern);
+
+        auto angle = (float)acos(p_intern);
+
+        if(a.x*b.y < a.y*b.x) {
+            angle = angle;
+        } else {
+            angle = angle*-1;
+        }
+        
+        
+        
+        return angle;
+    }
+
+    static Vector2 projection(Vector2 a, Vector2 b){
+        auto dot_ab = a^b;
+        auto dot_bb = b^b;
+
+        auto projection = b*(dot_ab/dot_bb);
+
+        return projection;
+    }
+
+
+    Vector2 projection(Vector2 b){
+        return Vector2::projection(*this, b);
+    }
+
+
+
+    static Vector2 reflex(Vector2 a, Vector2 b){
+        auto proj_ab = a.projection(b);
+        return (a - proj_ab*2);
+    }
+
+    Vector2 reflex(Vector2 b){
+        return Vector2::reflex(*this,b);
     }
 
 };
+
+
+
+/*
+ * Colisão de Circulo e Aresta
+ * MOVE_COLISION (CIRCULO, ARESTA, VetorMovimento):
+ *  retorna um valor de 0.f a 1.f,
+ *  caso o retorno seja 1.f não ouve colisão;
+ *  caso haja colisão este valor representa o multiplo do
+ *  VetorMovimento em que o círculo estará posicionado no momento da colisão.
+ *
+ * REFLEXÃO (VetorMovimento, VetorARESTA): <-- Função primária para calcular colisão;
+ * Retorna o mesmo vetor só que refletido na superficie da aresta;
+ * */
+
+
+
 
 
 #endif

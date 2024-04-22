@@ -69,6 +69,7 @@ public:
     static std::vector<Renderizable *> render_stack;
     //Posições do Mouse
     static Vector2  get_mouse_pos();
+    static Vector2 getMouseRelative();
     static Vector2  get_mouse_displacement();
 
     //funcoes para desenho de ponto e linha
@@ -119,6 +120,7 @@ public:
     static void translate(float x, float y);
     static void translate(Vector2 pos);
     static void relative_translate(float x, float y);
+    static Vector2 getTranslate();
 
 
     static void relative_translate(Vector2 pos);
