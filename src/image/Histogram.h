@@ -15,7 +15,7 @@
 #ifndef COMP_GRAFICA_HHSTOGRAM_H
 #define COMP_GRAFICA_HHSTOGRAM_H
 
-#include "gl_canvas2d.h"
+#include "../gl_canvas2d.h"
 #include <memory>
 #include "ImageManagement.h"
 

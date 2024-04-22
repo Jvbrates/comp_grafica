@@ -8,7 +8,7 @@
 //**********************************************************
 
 #include "ImageManagement.h"
-#include "gl_canvas2d.h"
+#include "../gl_canvas2d.h"
 #include <string.h>
 #include <cmath>
 #include <stdexcept>
@@ -240,7 +240,7 @@ void Image::setColor(enum_colors colors_) {
     this->colors = colors_;
 }
 
-#include "collisions.h"
+#include "../collisions.h"
 using namespace collisions;
 
 void Image::render() {

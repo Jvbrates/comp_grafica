@@ -18,9 +18,9 @@
 #ifndef COMP_GRAFICA_IMAGESELECTOR_H
 #define COMP_GRAFICA_IMAGESELECTOR_H
 
-#include "EventListener.h"
+#include "../EventListener.h"
 #include "ImageManagement.h"
-#include "Conteiner.h"
+#include "../Conteiner.h"
 
 
 class Quadrilatero : public Renderizable{

@@ -3,7 +3,7 @@
 //
 
 #include "ImageSelector.h"
-#include "collisions.h"
+#include "../collisions.h"
 #include <memory>
 
 

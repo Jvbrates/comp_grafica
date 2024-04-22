@@ -89,9 +89,11 @@ public:
     static void rectFill( Vector2  p1); //coordenadas do retangulo (p1, p2)
 
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
+    static void polygon(std::vector<Vector2> vertex);
     static void polygon(float vx[], float vy[], int n_elems);
     static void polygon(std::vector<std::tuple<Vector2 , Vector2 >> edges);
     static void polygonFill(float vx[], float vy[], int n_elems);
+    static void polygonFill(std::vector<Vector2> vertex);
     static void polygonFill(std::vector<std::tuple<Vector2 , Vector2 >> edges);
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div );
