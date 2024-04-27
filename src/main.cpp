@@ -46,9 +46,9 @@
 
 #include "gl_canvas2d.h"
 #include "EventListener.h"
-#include "ImageSelector.h"
+#include "image/ImageSelector.h"
 #include "TextBox.h"
-#include "Histogram.h"
+#include "image/Histogram.h"
 #include "Conteiner.h"
 #include "button.h"
 
@@ -74,7 +74,7 @@ public:
 
     void render() override{
 
-        this->position = 
+        this->position =
                 position +
                 move*velocidade
                 ;
@@ -110,7 +110,7 @@ public:
 
     std::vector<Circle> bullets = std::vector<Circle>();
 
-    
+
     explicit Canon(Vector2 mira_) {
         this->mira = mira_;
         this->base = {100., 100.};
@@ -152,7 +152,7 @@ public:
     bool mouse_left(int state) override{
         if(state == 1){
 
-            auto direction = Vector2(Vector2::polar(10.f, this->mira.getAngle()));
+            auto direction = polarVec(10.f, this->mira.getAngle());
 
             if(CV::get_mouse_pos().y < base.y){
                 direction.y = direction.y*-1;

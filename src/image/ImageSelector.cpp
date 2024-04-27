@@ -59,7 +59,7 @@ void ImageSelector::sort(){
 
     std::sort(images.elements.begin(),
               images.elements.end(),
-              [](auto a, auto b){
+              [](std::shared_ptr<Renderizable> a, std::shared_ptr<Renderizable> b){
 
 
                   return a->priority < b->priority;

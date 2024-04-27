@@ -11,6 +11,7 @@
 
 
 #include <algorithm>
+#include <tuple>
 #include "vector"
 #include "Vector2.h"
 #include "collisions.h"
@@ -117,7 +118,7 @@ bool collisions::polygon(Vector2  point, std::vector<std::tuple<Vector2 , Vector
 
 
     std::for_each(edges_filtered.begin(), edges_filtered.end(),
-                  [&acm, point](auto item){
+                  [&acm, point](std::tuple<Vector2 , Vector2 > item){
 
                       auto eq = line_equation (std::get<0>(item), std::get<1>(item));
 

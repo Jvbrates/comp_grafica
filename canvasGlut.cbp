@@ -38,31 +38,37 @@
 		</Compiler>
 		<Linker>
 			<Add library="../lib/libfreeglut32.a" />
-			<Add library="../lib/libopengl32.a"/>
-			<Add library="../lib/libglu32.a"/>
+			<Add library="../lib/libopengl32.a" />
+			<Add library="../lib/libglu32.a" />
 		</Linker>
-
-		<Unit filename="src/Vector2.h" />
-		<Unit filename="src/collisions.h" />
-		<Unit filename="src/Renderizable.cpp" />
-		<Unit filename="src/Renderizable.h" />
+		<Unit filename="src/Bola.h" />
+		<Unit filename="src/Botao.h" />
 		<Unit filename="src/Conteiner.cpp" />
 		<Unit filename="src/Conteiner.h" />
+		<Unit filename="src/EventListener.cpp" />
+		<Unit filename="src/EventListener.h" />
+		<Unit filename="src/Relogio.cpp" />
+		<Unit filename="src/Relogio.h" />
+		<Unit filename="src/Renderizable.cpp" />
+		<Unit filename="src/Renderizable.h" />
+		<Unit filename="src/TextBox.cpp" />
+		<Unit filename="src/TextBox.h" />
+		<Unit filename="src/Vector2.h" />
 		<Unit filename="src/button.cpp" />
 		<Unit filename="src/button.h" />
-        <Unit filename="src/EventListener.cpp" />
-		<Unit filename="src/EventListener.h" />
-        <Unit filename="src/Histogram.cpp" />
-		<Unit filename="src/Histogram.h" />
-        <Unit filename="src/ImageManagement.cpp" />
-		<Unit filename="src/ImageManagement.h" />
-        <Unit filename="src/ImageSelector.cpp" />
-		<Unit filename="src/ImageSelector.h" />
-        <Unit filename="src/TextBox.cpp" />
-		<Unit filename="src/TextBox.h" />
+		<Unit filename="src/collisions.cpp" />
+		<Unit filename="src/collisions.h" />
+		<Unit filename="src/geometry/Polygon.cpp" />
+		<Unit filename="src/geometry/Polygon.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
+		<Unit filename="src/image/Histogram.cpp" />
+		<Unit filename="src/image/Histogram.h" />
+		<Unit filename="src/image/ImageManagement.cpp" />
+		<Unit filename="src/image/ImageManagement.h" />
+		<Unit filename="src/image/ImageSelector.cpp" />
+		<Unit filename="src/image/ImageSelector.h" />
 		<Unit filename="src/main.cpp" />
-
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
