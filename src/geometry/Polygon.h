@@ -7,14 +7,14 @@
 #include "../Vector2.h"
 #include "../Conteiner.h"
 
-class Polygon: public Renderizable {
+class Polygon_: public Renderizable {
 private:
     std::vector<Vector2> vertex;
     bool fill;
     colors_enum color = black;
 
 public:
-    explicit Polygon(std::vector<Vector2>);
+    explicit Polygon_(std::vector<Vector2>);
     void render() override;
     void addVertex(Vector2 vertex);
     void setFill(bool f);

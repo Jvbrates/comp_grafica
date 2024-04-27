@@ -43,6 +43,9 @@
  *  de nomes, ela será descrita em gl_canvas2d.h;
  *
  * */
+#include <iosfwd>
+#include <sstream>
+#include <iomanip>
 
 #include "gl_canvas2d.h"
 #include "EventListener.h"
@@ -52,8 +55,16 @@
 #include "Conteiner.h"
 #include "button.h"
 
+#include "geometry/Circle.h"
+#include "geometry/Triangle.h"
+
+
+double  to_degres(double rad){
+    return rad*180/M_PI;
+}
+
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
-int screenWidth = 1200, screenHeight = 700;
+int screenWidth = 600, screenHeight = 600;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
@@ -66,198 +77,207 @@ void CV_render() {
 }
 
 
-class Circle: public Renderizable {
+class Bullet: public Circle, public EventClient {
 public:
-    Vector2 move, position;
-    float velocidade = 1., raio = 10.f;
-    int polygns = 10;
+    Vector2 move;
+
+    using Circle::Circle;
+
+    void render() override {
+        //Desenhando o Circulo
+        Circle::render();
+
+        //Ignorando redimensionamento de FPS por enquanto
+
+        //Desenha guias
+        auto l1 = move.cpy();
+        l1.setRay(this->getRay());
+
+        CV::color(red);
+        CV::line({0.,0.}, move);
+        CV::color(green);
+        CV::line({0.,0.}, l1);
+
+
+        auto sup = l1.cpy();
+        CV::color(blue);
+
+        sup.setAngle(sup.getAngle()+M_PI/2);
+
+        //auto sup_line = l1+sup;
+        CV::line({0.,0.}, sup);
+        CV::line(sup, sup+move+l1);
+
+
+        CV::color(brown);
+        auto inf = l1.cpy();
+        inf.setAngle(inf.getAngle()-M_PI/2);
+
+        //auto inf_line = l1+inf;
+        CV::line({0.,0.}, inf);
+        CV::line(inf, inf+move+l1);
+
+
+
+        //Guide
+
+        CV::circle(CV::getMouseRelative(), Circle::getRay(), vertex);
+
+
+
+    }
+
+
+    bool mouse_move(Vector2 pos, Vector2 displ) override{
+        this->move = CV::get_mouse_pos() - this->getAbsolutePos();
+
+        return false;
+    }
+
+};
+
+typedef std::vector<Vector2> polign_t;
+
+void draw_polign(polign_t p){
+    std::cout << "Desenhando poligonos" << std::endl;
+    CV::polygon(p);
+}
+
+std::vector<polign_t > vect_pol =std::vector<polign_t>();
+
+void CV_render2(){
+    CV::translate(300, 300);
+    CV::line(-300, 0, 600, 0);
+    CV::line(0, -300, 0, 600);
+
+
+    colors_enum  color = static_cast<colors_enum>(0);
+    CV::color(black);
+
+    for (const auto &item: vect_pol){
+        CV::color(color);
+        color = static_cast<colors_enum>(((int) color + 1)%n_of_colors);
+        draw_polign(item);
+    }
+}
+
+
+
+void rotate(polign_t *p, double rad){
+    for (auto &item: *p){
+        item.setAngle(item.getAngle()+rad);
+
+   /*     item.x = item.x*cos(rad) - item.y*sin(rad);
+        item.y = item.y*cos(rad) + item.x*sin(rad);
+*/
+    }
+}
+
+
+void translate(polign_t *p, Vector2 pos){
+    for (auto &item: *p){
+        item += pos;
+    }
+}
+
+
+void scale(polign_t *p, float scale){
+    for (auto &item: *p){
+        item.x *= scale;
+        item.y *= scale;
+    }
+}
+
+polign_t copy(polign_t src){
+    auto poligono2 = polign_t();
+    for (const auto &item: src){
+        poligono2.push_back(item);
+    }
+    return poligono2;
+
+}
+
+class Segment: public Renderizable, public EventClient {
+public:
+    Vector2 direct;
+
+    Segment(Vector2 src, Vector2 vec){
+        this->setRelativePos(src);
+        this->direct = vec;
+    }
+
 
     void render() override{
+        CV::line({0.,0.},direct);
 
-        this->position =
-                position +
-                move*velocidade
-                ;
+        auto mouse_vec = CV::getMouseRelative();
+        CV::line({0.,0.},mouse_vec);
+        auto angle =  mouse_vec.getAngle(direct);
 
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << angle*180/M_PI;
+        std::string s = stream.str();
 
-        if(this->position.x > screenWidth or this->position.x < 0){
-            move.x = -1*move.x;
-        }
-
-
-        if(this->position.y > screenHeight or this->position.y < 0){
-            move.y = -1*move.y;
-        }
+        CV::text(direct, s);
 
 
-        CV::circleFill(this->position, raio, polygns);
+        auto proj = mouse_vec.projection(direct);
 
-    }
-
-
-    explicit Circle(Vector2 direction, Vector2 position_){
-        this->move = direction;
-        this->position = position_;
-    }
-
-
-};
-
-class Canon : public Renderizable, public EventClient {
-
-public:
-    Conteiner bullets2;
-
-    std::vector<Circle> bullets = std::vector<Circle>();
-
-
-    explicit Canon(Vector2 mira_) {
-        this->mira = mira_;
-        this->base = {100., 100.};
-    }
-
-    Vector2 mira, base = {100., 100.};
-
-
-    void render() override {
-        CV::color(green);
-        CV::line(base, CV::get_mouse_pos());
         CV::color(red);
-        CV::line(base, base+mira);
+
+        CV::line({0.,0.}, proj);
 
     }
-
-    bool mouse_move(Vector2 pos, Vector2 desloc) override {
-        auto base_pos = pos-base;
-        double angle = base_pos.getAngle();
-        CV::line(base, pos);
-
-
-        if(pos.y < base.y){
-            angle = angle*-1;
-        }
-
-      /*  if(base_pos.x*pos.y < base_pos.y*pos.x) {
-            angle = angle;
-        } else {
-            angle = angle*-1;
-        }
-*/
-
-        mira.setAngle(angle);
-        return false;
-    }
-
-
-    bool mouse_left(int state) override{
-        if(state == 1){
-
-            auto direction = polarVec(10.f, this->mira.getAngle());
-
-            if(CV::get_mouse_pos().y < base.y){
-                direction.y = direction.y*-1;
-            }
-
-            auto position = Vector2(base+mira);
-
-            auto bullet = std::make_shared<Circle>(direction, position);
-
-            this->bullets2.push(bullet);
-
-        }
-        return false;
-    }
-
-
-};
-
-class Engrenagem : public Renderizable {
-
-    double rotate_acm = 0.;
-public:
-    double rotate_step = 0.02;
-    double periods;
-    std::vector<Vector2> points;
-
-    explicit Engrenagem(std::vector<Vector2> points_) {
-        this->points = points_;
-        this->periods = points_[points_.size() - 1].getAngle() - points_[0].getAngle();
-
-    }
-
-    void render() override {
-        rotate_acm += rotate_step;
-        auto points_cpy = points;
-
-
-        for (int i = 0; i <= PI_2 / (periods) + 1; i++) {
-
-            CV::color(black);
-
-            for (int j = 0; j < points.size() - 2; ++j) {
-
-                points_cpy[j].setAngle(points[j].getAngle() + i * periods + rotate_acm);
-                points_cpy[j + 1].setAngle(points[j + 1].getAngle() + i * periods + rotate_acm);
-
-                CV::line(points_cpy[j], points_cpy[j + 1]);
-            }
-
-            auto last = points.size() - 1;
-
-            CV::color(red);
-            points_cpy[last].setAngle(points[last].getAngle() + i * periods + rotate_acm);
-            points_cpy[0].setAngle(points[0].getAngle() + (i + 1) * periods + rotate_acm);
-            CV::line(points_cpy[last], points_cpy[0]);
-
-
-            /*CV::color(green);
-            points_cpy[0].setAngle(points[0].getAngle() + periods*i);
-            CV::line(points_cpy[3], points_cpy[0]);*/
-
-
-
-        }
-
-    }
-
-};
-
-
-class Lock {
-
-public:
-    Lock(){
-        std:: cout << "Locked ";
-    }
-
-    ~Lock(){
-        std::cout << "Unlocked " << std::endl;
-    }
-
 };
 
 int main() {
 
-    auto canhao = Canon({10.,0.});
+    //auto canhao = Canon({10.,0.});
+
+//
+//    EventListener::add_event(&canhao, en_mouse_move);
+//    EventListener::add_event(&canhao, en_mouse_left);
+//    CV::render_stack.push_back(&canhao);
+//    CV::render_stack.push_back(&canhao.bullets2);
+
+    auto segmento = Segment({200,200}, {100,0});
+    CV::render_stack.push_back(&segmento);
+    auto segmento2 = Segment({200,200}, {100,100});
+    auto segmento3 = Segment({200,200}, {0,100});
+    auto segmento4 = Segment({200,200}, {100,-100});
+    auto segmento5 = Segment({200,200}, {-100,100});
+    auto segmento6 = Segment({200,200}, {-100,-100});
+    auto segmento7 = Segment({200,200}, {0,-100});
+    auto segmento8 = Segment({200,200}, {-100,0});
+    //segmento2.color = red;
+    CV::render_stack.push_back(&segmento);
+    CV::render_stack.push_back(&segmento2);
+    CV::render_stack.push_back(&segmento3);
+    CV::render_stack.push_back(&segmento4);
+    CV::render_stack.push_back(&segmento5);
+    CV::render_stack.push_back(&segmento6);
+    CV::render_stack.push_back(&segmento7);
+    CV::render_stack.push_back(&segmento8);
 
 
-    EventListener::add_event(&canhao, en_mouse_move);
-    EventListener::add_event(&canhao, en_mouse_left);
-    CV::render_stack.push_back(&canhao);
-    CV::render_stack.push_back(&canhao.bullets2);
+    //std::vector<Vector2>pontos = {Vector2{300.,300.}, Vector2{0.,0.}, Vector2{300.,0.}};
 
+
+    //auto P = Polygon_(pontos);
+    //P.setRelativePos(300.,300.);
+
+//
+//    auto bullet = Bullet(80., 20, black, true);
+//    bullet.move = {100.,100.};
+//    bullet.setRelativePos({200., 200.});
+//
+//    EventListener::add_event(&bullet, en_mouse_move);
+//
     //INIT
+   // CV::render_stack.push_back(&P);
+   // CV::render_stack.push_back(&bullet);
+
+
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
-
-    {
-        auto hold = Lock();
-
-        std::cout << "Doing something ";
-
-    }
-
-
-
 }
-

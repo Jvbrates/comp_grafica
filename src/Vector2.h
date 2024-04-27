@@ -111,6 +111,8 @@ public:
 
     Vector2 reflex(Vector2 b);
 
+    Vector2 cpy();
+
 };
 
 Vector2 polarVec(float ray, float angle);

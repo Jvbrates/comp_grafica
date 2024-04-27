@@ -135,7 +135,7 @@ void CV::polygon(float vx[], float vy[], int elems)
 }
 void CV::polygon(std::vector<Vector2> vertex)
 {
-    glBegin(GL_POLYGON);
+    glBegin(GL_LINE_LOOP);
     for (unsigned int i = 0; i < vertex.size(); ++i) {
         glVertex2d(vertex[i].x, vertex[i].y);
     }
@@ -436,7 +436,6 @@ void display (void)
    glLoadIdentity();
 
    CV_render();
-
    glFlush();
    glutSwapBuffers();
 }
