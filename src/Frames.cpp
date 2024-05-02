@@ -20,17 +20,26 @@ float Frames::fps = 0.f;
 
 void Frames::updateAlarms(clock_t time)
 {
-        for(auto i = Frames::alarms.begin(); i != Frames::alarms.end();){
-            if(i->expire_at <= time){
-               *(i->value) = true;
-               i = Frames::alarms.erase(i);
-            } else {
-                break;
-            }
+    for(auto i = Frames::alarms.begin(); i != Frames::alarms.end();)
+    {
+        if(i->expire_at <= time)
+        {
+            *(i->value) = true;
+            i = Frames::alarms.erase(i);
+        }
+        else
+        {
+            break;
+        }
     }
 }
 
 float Frames::getFrames()
+{
+    return Frames::fps_old;
+}
+
+float Frames::updateFrames()
 {
     double tempo;
 

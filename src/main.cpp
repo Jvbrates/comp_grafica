@@ -1,62 +1,22 @@
-/*
- * Funcionalidades Implementadas:
- *  - Selecionar Imagens: Click com botão esquerdo do mouse
- *  - Arrastar Imagens: Mover mouse com botão esquerdo pressionado
- *  - Rotacionar Imagens: Mover mouse com botão direito pressionado
- *  - Gerar nova em imagem com canal de cores decomposto:
- *      No menu a direita clicar em um dos botões abaixo do título "Canais de Cores"
- *      R: Gerar imagem vermelho
- *      G: Gerar imagem verde
- *      B: Gerar imagem azul
- *      L: Gerar imagem em tons de luminância(ao longo do código foi usado a palavra
- *      grayscale)
- *  - Alterar brilho: Modifica a imagem selecionada ao interagir com o slider abaixo
- *  do título "Brilho:"
- *  - Visualizar histogramas: Interação com os checkbox na seção Histogramas
- *  - Espelhamento: Interação com os checkbox na seção Espelhamento
- *  - Mover "Câmera": Todas as imagens podem ser movidas conjuntamente pressionando
- *  as setas do teclado.
- *
- *
- *  Como requerido todo arquivo header possuí uma descrição, para um melhor
- *  entendimento do código sugere-se que sejam lidos na seguinte ordem
- *
- *  - gl_canvas2d.h (Descrito as modificações)
- *  - EventListener.h
- *  - collisions.h
- *  - Renderizable.h
- *  - Conteiner.h
- *  - ImageManagement.h
- *  - ImageSelector.h
- *  - Histogram.h
- *  - Button.h
- *  - TextBox.h
- *
- *  main.cpp
- *  - Instancia a classe que possuí as imagens (ImageSelector)
- *  - Cria o Menu e seus botões e define sua organização(posicionamento);
- *  - Cria os Histogramas e define sua organização
- *  - Confere interação com usuário e comunicação entre as partes
- *  Menu->Imagens, Menu->Histogramas;
- *
- *  A função render foi renomeada para CV_render a fim de evitar a colisão
- *  de nomes, ela será descrita em gl_canvas2d.h;
- *
- * */
+
 #include <iosfwd>
 #include <sstream>
 #include <iomanip>
 
 #include "gl_canvas2d.h"
+#include "Frames.h"
 #include "EventListener.h"
 #include "image/ImageSelector.h"
 #include "TextBox.h"
 #include "image/Histogram.h"
 #include "Conteiner.h"
 #include "button.h"
+#include "Blocks.h"
 
 #include "geometry/Circle.h"
 #include "geometry/Triangle.h"
+#include "geometry/Polygon.h"
+#include "geometry/SpecialSquare.h"
 
 
 double  to_degres(double rad){
@@ -70,6 +30,8 @@ int screenWidth = 600, screenHeight = 600;
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void CV_render() {
+
+    Frames::updateFrames();
     for (Renderizable *item: CV::render_stack) {
         CV::color(black);
         item->render_caller();
@@ -225,59 +187,26 @@ public:
 
         CV::color(red);
 
-        CV::line({0.,0.}, proj);
+        CV::line(Vector2{0.,0.}, proj);
 
+
+        CV::line(Vector2{0.,0.} + mouse_vec, (mouse_vec).reflex(direct) + mouse_vec);
+        CV::circle(mouse_vec, 10.f, 8);
     }
 };
 
 int main() {
 
-    //auto canhao = Canon({10.,0.});
+    auto surface = Segment({400.,200.}, {-150.,300.});
 
-//
-//    EventListener::add_event(&canhao, en_mouse_move);
-//    EventListener::add_event(&canhao, en_mouse_left);
-//    CV::render_stack.push_back(&canhao);
-//    CV::render_stack.push_back(&canhao.bullets2);
+    auto p1 = SpecialSquare(50., Vector2(100.,100.), 25.);
+    p1.draw_collision = true;
 
-    auto segmento = Segment({200,200}, {100,0});
-    CV::render_stack.push_back(&segmento);
-    auto segmento2 = Segment({200,200}, {100,100});
-    auto segmento3 = Segment({200,200}, {0,100});
-    auto segmento4 = Segment({200,200}, {100,-100});
-    auto segmento5 = Segment({200,200}, {-100,100});
-    auto segmento6 = Segment({200,200}, {-100,-100});
-    auto segmento7 = Segment({200,200}, {0,-100});
-    auto segmento8 = Segment({200,200}, {-100,0});
-    //segmento2.color = red;
-    CV::render_stack.push_back(&segmento);
-    CV::render_stack.push_back(&segmento2);
-    CV::render_stack.push_back(&segmento3);
-    CV::render_stack.push_back(&segmento4);
-    CV::render_stack.push_back(&segmento5);
-    CV::render_stack.push_back(&segmento6);
-    CV::render_stack.push_back(&segmento7);
-    CV::render_stack.push_back(&segmento8);
-
-
-    //std::vector<Vector2>pontos = {Vector2{300.,300.}, Vector2{0.,0.}, Vector2{300.,0.}};
-
-
-    //auto P = Polygon_(pontos);
-    //P.setRelativePos(300.,300.);
-
-//
-//    auto bullet = Bullet(80., 20, black, true);
-//    bullet.move = {100.,100.};
-//    bullet.setRelativePos({200., 200.});
-//
-//    EventListener::add_event(&bullet, en_mouse_move);
-//
-    //INIT
-   // CV::render_stack.push_back(&P);
-   // CV::render_stack.push_back(&bullet);
-
-
+    auto block = Blocks();
+    CV::render_stack.push_back(&surface);
+    CV::render_stack.push_back(&block.poligonos);
+    CV::render_stack.push_back(&p1);
+    //CV::render_stack.push_back(&p2);
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
 }

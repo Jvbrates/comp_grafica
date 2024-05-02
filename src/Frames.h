@@ -24,6 +24,7 @@ class Frames
         static void updateAlarms(clock_t t);
 
     public:
+        static float updateFrames();
         static float getFrames();
         static std::shared_ptr<bool> makeAlarm(clock_t t);
 

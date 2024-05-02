@@ -14,6 +14,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
+					<Add directory="src/geometry" />
+					<Add directory="./" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -24,6 +27,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2 -Wall" />
+					<Add directory="include" />
+					<Add directory="src/geometry" />
+					<Add directory="./" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -47,6 +53,8 @@
 		<Unit filename="src/Conteiner.h" />
 		<Unit filename="src/EventListener.cpp" />
 		<Unit filename="src/EventListener.h" />
+		<Unit filename="src/Frames.cpp" />
+		<Unit filename="src/Frames.h" />
 		<Unit filename="src/Relogio.cpp" />
 		<Unit filename="src/Relogio.h" />
 		<Unit filename="src/Renderizable.cpp" />
@@ -63,6 +71,8 @@
 		<Unit filename="src/geometry/Circle.h" />
 		<Unit filename="src/geometry/Polygon.cpp" />
 		<Unit filename="src/geometry/Polygon.h" />
+		<Unit filename="src/geometry/SpecialSquare.cpp" />
+		<Unit filename="src/geometry/SpecialSquare.h" />
 		<Unit filename="src/geometry/Triangle.cpp" />
 		<Unit filename="src/geometry/Triangle.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
