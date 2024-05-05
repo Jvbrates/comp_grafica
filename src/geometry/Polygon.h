@@ -24,7 +24,7 @@ public:
     bool inside(Vector2 point);
     int  countEdge();
     std::vector<Vector2> getEdge(int i);
-    std::vector<Vector2> *getVertex();
+    std::vector<Vector2> getVertex();
 };
 
 #endif //COMP_GRAFICA_POLYGON_H

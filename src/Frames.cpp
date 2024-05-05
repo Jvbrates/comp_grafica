@@ -5,7 +5,9 @@ struct alarm
     std::shared_ptr<bool> value = std::make_shared<bool>(false);
     clock_t expire_at;
 
-    alarm(clock_t t): expire_at(t) {}
+    alarm(clock_t t): expire_at(t) {};
+    alarm(clock_t t, std::shared_ptr<bool> v): expire_at(t), value(v) {};
+
 
 };
 
@@ -70,4 +72,13 @@ std::shared_ptr<bool> Frames::makeAlarm(clock_t t)
     Frames::alarms.push_back(new_alarm);
 
     return new_alarm.value;
+};
+
+
+void Frames::makeAlarm(clock_t t, std::shared_ptr<bool> v)
+{
+    auto new_alarm = alarm_t(clock() + t, v);
+
+    Frames::alarms.push_back(new_alarm);
+
 };

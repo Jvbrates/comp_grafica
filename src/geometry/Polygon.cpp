@@ -36,8 +36,8 @@ int Polygon_::countEdge() {
 
 
 
-std::vector<Vector2> *Polygon_::getVertex() {
-    return &(this->vertex);
+std::vector<Vector2> Polygon_::getVertex() {
+    return (this->vertex);
 }
 
 std::vector<Vector2> Polygon_::getEdge(int i) {

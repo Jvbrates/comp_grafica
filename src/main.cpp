@@ -16,7 +16,7 @@
 #include "geometry/Circle.h"
 #include "geometry/Triangle.h"
 #include "geometry/Polygon.h"
-#include "geometry/SpecialSquare.h"
+#include "SpecialSquare.h"
 
 
 double  to_degres(double rad){
@@ -32,10 +32,16 @@ int screenWidth = 600, screenHeight = 600;
 void CV_render() {
 
     Frames::updateFrames();
+
+
+
     for (Renderizable *item: CV::render_stack) {
         CV::color(black);
         item->render_caller();
     }
+
+    CV::color(idk_1);
+    CV::line(Vector2{50.,50.}, Vector2{100.,100.});
 }
 
 
@@ -195,14 +201,22 @@ public:
     }
 };
 
+class Teste {
+    public:
+    int a = 4;};
+
 int main() {
+
 
     auto surface = Segment({400.,200.}, {-150.,300.});
 
     auto p1 = SpecialSquare(50., Vector2(100.,100.), 25.);
     p1.draw_collision = true;
 
-    auto block = Blocks();
+    Blocks block = Blocks();
+
+    block.moveCircle(Vector2{50.,50.}, Vector2{50.,50.}, 20);
+
     CV::render_stack.push_back(&surface);
     CV::render_stack.push_back(&block.poligonos);
     CV::render_stack.push_back(&p1);
