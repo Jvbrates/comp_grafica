@@ -30,6 +30,7 @@ int screenWidth = 600, screenHeight = 600;
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void CV_render() {
+    CV::rect(Vector2(20.,20.), Vector2(120.,120.));
 
     Frames::updateFrames();
 
@@ -176,51 +177,66 @@ public:
 
 
     void render() override{
-        CV::line({0.,0.},direct);
-
-        auto mouse_vec = CV::getMouseRelative();
-        CV::line({0.,0.},mouse_vec);
-        auto angle =  mouse_vec.getAngle(direct);
-
-        std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << angle*180/M_PI;
-        std::string s = stream.str();
-
-        CV::text(direct, s);
+       CV::line(Vector2(50.,50.), Vector2(150., 150.));
+       CV::circle(Vector2(50.,50.), 25., 8);
+       CV::circle(Vector2(150.,150.), 25., 8);
 
 
-        auto proj = mouse_vec.projection(direct);
-
-        CV::color(red);
-
-        CV::line(Vector2{0.,0.}, proj);
-
-
-        CV::line(Vector2{0.,0.} + mouse_vec, (mouse_vec).reflex(direct) + mouse_vec);
-        CV::circle(mouse_vec, 10.f, 8);
     }
 };
 
-class Teste {
+class Teste : public Renderizable{
     public:
-    int a = 4;};
+        Vector2 from, to;
+    void render() override{
+        CV::color(green);
+        CV::line(from, to);
+       //CV::circle(Vector2(50.,50.), 25., 8);
+       CV::circle(to, 25., 8);
 
+    }
+    };
+
+#include "collisions.h"
 int main() {
 
+    solution_rect_rect sol = collisions::rect_rect(Vector2(0.,1.), Vector2(4.,-2.),Vector2(2.,2.), Vector2(1.,1.));
+    std::cout << sol.status << std::endl;
+    std::cout << sol.varA << std::endl;
+    std::cout << sol.varB << std::endl;
 
-    auto surface = Segment({400.,200.}, {-150.,300.});
 
-    auto p1 = SpecialSquare(50., Vector2(100.,100.), 25.);
+    auto surface = Segment({0.,0.}, {150.,300.});
+
+    auto p1 = SpecialSquare(50., Vector2(0.,0.), 25.);
     p1.draw_collision = true;
+    p1.setColor(black);
 
     Blocks block = Blocks();
+    block.poligonos.setRelativePos(20.,20.);
 
-    block.moveCircle(Vector2{50.,50.}, Vector2{50.,50.}, 20);
+    std::vector<Vector2> points = std::vector<Vector2>();
 
+    data_moveCircle dt = block.moveCircle(Vector2{50.,50.}, Vector2{100.,100.}, 25, &points);
+
+    auto p = Polygon_(points);
+
+    std::cout << dt.collision << std::endl;
+    std::cout << dt.pos_final.x << std::endl;
+    std::cout << dt.pos_final.y << std::endl;
+
+    auto teste = Teste();
+    teste.to = dt.pos_final;
+    teste.from = Vector2(50.,50.);
+
+    p.setColor(red);
+
+    CV::render_stack.push_back(&p);
     CV::render_stack.push_back(&surface);
     CV::render_stack.push_back(&block.poligonos);
-    CV::render_stack.push_back(&p1);
-    //CV::render_stack.push_back(&p2);
+    CV::render_stack.push_back(&teste);
+
+
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();
 }

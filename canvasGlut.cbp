@@ -47,6 +47,8 @@
 			<Add library="../lib/libopengl32.a" />
 			<Add library="../lib/libglu32.a" />
 		</Linker>
+		<Unit filename="src/Blocks.cpp" />
+		<Unit filename="src/Blocks.h" />
 		<Unit filename="src/Bola.h" />
 		<Unit filename="src/Botao.h" />
 		<Unit filename="src/Conteiner.cpp" />
@@ -59,6 +61,8 @@
 		<Unit filename="src/Relogio.h" />
 		<Unit filename="src/Renderizable.cpp" />
 		<Unit filename="src/Renderizable.h" />
+		<Unit filename="src/SpecialSquare.cpp" />
+		<Unit filename="src/SpecialSquare.h" />
 		<Unit filename="src/TextBox.cpp" />
 		<Unit filename="src/TextBox.h" />
 		<Unit filename="src/Vector2.cpp" />
@@ -71,8 +75,6 @@
 		<Unit filename="src/geometry/Circle.h" />
 		<Unit filename="src/geometry/Polygon.cpp" />
 		<Unit filename="src/geometry/Polygon.h" />
-		<Unit filename="src/geometry/SpecialSquare.cpp" />
-		<Unit filename="src/geometry/SpecialSquare.h" />
 		<Unit filename="src/geometry/Triangle.cpp" />
 		<Unit filename="src/geometry/Triangle.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />

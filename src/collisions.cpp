@@ -143,3 +143,114 @@ bool collisions::circle(Vector2 point, Vector2 circle_pos, float radius){
     return dist < radius;
 }
 
+
+solution_rect_rect collisions::rect_rect(Vector2 srcA, Vector2 dirA, Vector2 srcB, Vector2 dirB){
+    /*
+    O objetivo aqui não é cria uma solução elegante para equações lineares, é só resolver
+    o problema especifico de encontrar o ponto de colisão de duas retas.
+    Isto implica, por exemplo, que não serão tratados casos em que um dos vetores
+    diretores é nulo
+    */
+
+
+    auto diff_src = srcB - srcA;
+
+    float matrix[2][3]; //Matriz
+
+
+    //Dividir primeira linha pelo primeiro valor
+    if(dirA.x != 0 ){
+        dirB =dirB*-1;
+        matrix[0][0] = dirA.x;
+        matrix[0][1] = dirB.x;
+        matrix[0][2] = diff_src.x;
+        matrix[1][0] = dirA.y;
+        matrix[1][1] = dirB.y;
+        matrix[1][2] = diff_src.y;
+
+
+
+        matrix[0][0] /= dirA.x;
+        matrix[0][1] /= dirA.x;
+        matrix[0][2] /= dirA.x;
+
+        auto tmp = matrix[1][0]/matrix[0][0];
+
+        matrix[1][0] = 0; // Não é necessário realizar o calculo, mas seria -= matrix[0][0]*tmp
+        matrix[1][1] -= matrix[0][1]*tmp;
+        matrix[1][2] -= matrix[0][2]*tmp;
+
+
+        if(matrix[1][1] == 0){
+            if(diff_src.y){
+                return {en_none, 0.,0.};
+            } else {
+
+
+
+
+
+                return {en_infinity, 0.,0.};
+            }
+        }
+
+        matrix[1][0] /= matrix[1][1];
+        matrix[1][2] /= matrix[1][1];
+        matrix[1][1] /= matrix[1][1]; // Valor dividido por si próprio
+
+
+        tmp = matrix[0][1];
+
+        matrix[0][1] = 0;
+        matrix[0][2] -= matrix[1][2]*tmp;
+
+
+        return {en_one, matrix[0][2], matrix[1][2]};
+
+
+    } else if (dirA.y){ // Dividir primeira linha pelo segundo valor
+        dirB = dirB *-1;
+        matrix[1][0] = dirA.x;
+        matrix[1][1] = dirB.x;
+        matrix[1][2] = diff_src.x;
+        matrix[0][0] = dirA.y;
+        matrix[0][1] = dirB.y;
+        matrix[0][2] = diff_src.y;
+
+
+
+        matrix[0][0] /= dirB.x;
+        matrix[0][2] /= dirB.x;
+        matrix[0][1] /= dirB.x;
+
+        auto tmp = matrix[1][0]/matrix[0][0];
+
+        matrix[1][0] = 0; // Não é necessário realizar o calculo, mas seria -= matrix[0][0]*tmp
+        matrix[1][1] -= matrix[0][1]*tmp;
+        matrix[1][2] -= matrix[0][2]*tmp;
+
+
+        if(matrix[1][1] == 0){
+            if(diff_src.y){
+                return {en_none, 0.,0.};
+            } else {
+                return {en_infinity, 0.,0.};
+            }
+        }
+
+        matrix[1][0] /= matrix[1][1];
+        matrix[1][2] /= dirA.y;
+        matrix[1][1] = 1; // Valor dividido por si próprio
+
+
+        tmp = matrix[0][1];
+
+        matrix[0][1] = 0;
+        matrix[0][2] -= matrix[1][2]*tmp;
+
+
+        return {en_one, matrix[0][2], matrix[1][2]};
+
+
+    }
+}

@@ -24,7 +24,7 @@ class Blocks
         Conteiner poligonos;
 
         // Calcula a posição final do circulo, decrementa os blocos atingidos
-        data_moveCircle moveCircle(Vector2 pos, Vector2 movement, float radius);
+        data_moveCircle moveCircle(Vector2 pos, Vector2 movement, float radius, std::vector<Vector2>*);
 
         // Desce uma linha de blocos
         void lineDown();
@@ -37,7 +37,7 @@ class Blocks
 
         //Função principal para calcular o movimento do circulo,
         // a contraparte publica só realiza translação e entra na função recursiva
-        data_moveCircle recursiveMoveCircle(Vector2 pos, Vector2 movement, float radius);
+        data_moveCircle recursiveMoveCircle(Vector2 pos, Vector2 movement, float radius, std::vector<Vector2>*);
 
         //Remove blocos com life == 0
         void sanitizePolygons();

@@ -64,6 +64,18 @@ bool Polygon_::inside(Vector2 point) {
     return collisions::polygon(point, edges);
 }
 
+Vector2 Polygon_::meanPoint(){
+    int i = 0;
+    Vector2 tmp = Vector2(0.,0.);
+    for(;i< countEdge(); i++){
+        tmp+=vertex[i];
+    }
+
+    mean_point = tmp/(float)i;
+    return mean_point;
+}
+
+
 void Polygon_::render() {
 
     CV::color(color);

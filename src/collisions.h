@@ -15,6 +15,22 @@
 #include "vector"
 #include "Vector2.h"
 
+
+typedef enum {
+    en_none,   // Nenhuma solução
+    en_one,    // Multipla soluções
+    en_infinity// Infinitas soluções
+} enum_solution;
+
+typedef struct {
+
+    //Caso seja diferente de "one",
+    // os demais parametros deste struct devem ser desconsiderados
+    enum_solution status;
+    float varA;
+    float varB;
+} solution_rect_rect;
+
 class get_y;
 
 
@@ -30,6 +46,8 @@ namespace collisions{
 
     bool circle(Vector2 point, Vector2 circle_pos, float radius);
 
+    // Retorna o escalar que indica a posição em que a reta A intersecta a reta B,
+    solution_rect_rect rect_rect(Vector2 srcA, Vector2 dirA, Vector2 srcB, Vector2 dirB);
 
 }
 

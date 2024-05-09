@@ -12,17 +12,18 @@ protected:
     std::vector<Vector2> vertex;
     bool fill;
     colors_enum color = black;
-
+    void addVertex(Vector2 vertex);
+    void addVertex(float x, float y);
+    Vector2 mean_point;
 public:
     explicit Polygon_(std::vector<Vector2>);
     explicit Polygon_();
     void render() override;
-    void addVertex(Vector2 vertex);
-    void addVertex(float x, float y);
     void setFill(bool f);
     void setColor(colors_enum color_);
     bool inside(Vector2 point);
     int  countEdge();
+    Vector2 meanPoint();
     std::vector<Vector2> getEdge(int i);
     std::vector<Vector2> getVertex();
 };
