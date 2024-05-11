@@ -96,6 +96,9 @@ public:
     }
 
 
+
+
+
     //Funcoes estaticas
 
     static float distance(Vector2 a, Vector2 b);
@@ -117,7 +120,7 @@ public:
 
 Vector2 polarVec(float ray, float angle);
 
-
+bool operator!=(const Vector2 &a, const Vector2 &b);
 /*
  * Colisão de Circulo e Aresta
  * MOVE_COLISION (CIRCULO, ARESTA, VetorMovimento):

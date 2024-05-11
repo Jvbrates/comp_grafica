@@ -24,7 +24,7 @@ double  to_degres(double rad){
 }
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
-int screenWidth = 600, screenHeight = 600;
+int screenWidth = 505, screenHeight = 600;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
@@ -198,7 +198,26 @@ class Teste : public Renderizable{
     };
 
 #include "collisions.h"
-int main() {
+#include "Game.h"
+int main(){
+
+    Game G = Game();
+
+    CV::render_stack.push_back(&G);
+    CV::render_stack.push_back(&(G.blocks.poligonos));
+    CV::render_stack.push_back(&(G.cannon));
+
+    EventListener::add_event(&G, en_mouse_move);
+    EventListener::add_event(&G, en_mouse_left);
+
+    CV::init(screenWidth, screenHeight, "Canvas2D");
+    CV::run();
+
+
+    return 0;
+}
+
+int main2() {
 
     solution_rect_rect sol = collisions::rect_rect(Vector2(0.,1.), Vector2(4.,-2.),Vector2(2.,2.), Vector2(1.,1.));
     std::cout << sol.status << std::endl;

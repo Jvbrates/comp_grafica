@@ -42,8 +42,8 @@ std::vector<Vector2> Polygon_::getVertex() {
 
 std::vector<Vector2> Polygon_::getEdge(int i) {
 
-    return std::vector<Vector2>{this->vertex[i%(this->vertex.size())],
-                                this->vertex[(i+1)%(this->vertex.size())]};
+    return std::vector<Vector2>{this->vertex[i%(this->vertex.size())] + this->getRelativePos(),
+                                this->vertex[(i+1)%(this->vertex.size())] + this->getRelativePos()};
 }
 
 //
@@ -76,6 +76,7 @@ Vector2 Polygon_::meanPoint(){
 }
 
 
+
 void Polygon_::render() {
 
     CV::color(color);
@@ -84,4 +85,41 @@ void Polygon_::render() {
         CV::polygonFill(vertex);
     else
         CV::polygon(vertex);
+}
+
+void Polygon_::rotate(double rad)
+{
+    for(Vector2 &item: this->vertex){
+        item.setAngle(item.getAngle()+rad);
+    }
+}
+
+void Polygon_::setAngle(double rad)
+{
+
+    if(this->vertex.empty()){
+        return;
+    }
+
+        for(Vector2 &item: this->vertex){
+        item.setAngle(rad);
+    }
+}
+
+void Polygon_::translate(Vector2 t)
+{
+    for(Vector2 &item: this->vertex){
+        item = item + t;
+    }
+
+    this->meanPoint();
+
+}
+
+void Polygon_::scale(float scale)
+{
+    for(Vector2 &item: this->vertex){
+        item = item*scale;
+    }
+
 }

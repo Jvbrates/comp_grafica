@@ -12,12 +12,17 @@ protected:
     std::vector<Vector2> vertex;
     bool fill;
     colors_enum color = black;
-    void addVertex(Vector2 vertex);
-    void addVertex(float x, float y);
+
     Vector2 mean_point;
 public:
     explicit Polygon_(std::vector<Vector2>);
     explicit Polygon_();
+    void setAngle(double rad);
+    void rotate(double rad);
+    void translate(Vector2 t);
+    void scale(float scale);
+    void addVertex(Vector2 vertex);
+    void addVertex(float x, float y);
     void render() override;
     void setFill(bool f);
     void setColor(colors_enum color_);
