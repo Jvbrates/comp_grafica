@@ -6,6 +6,7 @@
 
 
 typedef enum {
+    stop,
     mirando,
     atirando,
     transicao_atira_mira,
@@ -25,9 +26,9 @@ class Game: public Renderizable, public EventClient
     public:
         Game();
 
-        void operator() (char level[], int power);
+        void operator() (int level, int power);
 
-        Game(char level[]);
+        Game(int);
         bool lose();
         bool win();
 
@@ -44,7 +45,7 @@ class Game: public Renderizable, public EventClient
         Polygon_ cannon;
 
     protected:
-        game_state_t state = mirando;
+        game_state_t state = stop;
         void stateAtirando(); // Move, desenha, remove projéteis
         void transAtiraMira();
         void lineDown(float downSize);

@@ -63,6 +63,9 @@ bool Button::callWraper() {
 }
 
 bool Button::mouse_left(int i) {
+    if(this->active == false){
+        return false;
+    }
 
     if (collisions::rectangle(CV::get_mouse_pos(), this->getAbsolutePos(), this->size + this->getAbsolutePos()) && i == 1) {
         return callWraper();

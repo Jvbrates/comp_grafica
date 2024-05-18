@@ -5,6 +5,71 @@
 #include "collisions.h"
 #include <math.h>
 
+
+
+
+int blocos_level1[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,20,20,20,20,20,20,20,20,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,20,20,20,20,20,20,20,20,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,50,11,50,11,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,20,32,20,31,0,0,0,0,0,0,0,0,20,32,20,31,0,0,
+0,0,20,33,20,30,0,0,0,0,0,0,0,0,20,33,20,30,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+
+
+int blocos_level2[] = {
+10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,20,20,20,20,20,20,20,20,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,20,20,20,20,20,20,20,20,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,50,11,50,11,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,20,32,20,31,0,0,0,0,0,0,0,0,20,32,20,31,0,0,
+20,33,20,33,20,30,20,33,20,33,20,33,20,33,20,33,20,30,20,33,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+
+};
+
+level map_level_1 = level(10,10,20, blocos_level1);
+
+level map_level_2 = level(10,10,20, blocos_level2);
+
+
+
 Blocks::Blocks()
 {
 }
@@ -13,10 +78,6 @@ Blocks::~Blocks()
 {
     //dtor
 
-    if(mapa){
-        fclose(mapa);
-        mapa = nullptr;
-    }
 }
 
 void Blocks::moveDown(){
@@ -43,9 +104,8 @@ void Blocks::loadLine(){
 
     for(int j = 0;j < colunas; j++){
             int tmp_ = 0;
-            int t   =  fscanf(mapa, "%i", &tmp_);
-            int shape;
-            fscanf(mapa, "%i", &shape);
+            int shape = 0;
+            fase.read(&tmp_, &shape);
 
             if(tmp_ != 0){
                 poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x+unitsize.x/2, (linhas-1)*unitsize.y+unitsize.y/2), tmp_, (en_shape)shape));
@@ -58,18 +118,13 @@ void Blocks::loadLine(){
 }
 
 void Blocks::init(){
-    if(!mapa){
-            std::cout << "Falha ao abrir arquivo" << std::endl;
-        exit(0);
-    }
 
     for(int i = 0; i < linhas; i++){
         for(int j = 0;j < colunas; j++){
 
             int life = 0;
             int shape = 0;
-            fscanf(mapa, "%i", &life);
-            fscanf(mapa, "%i", &shape);
+            fase.read(&life, &shape);
 
             if(life != 0){
                 poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x+unitsize.x/2 , i*unitsize.y+unitsize.y/2), life, (en_shape)shape));
@@ -81,21 +136,19 @@ void Blocks::init(){
 }
 
 
-void Blocks::operator()(char file[]){ //Reset
-    if(mapa){
-        fclose(mapa);
+void Blocks::operator()(int i){ //Reset
+
+    this->poligonos.elements.clear();
+    if(i == 0){
+        this->fase = map_level_1;
+    } else if (i == 1){
+        this->fase = map_level_2;
     }
 
-    mapa = fopen(file, "r");
+    this->colunas = fase.blocos_largura;
+    this->linhas = fase.blocos_altura;
+    this->total_linhas = fase.blocos_altura_total;
 
-    if(!mapa){
-            std::cout << "Falha ao abrir arquivo" << std::endl;
-        exit(0);
-    }
-
-    fscanf(this->mapa, "%i", &(this->colunas));
-    fscanf(this->mapa, "%i", &(this->linhas));
-    fscanf(this->mapa, "%i", &(this->total_linhas));
 
 
         //Limites principais
@@ -104,10 +157,10 @@ void Blocks::operator()(char file[]){ //Reset
 
     std::shared_ptr<SpecialSquare> grade = std::make_shared<SpecialSquare>();
 
-    grade->addVertex(Vector2(-0.5 - ref_size.x/2.,-0.5 - ref_size.y/2.));
+    grade->addVertex(Vector2(-1.5 - ref_size.x/2.,-5 - ref_size.y/2.));
     grade->addVertex(Vector2(-0.5 - ref_size.x/2 ,ref_size.y/2));
     grade->addVertex(ref_size/2);
-    grade->addVertex(Vector2(ref_size.x/2, -0.5 - ref_size.y/2.));
+    grade->addVertex(Vector2(1.5+ref_size.x/2, -5 - ref_size.y/2.));
     grade->setRelativePos(ref_size/2 + Vector2(1.5, 0.5));
 
     grade->noLife(true);
@@ -127,21 +180,18 @@ void Blocks::operator()(char file[]){ //Reset
 
 }
 
-Blocks::Blocks(char *file)
+Blocks::Blocks(int i)
 {
 
-    mapa = fopen(file, "r");
-
-    if(!mapa){
-            std::cout << "Falha ao abrir arquivo" << std::endl;
-        exit(0);
+     if(i == 0){
+        this->fase = map_level_1;
+    } else if (i == 1){
+        this->fase = map_level_2;
     }
 
-
-
-    fscanf(this->mapa, "%i", &(this->colunas));
-    fscanf(this->mapa, "%i", &(this->linhas));
-    fscanf(this->mapa, "%i", &(this->total_linhas));
+    this->colunas = fase.blocos_largura;
+    this->linhas = fase.blocos_altura;
+    this->total_linhas = fase.blocos_altura_total;
 
     //Limites principais
     auto ref_size = Vector2(this->unitsize.x*colunas,this->unitsize.y*linhas) + Vector2(0.5,0.5);
@@ -149,16 +199,17 @@ Blocks::Blocks(char *file)
 
     std::shared_ptr<SpecialSquare> grade = std::make_shared<SpecialSquare>();
 
-    grade->addVertex(Vector2(-0.5 - ref_size.x/2.,-0.5 - ref_size.y/2.));
-    grade->addVertex(Vector2(-0.5 - ref_size.x/2 ,ref_size.y/2));
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2.,-0.5 - ref_size.y/2. - 10.));
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2 ,-0.5 - ref_size.y/2. - 10.));
     grade->addVertex(ref_size/2);
     grade->addVertex(Vector2(ref_size.x/2, -0.5 - ref_size.y/2.));
     grade->setRelativePos(ref_size/2 + Vector2(1.5, 0.5));
+    grade->setColor(blue);
 
     grade->noLife(true);
     grade->showText(false);
     grade->setFill(false);
-    grade->setColor(black);
+    //grade->setColor(black);
 
     this->poligonos.push(grade);
 

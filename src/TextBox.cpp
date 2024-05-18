@@ -79,12 +79,13 @@ void TextBox::render(){
 
 };
 
-void TextBox::parseLines(std::string string) {
+void TextBox::parseLines(std::string string_) {
 
-    std::istringstream iss(string);
+    std::istringstream iss(string_);
     std::string tmp;
+    this->text.clear();//Reseta
     while (std::getline(iss, tmp)) {
-        this->text.push_back(tmp);
+        this->text.insert(this->text.begin(), tmp);
     }
 
 

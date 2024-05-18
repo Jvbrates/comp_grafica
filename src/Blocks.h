@@ -23,18 +23,48 @@ typedef struct {
     std::vector<Vector2> prev_segment;
 } data_moveCircle;
 
+
+//As fases eram anteriiormente lidas de arquivo, agora serão armazenadas em uma struct
+typedef struct lvl{
+    int blocos_altura;
+    int blocos_largura;
+    int blocos_altura_total;
+    int count_;
+    int *blocos;
+
+    void read(int *life, int *shape){
+
+        if(count_ >= this->blocos_largura * this->blocos_altura_total * 2){
+            return;
+        }
+
+        *life = blocos[count_++];
+        *shape = blocos[count_++];
+    }
+
+    lvl(int alt, int larg, int t_alt, int *blocos): count_(0){
+        this->blocos_altura = alt;
+        this->blocos_altura_total = t_alt;
+        this->blocos_largura = larg;
+        this->blocos = blocos;
+    }
+    lvl(): count_(0){};
+
+
+} level;
+
 class Blocks
 {
     public:
+        level fase;
         Blocks();
-        void operator()(char level[]);
-        Blocks(char *);
+        void operator()(int i);
+        Blocks(int i);
         virtual ~Blocks();
         Conteiner poligonos;
 
         int linhas, colunas, total_linhas, linhas_carregadas = 0;
         Vector2 unitsize = Vector2(50., 50.);
-        FILE *mapa = nullptr;
 
 
         // Calcula a posição final do circulo, decrementa os blocos atingidos

@@ -31,7 +31,7 @@
 #define PI_2 6.28318530717
 #define PI   3.14159265359
 #define PXL_STR 10.f //Pixels por String
-#define PXL_STR_H 10.f //Pixels por String em altura
+#define PXL_STR_H 15.f //Pixels por String em altura
 #define Y_CANVAS_CRESCE_PARA_CIMA 1
 
 extern int screenWidth, screenHeight;

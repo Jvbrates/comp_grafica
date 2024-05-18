@@ -8,7 +8,7 @@
 typedef enum {
     init,
     play,
-    between_level,
+    win_level,
     win,
     loose
 } en_app_state;
@@ -24,6 +24,8 @@ class GUI: public Renderizable, public EventClient
     protected:
 
 
+        char* level[2] = {"comp_grafica\\src\\lvl1.txt", "comp_grafica\\src\\lvl2.txt"};
+        int level_count = 0;
 
         void exitState(en_app_state);
         void enterState(en_app_state);
@@ -34,10 +36,9 @@ class GUI: public Renderizable, public EventClient
         //INIT
         TextBox textInit = TextBox("Trabalho 3 - Computacao Grafica\nBalls Bounce", center_center, Vector2(100.,500.));
         Button btnPlay;
-        // BETWEEN LEVEL
-        // PLAY
-        // WIN
-        //LOOSE
+        Button btnNext;
+        Button btnRetry;
+
         Game game;
 
     private:

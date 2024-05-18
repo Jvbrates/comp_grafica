@@ -6,7 +6,7 @@ game_state_t Game::getState(){
     return this->state;
 }
 
-Game::Game(char level[]): blocks(level)
+Game::Game(int level): blocks(level)
 {
 
 
@@ -23,14 +23,15 @@ Game::Game(char level[]): blocks(level)
 
 }
 
-void Game::operator()(char level[], int power)
+void Game::operator()(int level, int power)
 {
 
     blocks(level);
     this->power = power;
+    this->state = stop;
 
 
-    cannon.setRelativePos(100.,10.);
+    //cannon.setRelativePos(100.,10.);
 }
 
 
@@ -45,6 +46,8 @@ Game::Game(): blocks()
     cannon.addVertex(10., -10.);
     cannon.addVertex(10., 30.);
     cannon.addVertex(-10., 30.);
+
+    cannon.setRelativePos(100.,10.);
 
     cannon.setFill(true);
 
@@ -103,12 +106,7 @@ void Game::transAtiraMira(){
 
 void Game::render() {
 
-    auto tmp = std::vector<Vector2>();
-    //Temporaruamente sem controle de FPS
 
-
-    CV::color(red);
-    CV::circleFill(bullet0, 5, 16);
 
     switch(state){
         case atirando:
@@ -127,6 +125,9 @@ void Game::render() {
             std::cout << "Perdeu" << std::endl;
         case en_win:
             std::cout << "Win" << std::endl;
+            break;
+        case stop:
+            this->state = mirando;
             break;
 
     }
@@ -156,7 +157,7 @@ void Game::stateAtirando(){
 
         data_moveCircle dt = blocks.moveCircle(tmp->pos, tmp->mov/Frames::getFrames()*mod_speed, 25, nullptr);
 
-        if(dt.pos_final.y < 10.){
+        if(dt.pos_final.y < 0.){
 
             last_pos_bullet = tmp->pos;
             it = bullets.erase(tmp);
