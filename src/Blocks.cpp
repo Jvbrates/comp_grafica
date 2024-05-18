@@ -4,35 +4,9 @@
 #include <vector>
 #include "collisions.h"
 #include <math.h>
-#include <errno.h>
 
 Blocks::Blocks()
 {
-
-
-
-    poligonos.push(std::make_shared<SpecialSquare>(500., Vector2(5., 4.), 5.));
-
-    auto tmp = std::dynamic_pointer_cast<SpecialSquare>(this->poligonos.lastElement());
-
-    tmp->noLife(true);
-    tmp->showText(false);
-
-    poligonos.push(std::make_shared<SpecialSquare>(100., Vector2(-50., -40.), 5.));
-    poligonos.lastElement()->setRelativePos(100.,100.);
-
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(455., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(405., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(355., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(305., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(255., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(205., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(155., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(105., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(55., 455.), 5.));
-    poligonos.push(std::make_shared<SpecialSquare>(50., Vector2(5., 455.), 5.));
-
-
 }
 
 Blocks::~Blocks()
@@ -46,6 +20,11 @@ Blocks::~Blocks()
 }
 
 void Blocks::moveDown(){
+
+    if(poligonos.elements.empty()){
+        return;
+    }
+
     //O primeiro item não deve ser movido pois é
     for(std::vector<std::shared_ptr<Renderizable>>::iterator it = poligonos.elements.begin() + 1; it != poligonos.elements.end(); it++){
         std::shared_ptr<Polygon_> c_it = std::dynamic_pointer_cast<Polygon_>(*it);
@@ -65,10 +44,11 @@ void Blocks::loadLine(){
     for(int j = 0;j < colunas; j++){
             int tmp_ = 0;
             int t   =  fscanf(mapa, "%i", &tmp_);
+            int shape;
+            fscanf(mapa, "%i", &shape);
 
-            std::cout << "Leu: " << tmp_ << ":" << feof(mapa) << ":" << t << std::endl;
             if(tmp_ != 0){
-                poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x, (linhas-1)*unitsize.y), tmp_));
+                poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x+unitsize.x/2, (linhas-1)*unitsize.y+unitsize.y/2), tmp_, (en_shape)shape));
             }
         }
 
@@ -86,18 +66,65 @@ void Blocks::init(){
     for(int i = 0; i < linhas; i++){
         for(int j = 0;j < colunas; j++){
 
-            int tmp = 0;
-            int t   =  fscanf(mapa, "%i", &tmp);
+            int life = 0;
+            int shape = 0;
+            fscanf(mapa, "%i", &life);
+            fscanf(mapa, "%i", &shape);
 
-            std::cout << "Leu: " << tmp << ":" << strerror(errno) << ":" << t << std::endl;
-
-            if(tmp != 0){
-                poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x, i*unitsize.y), tmp));
+            if(life != 0){
+                poligonos.push(std::make_shared<SpecialSquare>(unitsize.x, Vector2(j*unitsize.x+unitsize.x/2 , i*unitsize.y+unitsize.y/2), life, (en_shape)shape));
             }
         }
     }
 
     linhas_carregadas = linhas;
+}
+
+
+void Blocks::operator()(char file[]){ //Reset
+    if(mapa){
+        fclose(mapa);
+    }
+
+    mapa = fopen(file, "r");
+
+    if(!mapa){
+            std::cout << "Falha ao abrir arquivo" << std::endl;
+        exit(0);
+    }
+
+    fscanf(this->mapa, "%i", &(this->colunas));
+    fscanf(this->mapa, "%i", &(this->linhas));
+    fscanf(this->mapa, "%i", &(this->total_linhas));
+
+
+        //Limites principais
+    auto ref_size = Vector2(this->unitsize.x*colunas,this->unitsize.y*linhas) + Vector2(0.5,0.5);
+
+
+    std::shared_ptr<SpecialSquare> grade = std::make_shared<SpecialSquare>();
+
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2.,-0.5 - ref_size.y/2.));
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2 ,ref_size.y/2));
+    grade->addVertex(ref_size/2);
+    grade->addVertex(Vector2(ref_size.x/2, -0.5 - ref_size.y/2.));
+    grade->setRelativePos(ref_size/2 + Vector2(1.5, 0.5));
+
+    grade->noLife(true);
+    grade->showText(false);
+    grade->setFill(false);
+    grade->setColor(black);
+
+
+    this->poligonos.elements.clear();
+
+    this->poligonos.push(grade);
+
+    init();
+
+
+
+
 }
 
 Blocks::Blocks(char *file)
@@ -122,13 +149,16 @@ Blocks::Blocks(char *file)
 
     std::shared_ptr<SpecialSquare> grade = std::make_shared<SpecialSquare>();
 
-    grade->addVertex(Vector2(-0.5,-0.5));
-    grade->addVertex(Vector2(-0.5,ref_size.y));
-    grade->addVertex(ref_size);
-    grade->addVertex(Vector2(ref_size.x, -0.5));
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2.,-0.5 - ref_size.y/2.));
+    grade->addVertex(Vector2(-0.5 - ref_size.x/2 ,ref_size.y/2));
+    grade->addVertex(ref_size/2);
+    grade->addVertex(Vector2(ref_size.x/2, -0.5 - ref_size.y/2.));
+    grade->setRelativePos(ref_size/2 + Vector2(1.5, 0.5));
 
     grade->noLife(true);
     grade->showText(false);
+    grade->setFill(false);
+    grade->setColor(black);
 
     this->poligonos.push(grade);
 
@@ -209,7 +239,7 @@ data_moveCircle Blocks::firstCollision(std::vector<std::shared_ptr<Polygon_>> fi
 
         reflex = Vector2::reflex(reflex, save_segment[1] - save_segment[0]);
 
-        colide->decreaseLife(4);
+        colide->decreaseLife(1);
         data_moveCircle tmp = {pos+(mov*save_colision.varA),reflex, true};
         tmp.prev_segment.push_back(save_segment[0]);
         tmp.prev_segment.push_back(save_segment[1]);

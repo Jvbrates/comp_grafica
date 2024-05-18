@@ -27,13 +27,14 @@ class Blocks
 {
     public:
         Blocks();
+        void operator()(char level[]);
         Blocks(char *);
         virtual ~Blocks();
         Conteiner poligonos;
 
         int linhas, colunas, total_linhas, linhas_carregadas = 0;
         Vector2 unitsize = Vector2(50., 50.);
-        FILE *mapa;
+        FILE *mapa = nullptr;
 
 
         // Calcula a posição final do circulo, decrementa os blocos atingidos

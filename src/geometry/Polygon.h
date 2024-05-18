@@ -11,7 +11,7 @@ class Polygon_: public Renderizable {
 protected:
     std::vector<Vector2> vertex;
     bool fill;
-    colors_enum color = black;
+    colors_enum color = red;
 
     Vector2 mean_point;
 public:

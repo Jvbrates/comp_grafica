@@ -37,6 +37,12 @@ void CV_render() {
 
 
     for (Renderizable *item: CV::render_stack) {
+
+        //Movido para reduzir o custo de processamento
+        if(item->visible == false){
+            continue;
+        }
+
         CV::color(black);
         item->render_caller();
     }
@@ -199,16 +205,17 @@ class Teste : public Renderizable{
 
 #include "collisions.h"
 #include "Game.h"
+#include "GUI.h"
 int main(){
 
-    Game G = Game();
 
-    CV::render_stack.push_back(&G);
-    CV::render_stack.push_back(&(G.blocks.poligonos));
-    CV::render_stack.push_back(&(G.cannon));
+    GUI I = GUI();
 
-    EventListener::add_event(&G, en_mouse_move);
-    EventListener::add_event(&G, en_mouse_left);
+    EventListener::captureEvent[en_mouse_left] = true;
+
+
+    CV::render_stack.push_back(&I);
+
 
     CV::init(screenWidth, screenHeight, "Canvas2D");
     CV::run();

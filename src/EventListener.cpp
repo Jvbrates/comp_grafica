@@ -6,8 +6,7 @@
 
 #include "EventListener.h"
 
-std::vector<bool> EventListener::captureEvent = std::vector<bool>
-        (num_of_events, false);
+bool EventListener::captureEvent[num_of_events] = {false};
 
 std::vector<std::map<int, EventClient*> >  EventListener::EventMatrix =
         std::vector<std::map<int, EventClient *>>(num_of_events);
@@ -87,6 +86,7 @@ void EventListener::mouse_right(int state) {
 
 void EventListener::mouse_left(int state) {
     for (const  auto item: EventListener::EventMatrix[en_mouse_left]){
+            std::cout << "ID: " << item.first << std::endl;
         bool stop = item.second->mouse_left(state);
 
         if(stop && EventListener::captureEvent[en_mouse_left]){

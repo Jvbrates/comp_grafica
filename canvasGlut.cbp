@@ -57,6 +57,8 @@
 		<Unit filename="src/EventListener.h" />
 		<Unit filename="src/Frames.cpp" />
 		<Unit filename="src/Frames.h" />
+		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Game.h" />
 		<Unit filename="src/Relogio.cpp" />
 		<Unit filename="src/Relogio.h" />
 		<Unit filename="src/Renderizable.cpp" />

@@ -103,7 +103,7 @@ private:
 
 public:
 
-    static std::vector<bool> captureEvent;
+    static bool captureEvent[num_of_events];
 
     static void add_event(EventClient *client, enum_event event);
 

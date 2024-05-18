@@ -28,6 +28,18 @@ typedef struct states{
     Vector2  position, size, text_offset; // FIXME text offset não é util
     colors_enum fill_color = gray, text_color = black;
     std::string texto;
+
+
+    states(Vector2 position_, Vector2 size_, colors_enum fill_, colors_enum text_, std::string textt_){
+        this->fill_color = fill_;
+        this->text_color = text_;
+        this->position = position_;
+        this->size = size_;
+        this->texto = textt_;
+    }
+
+
+    states(){};
 } states_t;
 
 
