@@ -6,7 +6,7 @@ struct alarm
     clock_t expire_at;
 
     alarm(clock_t t): expire_at(t) {};
-    alarm(clock_t t, std::shared_ptr<bool> v): expire_at(t), value(v) {};
+    alarm(clock_t t, std::shared_ptr<bool> v):value(v),expire_at(t) {};
 
 
 };

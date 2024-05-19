@@ -27,6 +27,7 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #include "Vector2.h"
+#include "collisions.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
@@ -91,10 +92,10 @@ public:
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(std::vector<Vector2> vertex);
     static void polygon(float vx[], float vy[], int n_elems);
-    static void polygon(std::vector<std::tuple<Vector2 , Vector2 >> edges);
+    static void polygon(std::vector<repl_tuple_t> edges);
     static void polygonFill(float vx[], float vy[], int n_elems);
     static void polygonFill(std::vector<Vector2> vertex);
-    static void polygonFill(std::vector<std::tuple<Vector2 , Vector2 >> edges);
+    static void polygonFill(std::vector<repl_tuple_t> edges);
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div );
     static void circle( Vector2  pos, float radius, int div );

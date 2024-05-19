@@ -11,7 +11,6 @@
 
 
 #include <algorithm>
-#include <tuple>
 #include "vector"
 #include "Vector2.h"
 #include "collisions.h"
@@ -78,20 +77,20 @@ Vector2  collisions::rotate(Vector2  pos, double rot){
 }
 
 
-bool collisions::polygon(Vector2  point, std::vector<std::tuple<Vector2 , Vector2 >> edges) {
+bool collisions::polygon(Vector2  point, std::vector<repl_tuple_t> edges) {
 
 
-    auto edges_filtered = std::vector<std::tuple<Vector2 , Vector2 >>(0);
+    auto edges_filtered = std::vector<repl_tuple_t>(0);
 
 
     /* Filtrando, removendo arestas que não cortam o eixo Y do ponto buscado
      * ou estão completamente a direita. */
     std::copy_if(edges.begin(), edges.end(), std::back_inserter(edges_filtered),
-                 [point](std::tuple<Vector2 , Vector2 > item) {
+                 [point](repl_tuple_t item) {
 
                      //item = Segmento AB;
-                     auto coord_A = std::get<0>(item);
-                     auto coord_B = std::get<1>(item);
+                     auto coord_A = item.itemA;
+                     auto coord_B = item.itemB;
 
                      if ((point.y < coord_A.y && point.y < coord_B.y) ||
                          (point.y > coord_A.y && point.y > coord_B.y))
@@ -118,9 +117,9 @@ bool collisions::polygon(Vector2  point, std::vector<std::tuple<Vector2 , Vector
 
 
     std::for_each(edges_filtered.begin(), edges_filtered.end(),
-                  [&acm, point](std::tuple<Vector2 , Vector2 > item){
+                  [&acm, point](repl_tuple_t item){
 
-                      auto eq = line_equation (std::get<0>(item), std::get<1>(item));
+                      auto eq = line_equation (item.itemA, item.itemB);
 
                       auto resultado = eq(point.y);
                       if(point.x <=  resultado) // Aqui eu considero que uma colisao no limite, está dentro.
@@ -253,4 +252,8 @@ solution_rect_rect collisions::rect_rect(Vector2 srcA, Vector2 dirA, Vector2 src
 
 
     }
+
+
+    return {en_none, 0., 0.};
+
 }

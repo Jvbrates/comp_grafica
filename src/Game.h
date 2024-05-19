@@ -1,6 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+/*
+    A classe Game administra cada fase/partida.
+
+    São três itens principais mantidos por game:
+    - O canhão. Muda de posição a cada fim de turno e é rotacionado pelo movimento do mouse.
+    - Os projéteis (Bullet).
+    - Os blocos. Administração delegada para classe Blocks.
+*/
+
 #include "Blocks.h"
 #include "SpecialSquare.h"
 
@@ -34,7 +43,6 @@ class Game: public Renderizable, public EventClient
 
         Blocks blocks;
         game_state_t getState();
-        Vector2 bullet0 = Vector2(100., 100.);
         Vector2 mov = Vector2(200, 200.6);
 
         bool mouse_move(Vector2 pos, Vector2 desl) override;
@@ -54,7 +62,7 @@ class Game: public Renderizable, public EventClient
 
                 //Canhão
         bool cannon_rotate = true;
-        Vector2 cannon_angle = {0.,10.}; // Vetor Auxilia para controlar os angulos dos pontos do canhão
+        Vector2 cannon_angle = {0.,10.}; // Vetor Auxiliar para controlar os angulos dos pontos do canhão
 
         //Projeteis
         float mod_speed = 5.f; //Modificador de velocidade

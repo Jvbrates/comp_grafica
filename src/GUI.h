@@ -1,6 +1,12 @@
 #ifndef GUI_H
 #define GUI_H
 
+/*
+    A classe GUI é responsável por administrar a aplicação como um todo,
+    alternando entre telas de menu e telas de jogo (Game).
+*/
+
+
 #include "TextBox.h"
 #include "button.h"
 #include "Game.h"

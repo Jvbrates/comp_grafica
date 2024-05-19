@@ -1,8 +1,23 @@
+/*
+    Lista de Instruções:
+    O usuário interage  com a aplicação usando somente o mouse,
+    para atirar use o botão esquerdo, para rotacionar o canhão mova o mouse;
+
+    Quesitos Implementados:
+    Além dos critérios básicos de avaliação, foram implementados.
+    - Outros tipos de primitivas, além de quadrados (0.5 pontos).
+    - Menu incial (0.5 pontos).
+    - Criação de várias fases do jogo (até 1 ponto). Muda-se de fase quando
+    todos os quadrados são removidos.
+
+*/
+
 
 #include "gl_canvas2d.h"
 #include "Frames.h"
 #include "GUI.h"
 #include "EventListener.h"
+#include <string>
 
 double  to_degres(double rad){
     return rad*180/M_PI;
@@ -17,6 +32,10 @@ int screenWidth = 505, screenHeight = 600;
 void CV_render() {
 
     Frames::updateFrames();
+    float fps = Frames::getFrames();
+
+    CV::text(Vector2(10.,10.),std::to_string(fps));
+
     for (Renderizable *item: CV::render_stack) {
 
         //Movido para reduzir o custo de processamento

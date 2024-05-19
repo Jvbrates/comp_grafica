@@ -4,6 +4,14 @@
 #include "Conteiner.h"
 #include "Polygon.h"
 
+/*
+    - Mantem todos os blocos(poligonos), incluindo os limites laterais da tela.
+    - moveDown(): Move todos os blocos para baixo.
+    - loadLine(): Carrega uma nova linha de blocos, caso haja.
+    - sanitizePolygons(): Remove blocos com life == 0.
+    - firstCollision() e moveCircle(): Calcula a colisão de uma esfera.
+
+*/
 
 typedef struct {
     Vector2 pos_final;  //Posição final do vetor
@@ -23,7 +31,7 @@ typedef struct {
 } data_moveCircle;
 
 
-//As fases eram anteriiormente lidas de arquivo, agora serão armazenadas em uma struct
+//As fases eram anteriiormente lidas de arquivos, agora serão armazenadas em uma struct
 typedef struct lvl{
     int blocos_altura;
     int blocos_largura;
@@ -70,7 +78,6 @@ class Blocks
         data_moveCircle moveCircle(Vector2 pos, Vector2 movement, float radius, std::vector<Vector2>*);
 
         // Desce uma linha de blocos
-        void lineDown();
         void loadLine(); //Carrega uma linha de poligonos
 
     protected:

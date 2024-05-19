@@ -1,6 +1,10 @@
 #ifndef __VECTOR_2_H__
 #define __VECTOR_2_H__
 
+/*
+    Vector2: Implementação de vetores 2D.
+*/
+
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>

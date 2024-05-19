@@ -14,8 +14,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="include" />
-					<Add directory="src/geometry" />
 					<Add directory="./" />
 				</Compiler>
 			</Target>
@@ -27,8 +25,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2 -Wall" />
-					<Add directory="include" />
-					<Add directory="src/geometry" />
 					<Add directory="./" />
 				</Compiler>
 				<Linker>
@@ -49,8 +45,8 @@
 		</Linker>
 		<Unit filename="src/Blocks.cpp" />
 		<Unit filename="src/Blocks.h" />
-		<Unit filename="src/Bola.h" />
-		<Unit filename="src/Botao.h" />
+		<Unit filename="src/Circle.cpp" />
+		<Unit filename="src/Circle.h" />
 		<Unit filename="src/Conteiner.cpp" />
 		<Unit filename="src/Conteiner.h" />
 		<Unit filename="src/EventListener.cpp" />
@@ -61,8 +57,8 @@
 		<Unit filename="src/GUI.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
-		<Unit filename="src/Relogio.cpp" />
-		<Unit filename="src/Relogio.h" />
+		<Unit filename="src/Polygon.cpp" />
+		<Unit filename="src/Polygon.h" />
 		<Unit filename="src/Renderizable.cpp" />
 		<Unit filename="src/Renderizable.h" />
 		<Unit filename="src/SpecialSquare.cpp" />
@@ -75,20 +71,8 @@
 		<Unit filename="src/button.h" />
 		<Unit filename="src/collisions.cpp" />
 		<Unit filename="src/collisions.h" />
-		<Unit filename="src/geometry/Circle.cpp" />
-		<Unit filename="src/geometry/Circle.h" />
-		<Unit filename="src/geometry/Polygon.cpp" />
-		<Unit filename="src/geometry/Polygon.h" />
-		<Unit filename="src/geometry/Triangle.cpp" />
-		<Unit filename="src/geometry/Triangle.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
-		<Unit filename="src/image/Histogram.cpp" />
-		<Unit filename="src/image/Histogram.h" />
-		<Unit filename="src/image/ImageManagement.cpp" />
-		<Unit filename="src/image/ImageManagement.h" />
-		<Unit filename="src/image/ImageSelector.cpp" />
-		<Unit filename="src/image/ImageSelector.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions />
 	</Project>

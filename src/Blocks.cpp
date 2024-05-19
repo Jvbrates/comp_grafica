@@ -244,7 +244,9 @@ void Blocks::sanitizePolygons(){
                std::remove_if(this->poligonos.elements.begin(), this->poligonos.elements.end(),
                 [](std::shared_ptr<Renderizable> item) {
                 std::shared_ptr<SpecialSquare> cast_item = std::dynamic_pointer_cast<SpecialSquare>(item);
-                if(cast_item->getLife() <= 0 && !cast_item->noLife()) return true;}
+                if(cast_item->getLife() <= 0 && !cast_item->noLife()) return true;
+
+                return false;}
                 )
               , this->poligonos.elements.end()
               );

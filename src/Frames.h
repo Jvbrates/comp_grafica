@@ -2,6 +2,12 @@
 #ifndef _FRAMES_H___
 #define _FRAMES_H___
 
+/*
+    Mantêm o calculo do FPS e implementa "alarmes"
+    "alarmes": Após determinado tempo, torna uma variável booleana compartilhada true;
+*/
+
+
 #include <time.h>
 #include <vector>
 #include <memory>
@@ -9,6 +15,7 @@
 
 #define UPDATE_RATE 30   //milisegundos
 #define SECOND 1000   //1 segundo
+
 
 typedef struct alarm alarm_t;
 

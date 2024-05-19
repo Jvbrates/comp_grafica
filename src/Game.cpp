@@ -129,6 +129,8 @@ void Game::render() {
         case stop:
             this->state = mirando;
             break;
+        default:
+            break;
 
     }
 }

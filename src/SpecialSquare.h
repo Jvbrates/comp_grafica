@@ -1,6 +1,13 @@
 #ifndef SPECIALSQUARE_H
 #define SPECIALSQUARE_H
 
+/*
+    Não trata somente de quadrados, apesar do nome;
+    Extensão da classe Polygon_, com adição de "vida".
+    Permite criação rápida de diferentes formas geométricas (en_shape);
+    Os blocos de cada fase usem esta classe;
+*/
+
 #include "Polygon.h"
 
 typedef enum {

@@ -155,12 +155,12 @@ void CV::polygonFill(float vx[], float vy[], int elems)
 }
 
 
-void CV::polygonFill(std::vector<std::tuple<Vector2 , Vector2 >> edges)
+void CV::polygonFill(std::vector<repl_tuple_t> edges)
 {
     glBegin(GL_POLYGON);
     for (const auto &item: edges)
     {
-        glVertex2d(std::get<0>(item).x, std::get<0>(item).y);
+        glVertex2d(item.itemA.x, item.itemA.y);
     }
     glEnd();
 
@@ -178,12 +178,12 @@ void CV::polygonFill(std::vector<Vector2> vertex)
 }
 
 
-void CV::polygon(std::vector<std::tuple<Vector2 , Vector2 >> edges)
+void CV::polygon(std::vector<repl_tuple_t> edges)
 {
     glBegin(GL_LINE_LOOP);
     for (const auto &item: edges)
     {
-        glVertex2d(std::get<0>(item).x, std::get<0>(item).y);
+        glVertex2d(item.itemA.x, item.itemA.y);
     }
     glEnd();
 

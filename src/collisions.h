@@ -31,6 +31,11 @@ typedef struct {
     float varB;
 } solution_rect_rect;
 
+typedef struct replace_tuple {
+    Vector2 itemA;
+    Vector2 itemB;
+}repl_tuple_t;
+
 class get_y;
 
 
@@ -42,7 +47,7 @@ namespace collisions{
 
     bool rectangle(Vector2 point, Vector2 rect_1, Vector2 rect_2);
 
-    bool polygon(Vector2  point, std::vector<std::tuple<Vector2 , Vector2 >> edges);
+    bool polygon(Vector2  point, std::vector<repl_tuple_t> edges);
 
     bool circle(Vector2 point, Vector2 circle_pos, float radius);
 
