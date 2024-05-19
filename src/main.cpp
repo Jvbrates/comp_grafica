@@ -1,23 +1,8 @@
 
-#include <iosfwd>
-#include <sstream>
-#include <iomanip>
-
 #include "gl_canvas2d.h"
 #include "Frames.h"
+#include "GUI.h"
 #include "EventListener.h"
-#include "image/ImageSelector.h"
-#include "TextBox.h"
-#include "image/Histogram.h"
-#include "Conteiner.h"
-#include "button.h"
-#include "Blocks.h"
-
-#include "geometry/Circle.h"
-#include "geometry/Triangle.h"
-#include "geometry/Polygon.h"
-#include "SpecialSquare.h"
-
 
 double  to_degres(double rad){
     return rad*180/M_PI;
@@ -46,10 +31,6 @@ void CV_render() {
 
 }
 
-
-#include "collisions.h"
-#include "Game.h"
-#include "GUI.h"
 int main(){
 
 

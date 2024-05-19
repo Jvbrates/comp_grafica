@@ -2,8 +2,7 @@
 #define BLOCKS_H
 
 #include "Conteiner.h"
-#include "geometry/Polygon.h"
-#include <stdio.h>
+#include "Polygon.h"
 
 
 typedef struct {

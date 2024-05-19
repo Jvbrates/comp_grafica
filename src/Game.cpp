@@ -62,7 +62,7 @@ bool Game::win(){
 
 bool Game::lose(){
 
-    //O primeiro elemento é a grade, o segundo é o poligono mais baixo;
+    //O primeiro elemento ï¿½ a grade, o segundo ï¿½ o poligono mais baixo;
 
     if(blocks.poligonos.elements.size() > 1){
         std::shared_ptr<Polygon_> lowest = std::dynamic_pointer_cast<Polygon_>(blocks.poligonos.elements[1]);
@@ -122,9 +122,9 @@ void Game::render() {
             break;
         case en_lose:
             break;
-            std::cout << "Perdeu" << std::endl;
+            //_ std::cout << "Perdeu" << std::endl;
         case en_win:
-            std::cout << "Win" << std::endl;
+            //_ std::cout << "Win" << std::endl;
             break;
         case stop:
             this->state = mirando;
@@ -178,7 +178,7 @@ void Game::lineDown(float down){
     this->blocks.poligonos.setRelativePos(Vector2(0, -down) + blocks.poligonos.getAbsolutePos());
 };
 
-bool Game::mouse_move(Vector2 pos, Vector2 desl){  //Rotação do canhão
+bool Game::mouse_move(Vector2 pos, Vector2 desl){  //Rotaï¿½ï¿½o do canhï¿½o
     if(cannon_rotate && !ammo && state == mirando){
         Vector2 c_mouse = pos - cannon.getAbsolutePos();
 
@@ -196,7 +196,7 @@ bool Game::mouse_left(int state){
 
 
 
-    std::cout << "Click em GAME: " << this->state << std::endl;
+    //_ std::cout << "Click em GAME: " << this->state << std::endl;
     if(this->state != mirando){
         return false;
     }

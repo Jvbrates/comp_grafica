@@ -59,7 +59,7 @@ GUI::GUI():
 
     // BTN NEXT
     btnNext.onclick([this](void *arg){
-                    std::cout << "Clickou em NEXT" << std::endl;
+                    //_ std::cout << "Clickou em NEXT" << std::endl;
                     this->state = play;
                      return true;
                      }, nullptr);
@@ -144,7 +144,7 @@ void GUI::exitState(en_app_state st){
 
 
     default:
-        std::cout << "Caso não tratatdo" << std::endl;
+        //_ std::cout << "Caso nï¿½o tratatdo" << std::endl;
         exit(21);
         break;
 
@@ -170,7 +170,7 @@ void GUI::render() {
     }
 
 
-    //Troca de estados, remover e colocar na pilha de renderização
+    //Troca de estados, remover e colocar na pilha de renderizaï¿½ï¿½o
     if(prev_state != state){
         exitState(prev_state);
         enterState(state);

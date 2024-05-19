@@ -24,7 +24,7 @@ class GUI: public Renderizable, public EventClient
     protected:
 
 
-        char* level[2] = {"comp_grafica\\src\\lvl1.txt", "comp_grafica\\src\\lvl2.txt"};
+
         int level_count = 0;
 
         void exitState(en_app_state);

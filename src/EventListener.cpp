@@ -46,7 +46,7 @@ void EventListener::add_event(EventClient *client, enum_event event){
         }
 
         default:
-            std::cout << "Evento não definido";
+            //_ std::cout << "Evento não definido";
             throw;
 
     }
@@ -86,7 +86,7 @@ void EventListener::mouse_right(int state) {
 
 void EventListener::mouse_left(int state) {
     for (const  auto item: EventListener::EventMatrix[en_mouse_left]){
-            std::cout << "ID: " << item.first << std::endl;
+            //_ std::cout << "ID: " << item.first << std::endl;
         bool stop = item.second->mouse_left(state);
 
         if(stop && EventListener::captureEvent[en_mouse_left]){
