@@ -157,7 +157,14 @@ Vector2 Vector2::cpy(){
     return Vector2(this->x, this->y);
 }
 
+void Vector2::rotate(double angle){
+    this->setAngle(this->getAngle() + angle);
+}
 
 bool operator!=(const Vector2 &a, const Vector2 &b){
     return (a.x != b.x || b.y != a.y);
 };
+
+
+
+

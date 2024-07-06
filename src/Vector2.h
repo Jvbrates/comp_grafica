@@ -21,6 +21,8 @@ public:
 
     Vector2(float _x, float _y);
 
+    void rotate(double angle);
+
     // define o angulo do vetor mantendo o raio
     void setAngle(double ang);
 
@@ -119,6 +121,16 @@ public:
     Vector2 reflex(Vector2 b);
 
     Vector2 cpy();
+
+    friend std::ostream& operator<<(std::ostream &out, Vector2 const& data) {
+        out << "( ";
+    out << data.x << "; ";
+    out << data.y << ")";
+    // and so on...
+    return out;
+}
+
+
 
 };
 

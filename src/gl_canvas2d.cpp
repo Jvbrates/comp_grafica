@@ -48,11 +48,39 @@ void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
 
+Vector3 CV::camera_coord = Vector3(0., 0., 0.);
+Vector3 CV::camera_translate = Vector3(0., 0., 0.);
+Vector3 CV::camera_N = Vector3(0., 0., 10.);
+Vector3 CV::camera_up = Vector3(0., 10., 0.);
+
 
 Vector2  CV::mouse_pos {0,0};   // Jeito legal de declarar variável
 Vector2  CV::mouse_displacement {0,0};
 Vector2  CV::current_translate {0,0};
 
+
+
+float CV::camera_d = 100.f; //Distancia da camera para o plano de projeção;
+
+void CV::camera_update(){
+    Vector3 n = CV::camera_N.normalizado();
+    Vector3 u = (CV::camera_N*CV::camera_up).normalizado();
+    Vector3 v = n*u;
+
+/*
+    CV::camera_r[0][0] = u.x;
+    CV::camera_r[0][1] = u.y;
+    CV::camera_r[0][2] = u.z;
+
+    CV::camera_r[1][0] = v.x;
+    CV::camera_r[1][1] = v.y;
+    CV::camera_r[1][2] = v.z;
+
+    CV::camera_r[1][0] = n.x;
+    CV::camera_r[1][1] = n.y;
+    CV::camera_r[1][2] = n.z;
+*/
+}
 
 void CV::point(float x, float y)
 {

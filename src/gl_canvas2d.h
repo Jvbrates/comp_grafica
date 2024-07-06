@@ -19,6 +19,17 @@
 #ifndef __CANVAS_2D__H__
 #define __CANVAS_2D__H__
 
+
+#ifdef _DEBUG
+    #define DEBUG(x) std::cout << x ;
+#else
+    #define DEBUG(x)
+#endif
+
+
+
+
+
 #include <string>
 #include <vector>
 #include <functional>
@@ -27,6 +38,7 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #include "Vector2.h"
+#include "Vector3.h"
 #include "collisions.h"
 
 #define PI_2 6.28318530717
@@ -67,6 +79,19 @@ class CV //classe Canvas2D
     friend void ConvertMouseCoord(int,int,int,int,int,int);
 
 public:
+
+    static float camera_d;
+
+    static Vector3 camera_coord;
+    static Vector3 camera_N;
+    static Vector3 camera_up;
+
+    static Vector3 camera_translate;
+
+    static float camera_r[3][3];
+
+    static void camera_update();
+
     static std::vector<Renderizable *> render_stack;
     //Posições do Mouse
     static Vector2  get_mouse_pos();
