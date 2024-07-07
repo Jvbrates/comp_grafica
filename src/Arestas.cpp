@@ -69,4 +69,53 @@ namespace Arestas {
         return tmp;
     }
 
+    vector<shared_ptr<point3d_t>> gear_points(float external_ray, float z)
+{
+
+    vector<shared_ptr<point3d_t>> ret = vector<shared_ptr<point3d_t>>();
+
+    float teeth = M_PI*2.;
+    float deep_ray = 20.f;
+    float arco = teeth/external_ray;
+    float arco_in = teeth/(external_ray-deep_ray);
+
+    int c = 0;
+    bool swap = true;
+    for(float i = 0.f; i <= M_PI*2;)
+    {
+        if(c++%2 == 0 )
+        {
+            swap = !swap;
+        }
+        else
+        {
+            swap = swap;
+        }
+
+
+        if(swap)
+        {
+            ret.push_back(make_shared<point3d_t>(
+                              external_ray*cos(i),
+                              external_ray*sin(i),
+                              z)
+                         );
+            i+=arco;
+        }
+        else
+        {
+            ret.push_back(make_shared<point3d_t>(
+                              (external_ray-deep_ray)*cos(i),
+                              (external_ray-deep_ray)*sin(i),
+                              z)
+                         );
+            i+=arco_in;
+        }
+
+
+    }
+
+    return ret;
+}
+
 }

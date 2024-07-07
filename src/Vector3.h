@@ -2,6 +2,9 @@
 #define VECTOR3_H
 
 #include "Vector2.h"
+#include "array"
+
+using namespace std;
 
 class Vector3
 {
@@ -83,6 +86,8 @@ class Vector3
 
 
 
+    static float angle(Vector3 a, Vector3 b);
+
     protected:
 
     private:
@@ -91,8 +96,9 @@ class Vector3
 
 bool operator!=(Vector3 v1, Vector3 v2);
 
-Vector3 mmult(float m[3][3], Vector3 vec);
+Vector3 mmult(const Vector3& vec, const array<array<float, 3>, 3>& rotation_matrix);
 
 Vector3 operator*(Vector3 v1, Vector3 v2);
+//float operator^(Vector3 v1, Vector3 v2);
 
 #endif // VECTOR3_H

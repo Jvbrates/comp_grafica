@@ -26,10 +26,15 @@ struct piped_point_st
 
     void projZ(float d)
     {
+
         float r = 1;
 
-        r = this->camera_vec.z!=0?(d/this->camera_vec.z):0.f;
-        this->projected_vec = Vector2(this->modified_vec.x*r, this->camera_vec.y*r);
+        r = this->camera_vec.z!=0?(d/this->camera_vec.z):1.f;
+        this->projected_vec = Vector2(this->camera_vec.x*r, this->camera_vec.y*r);
+
+
+
+
     }
 
 
@@ -75,6 +80,7 @@ vector<aresta_t> intercalado(vector<shared_ptr<point3d_t>>points1, vector<shared
 
 vector<aresta_t> central(vector<shared_ptr<point3d_t>>points, shared_ptr<point3d_t>center);
 
+vector<shared_ptr<point3d_t>> gear_points(float external_ray, float z);
 
 };
 

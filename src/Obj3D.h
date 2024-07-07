@@ -19,6 +19,14 @@ class Obj3D
     friend void CV_render();
 
     public:
+        bool rotate_old = true;
+
+        std::array<std::array<float, 3>, 3> matriz_rot = {{
+        {1, 0, 0},
+        {0, 1, 0},
+        {0, 0, 1}
+    }};;
+
 
         Vector3 coordinates = Vector3(0., 0.,0.);
 

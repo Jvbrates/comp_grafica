@@ -16,6 +16,9 @@ Vector3::~Vector3()
 
 
 void Vector3::rotacionaY(double rad){
+    if(!(*this != Vector3(0.,0.,0.))){return;}
+
+
      Vector3 aux = Vector3(x*std::cos(rad) + z*std::sin(rad),
                     y,
                     z*std::cos(rad)- x*std::sin(rad)
@@ -61,22 +64,28 @@ void Vector3::rotateArbitrary(const Vector3& axis, double theta) {
 
 
 
-Vector3 mmult(float m[3][3], Vector3 vec){
-    return Vector3(
-                   m[0][0]*vec.x + m[0][1]*vec.y + m[0][2]*vec.z,
-                   m[1][0]*vec.x + m[1][1]*vec.y + m[1][2]*vec.z,
-                   m[2][0]*vec.x + m[2][1]*vec.y + m[2][2]*vec.z
-                   );
+Vector3 mmult(const Vector3& vec, const std::array<std::array<float, 3>, 3>& rotation_matrix) {
+    Vector3 result = Vector3(
+        rotation_matrix[0][0] * vec.x + rotation_matrix[0][1] * vec.y + rotation_matrix[0][2] * vec.z,
+        rotation_matrix[1][0] * vec.x + rotation_matrix[1][1] * vec.y + rotation_matrix[1][2] * vec.z,
+        rotation_matrix[2][0] * vec.x + rotation_matrix[2][1] * vec.y + rotation_matrix[2][2] * vec.z
+    );
+    return result;
 }
 
-Vector3 operator*(Vector3 v1, Vector3 v2){
-    return Vector3(v1.y*v2.z - v1.z*v2.y,
-                   v1.x*v2.z - v1.z*v2.z,
-                   v1.x*v2.y - v1.y*v2.x);
-}
+Vector3 operator*(Vector3 v1, Vector3 v2) {
+    return Vector3(
+        v1.y * v2.z - v1.z * v2.y,
+        v1.z * v2.x - v1.x * v2.z,
+        v1.x * v2.y - v1.y * v2.x
+    );}
+
 
 
 void Vector3::rotacionaX(double rad){
+
+    if(!(*this != Vector3(0.,0.,0.))){return;}
+
     Vector3 aux = Vector3( x,
                      y*std::cos(rad) - z*std::sin(rad),
                      y*std::sin(rad) + z*std::cos(rad)
@@ -89,6 +98,9 @@ void Vector3::rotacionaX(double rad){
 }
 
 void Vector3::rotacionaZ(double rad){
+    if(!(*this != Vector3(0.,0.,0.))){return;}
+
+
     Vector3 aux = Vector3(
                     x*std::cos(rad) - y*std::sin(rad),
                     x*std::sin(rad) + y*std::cos(rad),
@@ -102,11 +114,32 @@ void Vector3::rotacionaZ(double rad){
 
 
 
+float Vector3::angle(Vector3 a, Vector3 b)
+{
+    a = a.normalizado();
+    b = b.normalizado();
+
+    auto p_intern = a^b;
+
+    auto angle = (float)acos(p_intern);
+
+    if(a.x*b.y < a.y*b.x)
+    {
+        angle = angle;
+    }
+    else
+    {
+        angle = angle*-1;
+    }
+
+
+
+    return angle;
+}
+
 
 bool operator!=(Vector3 v1, Vector3 v2){
-    return (   v1.x != v2.x
-            && v1.y != v2.y
-            && v1.z != v2.z);
+    return (v1.x != v2.x || v1.y != v2.y || v1.z != v2.z);
 }
 
 

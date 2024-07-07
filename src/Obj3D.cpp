@@ -7,97 +7,113 @@ Copia source para modified e aplica rotacoes
 shared_ptr<point3d_t> Obj3D::p_zero = make_shared<point3d_t>(0.,0.,0.);
 
 
-void Obj3D::rotations()
-{
-    //angle_vector.rotacionaY(rotate_y);
+void Obj3D::rotations() {
 
-    Vector3 tmp_x_y = Vector3(1.f,0.f,0.f);
-    Vector3 tmp_z_y = Vector3(0.f,0.f,1.f);
+    if(rotate_old){
 
-    tmp_x_y.rotateArbitrary(Vector3(0.,0.,1.), rotate_y);
-    tmp_z_y.rotateArbitrary(Vector3(0.,0.,1.), rotate_y);
+        Vector3 x_axis = Vector3(1.,0.,0.);
+        Vector3 y_axis = Vector3(0.,1.,0.);
+        Vector3 z_axis = Vector3(0.,0.,1.);
+        for (auto &item : points) {
+        item->modified_vec = item->source;
 
-    tmp_z_y.rotateArbitrary(tmp_x_y, rotate_x);
-
-    this->angle_x.p1->modified_vec = this->angle_x.p1->source;
-    this->angle_y.p1->modified_vec = this->angle_y.p1->source;
-    this->angle_z.p1->modified_vec = this->angle_z.p1->source;
-
-
-    this->angle_x.p2->modified_vec = this->angle_x.p2->source;
-    this->angle_y.p2->modified_vec = this->angle_y.p2->source;
-    this->angle_z.p2->modified_vec = this->angle_z.p2->source;
-
-    DEBUG(endl << "ROTACAO Y (" << angle_x.vecN() << this->angle_y.p2->modified_vec);
-    this->angle_y.p2->modified_vec.rotateArbitrary(angle_x.vecN(), rotate_x);
-    DEBUG(endl << "  " << this->angle_y.p2->modified_vec);
-
-
-    //ROTATE X
-    angle_y.p2->modified_vec.rotateArbitrary(angle_x.vecN(), rotate_x);
-    angle_z.p2->modified_vec.rotateArbitrary(angle_x.vecN(), rotate_x);
-
-    //ROTATE Y
-    angle_x.p2->modified_vec.rotateArbitrary(angle_y.vecN(), rotate_y);
-    angle_z.p2->modified_vec.rotateArbitrary(angle_y.vecN(), rotate_y);
-
-
-    //ROTATE Z
-    angle_y.p2->modified_vec.rotateArbitrary(angle_z.vecN(), rotate_z);
-    angle_x.p2->modified_vec.rotateArbitrary(angle_z.vecN(), rotate_z);
-
-
-
-    cout  << "ROTACAO X EM TORNO DE:"  << angle_x.vecN() << endl;
-
-    for(auto &item : points){
-        if(!(item->rotated)){
-                item->modified_vec = item->source;
-
-                //Rotaciona X
-                item->modified_vec.rotateArbitrary(angle_x.vecN(), rotate_x);
-
-
-
-                item->rotated = true;
+            if (!item->rotated) {
+                item->modified_vec.rotateArbitrary(x_axis, rotate_x);
+                item->modified_vec.rotateArbitrary(y_axis, rotate_y);
+                item->modified_vec.rotateArbitrary(z_axis, rotate_z);
+            }
         }
+    } else {
 
+    std::array<std::array<float, 3>, 3> Rx = {{
+        {1, 0, 0},
+        {0, cos(rotate_x), -sin(rotate_x)},
+        {0, sin(rotate_x), cos(rotate_x)}
+    }};
 
+    std::array<std::array<float, 3>, 3> Ry = {{
+        {cos(rotate_y), 0, sin(rotate_y)},
+        {0, 1, 0},
+        {-sin(rotate_y), 0, cos(rotate_y)}
+    }};
 
+    std::array<std::array<float, 3>, 3> Rz = {{
+        {cos(rotate_z), -sin(rotate_z), 0},
+        {sin(rotate_z), cos(rotate_z), 0},
+        {0, 0, 1}
+    }};
 
-                //item->modified_vec.rotateArbitrary(Vector3(0.,0.,1.), rotate_y);
-
-                //item->modified_vec.rotateArbitrary(tmp_z_y, rotate_z);
+    std::array<std::array<float, 3>, 3> Rxy;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            Rxy[i][j] = 0;
+            for (int k = 0; k < 3; ++k) {
+                Rxy[i][j] += Ry[i][k] * Rx[k][j];
+            }
+        }
     }
 
-
-
-    for(auto &item : points){
-
-        item->modified_vec.rotateArbitrary(angle_y.vecN(), rotate_y);
+    std::array<std::array<float, 3>, 3> finalR;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            finalR[i][j] = 0;
+            for (int k = 0; k < 3; ++k) {
+                finalR[i][j] += Rxy[i][k] * Rz[k][j];
+            }
+        }
     }
 
-
-
-    for(auto &item : points){
-        item->modified_vec.rotateArbitrary(angle_z.vecN(), rotate_z);
-
+    // Atualizar a matriz de rotação acumulada multiplicando pela nova matriz de rotação
+    std::array<std::array<float, 3>, 3> new_rotation_matrix;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            new_rotation_matrix[i][j] = 0;
+            for (int k = 0; k < 3; ++k) {
+                new_rotation_matrix[i][j] += matriz_rot[i][k] * finalR[k][j];
+            }
+        }
     }
 
+    matriz_rot = new_rotation_matrix;
 
+
+    Vector3 x_axis(1.f, 0.f, 0.f);
+    Vector3 y_axis(0.f, 1.f, 0.f);
+    Vector3 z_axis(0.f, 0.f, 1.f);
+
+    // Aplica as rotações aos pontos
+    for (auto &item : points) {
+        item->modified_vec = item->source;
+
+        if (!item->rotated) {
+
+            item->modified_vec = mmult(item->source, this->matriz_rot);
+
+        }
+    }
+
+    rotate_x = 0.;
+    rotate_z = 0.;
+    rotate_y = 0.;
+
+    }
 }
 
-/*
-Aplica rotacoes para modified
-*/
+
 void Obj3D::translation()
 {
 
     for(auto &item : points){
         if(!(item->translated)){
-                (item->modified_vec)+=(this->coordinates);
-                item->translated= true;
+
+            (item->modified_vec)+=(this->coordinates);
+            item->translated= true;
+
+
+
         }
+
+
     }
 
     //Angulos de apoio
@@ -121,6 +137,7 @@ void Obj3D::projection(float d){
         if(!(item->projected)){
 
                 item->projZ(d);
+
                 item->projected = true;
 
               // DEBUG( item->modified_vec << "-->" << item->projected_vec << endl)
@@ -129,57 +146,29 @@ void Obj3D::projection(float d){
 
 }
 
+//Aqui já terá rotacionado sobre si mesmo e sido transladado; Agora rotacionará sobre 0.
+// e depois será trasnaldado para adaptar a camera
+void Obj3D::camera_transformation() {
+    for (auto &point : points) {
 
-void Obj3D::camera_transformation(){
+         point->modified_vec.rotacionaX(CV::rotate_x);
+         point->modified_vec.rotacionaY(CV::rotate_y);
+         point->modified_vec.rotacionaZ(CV::rotate_z);
 
-    for(shared_ptr<point3d_t> point : points){
-        point->camera_vec = point->modified_vec;
-        //point->camera_vec -= CV::camera_coord;
+        point->camera_vec = point->modified_vec - CV::camera_coord;
     }
 }
+
 
 void Obj3D::render()
 {
 
-    /*
-    DEBUG(endl << "Arestas originais" << endl)
-    for(vector<aresta_t> &l_arestas: this->arestas){
-            DEBUG( "Malha" << endl)
-        for(aresta_st aresta: l_arestas){
-
-                DEBUG(aresta.p1->source << " -- " << aresta.p2->source << endl)
-        }
-    }
-
-*/
     rotations();
     translation();
 
-/*
-    DEBUG( endl << "Rotacao e Translação" << endl)
-    for(vector<aresta_t> &l_arestas: this->arestas){
-            DEBUG( "Malha" << endl)
-        for(aresta_st aresta: l_arestas){
-                DEBUG(aresta.p1->modified_vec << " -- " << aresta.p2->modified_vec<< endl)
-        }
-    }
-
-*/
 
     camera_transformation();
     projection(CV::camera_d);
-/*
-        DEBUG(endl << "Projecoes" << endl)
-    for(vector<aresta_t> &l_arestas: this->arestas){
-            DEBUG( "Malha" << endl)
-        for(aresta_st aresta: l_arestas){
-                DEBUG(aresta.p1->projected_vec << " -- " << aresta.p2->projected_vec<< endl)
-        }
-    }
-
-
-*/
-
 
     for(vector<aresta_t> &l_arestas: this->arestas){
         for(aresta_st aresta: l_arestas){
@@ -201,28 +190,6 @@ void Obj3D::render()
     this->angle_y.p2->projZ(CV::camera_d);
     this->angle_z.p1->projZ(CV::camera_d);
     this->angle_z.p2->projZ(CV::camera_d);
-    CV::color(this->angle_x.color);
-    CV::line(this->angle_x.p1->projected_vec, this->angle_x.p2->projected_vec);
 
-    CV::color(this->angle_y.color);
-    CV::line(this->angle_y.p1->projected_vec, this->angle_y.p2->projected_vec);
-
-    CV::color(this->angle_z.color);
-    CV::line(this->angle_z.p1->projected_vec, this->angle_z.p2->projected_vec);
-
-
-    DEBUG(endl << this->angle_x.p1->source << this->angle_x.p2->source << endl)
-    DEBUG(this->angle_x.p1->modified_vec<< this->angle_x.p2->modified_vec << endl)
-    DEBUG(this->angle_x.p1->projected_vec << this->angle_x.p2->projected_vec  << endl)
-
-
-    DEBUG(this->angle_y.p1->source << this->angle_y.p2->source << endl)
-    DEBUG(this->angle_y.p1->modified_vec<< this->angle_y.p2->modified_vec << endl)
-    DEBUG(this->angle_y.p1->projected_vec << this->angle_y.p2->projected_vec  << endl)
-
-    DEBUG(this->angle_z.p1->source << this->angle_z.p2->source << endl)
-    DEBUG(this->angle_z.p1->modified_vec<< this->angle_z.p2->modified_vec << endl)
-    DEBUG(this->angle_z.p1->projected_vec << this->angle_z.p2->projected_vec  << endl)
-    //DEBUG("";exit(0);)
 
 }

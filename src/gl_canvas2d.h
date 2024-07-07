@@ -19,7 +19,7 @@
 #ifndef __CANVAS_2D__H__
 #define __CANVAS_2D__H__
 
-
+#define _DEBUG
 #ifdef _DEBUG
     #define DEBUG(x) std::cout << x ;
 #else
@@ -83,14 +83,10 @@ public:
     static float camera_d;
 
     static Vector3 camera_coord;
-    static Vector3 camera_N;
-    static Vector3 camera_up;
 
-    static Vector3 camera_translate;
-
-    static float camera_r[3][3];
-
-    static void camera_update();
+    static float rotate_x;
+    static float rotate_y;
+    static float rotate_z;
 
     static std::vector<Renderizable *> render_stack;
     //Posições do Mouse
@@ -158,6 +154,9 @@ public:
 
     //funcao para executar a Canvas2D
     static void run();
+
+    //AUXILIAR |  camera_r to string
+    static std::string strCamera_r();
 
 private:
     static Vector2  current_translate;
