@@ -16,6 +16,7 @@ class Obj3D
 {
     static shared_ptr<point3d_t> p_zero;
     friend class CV;
+    friend void view2d();
     friend void CV_render();
 
     public:

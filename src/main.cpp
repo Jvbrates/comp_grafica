@@ -22,7 +22,6 @@
 // Old Libraries
 #include "gl_canvas2d.h"
 #include "Frames.h"
-#include "GUI.h"
 #include "EventListener.h"
 #include "TextBox.h"
 
@@ -59,48 +58,93 @@ Virabrequim V = Virabrequim(points, 10.f, y_conn_pistao, dist_pratos, 7.f, 10.f,
 Cilindro C = Cilindro(20, 21.f, 25.f, cil_height);
 Teclado T = Teclado();
 
-void view2d(){
+void view2d()
+{
     vector<Vector2> cilindro_src = {Vector2(-15.,0.), Vector2(-15.,-110.), Vector2(15.,-110.), Vector2(15.,0.)};
     vector<Vector2> pist_src = {Vector2(-10.,0.), Vector2(10.,0.), Vector2(10.,70.), Vector2(15.,70.),
-                                Vector2(15.,90.),Vector2(-15.,90.),Vector2(-15.,70.),Vector2(-10.,70.)}; //* pontos
+                                Vector2(15.,90.),Vector2(-15.,90.),Vector2(-15.,70.),Vector2(-10.,70.)
+                               }; //* pontos
     vector<Vector2> virb_pist = {Vector2(-15.,0.), Vector2(-15.,y_conn_pistao), Vector2(15.,y_conn_pistao), Vector2(15.,0.)};
+    vector<Vector2> gear1 = vector<Vector2>();
 
-    for(Vector2 &item: pist_src){
+
+
+    for(Vector2 &item: pist_src)
+    {
         item.rotate(P.rotate_z);
         item += Vector2(P.coordinates.x, P.coordinates.y);
         item = item*2;
     }
 
-    for(Vector2 &item: cilindro_src){
+    for(Vector2 &item: cilindro_src)
+    {
         item.rotate(P.rotate_z);
         item += Vector2(C.coordinates.x, C.coordinates.y);
         item = item*2;
     }
 
 
-    for(Vector2 &item: virb_pist){
+    for(Vector2 &item: virb_pist)
+    {
         item.rotate(V.rotate_z);
         item = item*2;
     }
 
+    if(T.sw_g2){
+    for(aresta_st aresta: G2.arestas[0])
+    {
+            G2.rotations();
+            G2.translation();
+        CV::line(Vector2(aresta.p1->modified_vec.x, aresta.p1->modified_vec.y) + Vector2(G2.coordinates.x, G2.coordinates.y),
+                 Vector2(aresta.p2->modified_vec.x, aresta.p2->modified_vec.y) + Vector2(G2.coordinates.x, G2.coordinates.y));
+
+    }
+    }
+
+    if(T.sw_g1){
+    for(aresta_st aresta: G1.arestas[0])
+    {
+        G1.rotations();
+        G1.translation();
+        CV::line(Vector2(aresta.p1->modified_vec.x, aresta.p1->modified_vec.y),
+                 Vector2(aresta.p2->modified_vec.x, aresta.p2->modified_vec.y));
+    }
+    }
+
+    if(T.sw_cil){
     CV::color(yellow);
     CV::polygonFill(cilindro_src);
+    }
 
+    if(T.sw_pi){
     CV::color(gray);
     CV::polygon(pist_src);
+    }
 
+    if(T.sw_v){
     CV::color(red);
     CV::polygonFill(virb_pist);
     CV::color(green);
     CV::circleFill(Vector2(0.,0.), 10.f,points);
     CV::circleFill(Vector2(P.coordinates.x, P.coordinates.y)*2, 10.f,points);
     CV::circleFill(Vector2(C.coordinates.x, C.coordinates.y)*2, 10.f,points);
+    }
 }
 
-string text_info(){
-        //TEXTOS
+string text_info()
+{
+    //TEXTOS
     stringstream txt;
-    txt << fixed << setprecision(3) << "View: " << ((T.sw_2d==true)?"2D ":"3D ") << endl;
+    txt << fixed << setprecision(3) << "View: " ;
+    if(T.sw_2d)
+    {
+        txt << "2D " << endl;
+    }
+    else
+    {
+        txt << ((T.sw_o==true)?"3D[Ortografica] ":"3D[Perspectiva] ") << endl;
+    }
+
 
     txt << "Gear 1: " << ((T.sw_g1==true)?"ON ":"OFF") << endl;
     txt << "Gear 2: " << ((T.sw_g2==true)?"ON ":"OFF") << endl;
@@ -136,7 +180,8 @@ void CV_render()
 
 
     //RENDERIZAÇÃO
-    if(!T.sw_2d){
+    if(!T.sw_2d)
+    {
 
         //Renderização 3d dos compontentes
         if(T.sw_v) V.render(T.sw_o);
@@ -145,7 +190,9 @@ void CV_render()
         if(T.sw_pi) P.render(T.sw_o);
         if(T.sw_cil) C.render(T.sw_o);
 
-    } else {
+    }
+    else
+    {
         view2d(); //Renderização 2d
     }
 
@@ -160,7 +207,7 @@ void CV_render()
     Tbox.setBackground(black);
 
     //Tbox.resize();
-    CV::translate(Vector2(20.,screenHeight - Tbox.getHeightText() -10.f));
+    CV::translate(Vector2(20.,screenHeight - Tbox.getHeightText() -30.f));
     Tbox.render();
 }
 

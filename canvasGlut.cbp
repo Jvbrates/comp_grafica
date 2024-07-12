@@ -47,37 +47,28 @@
 		</Linker>
 		<Unit filename="src/Arestas.cpp" />
 		<Unit filename="src/Arestas.h" />
-		<Unit filename="src/Blocks.cpp" />
-		<Unit filename="src/Blocks.h" />
+
 		<Unit filename="src/Cilindro.cpp" />
 		<Unit filename="src/Cilindro.h" />
-		<Unit filename="src/Circle.cpp" />
-		<Unit filename="src/Circle.h" />
+
 		<Unit filename="src/Conteiner.cpp" />
 		<Unit filename="src/Conteiner.h" />
 		<Unit filename="src/EventListener.cpp" />
 		<Unit filename="src/EventListener.h" />
 		<Unit filename="src/Frames.cpp" />
 		<Unit filename="src/Frames.h" />
-		<Unit filename="src/GUI.cpp" />
-		<Unit filename="src/GUI.h" />
-		<Unit filename="src/Game.cpp" />
-		<Unit filename="src/Game.h" />
+
 		<Unit filename="src/Gear.cpp" />
 		<Unit filename="src/Gear.h" />
 		<Unit filename="src/Obj3D.cpp" />
 		<Unit filename="src/Obj3D.h" />
-		<Unit filename="src/Object3D.h" />
+
 		<Unit filename="src/Pistao.cpp" />
 		<Unit filename="src/Pistao.h" />
-		<Unit filename="src/Polygon.cpp" />
-		<Unit filename="src/Polygon.h" />
+
 		<Unit filename="src/Renderizable.cpp" />
 		<Unit filename="src/Renderizable.h" />
-		<Unit filename="src/SpecialSquare.cpp" />
-		<Unit filename="src/SpecialSquare.h" />
 		<Unit filename="src/Teclado.cpp" />
-		<Unit filename="src/Teclado.h" />
 		<Unit filename="src/TextBox.cpp" />
 		<Unit filename="src/TextBox.h" />
 		<Unit filename="src/Vector2.cpp" />
@@ -86,14 +77,10 @@
 		<Unit filename="src/Vector3.h" />
 		<Unit filename="src/Virabrequim.cpp" />
 		<Unit filename="src/Virabrequim.h" />
-		<Unit filename="src/button.cpp" />
-		<Unit filename="src/button.h" />
-		<Unit filename="src/collisions.cpp" />
-		<Unit filename="src/collisions.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
-		<Unit filename="src/virabrequim2d.h" />
+
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -202,7 +202,8 @@ void Obj3D::render(bool ort)
             for(aresta_st aresta: l_arestas)
             {
                 CV::color(aresta.color);
-                //CV::line(Vector2(aresta.p1->camera_vec.x, aresta.p2->camera_vec.y);
+                CV::line(Vector2(aresta.p1->camera_vec.x, aresta.p1->camera_vec.y),
+                         Vector2(aresta.p2->camera_vec.x, aresta.p2->camera_vec.y));
 
 
                 aresta.p1->projected = false;

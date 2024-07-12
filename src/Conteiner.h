@@ -57,19 +57,12 @@ public:
     bool visible = false;
     void composer();
     void push(std::shared_ptr<Renderizable> item);
-    void findRemove(std::shared_ptr<Renderizable> item);
     void pop();
     std::shared_ptr<Renderizable> lastElement();
     void updateElementsPos();
     void setRelativePos(Vector2  pos) override;
     void setRelativePos(float x, float y) override;
     ~Conteiner();
-
-
-    //Evitar clicks por detrás do conteiner; ISSUE #8
-    bool mouse_left(int state);
-    bool mouse_right(int state);
-
 
 };
 

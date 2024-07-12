@@ -3,7 +3,6 @@
 //
 
 #include "Conteiner.h"
-#include "collisions.h"
 
 void Conteiner::composer(){
 
@@ -94,14 +93,6 @@ void Conteiner::pop() {
 
 }
 
-void Conteiner::findRemove(std::shared_ptr<Renderizable> item) {
-    auto item_find = std::find(this->elements.begin(), this->elements.end(), item);
-
-    if(item_find != this->elements.end()) {
-        (*item_find)->posAbsoluteSuper = {0.,0.};
-        this->elements.erase(item_find);
-    }
-}
 
 std::shared_ptr<Renderizable> Conteiner::lastElement() {
     if(this->elements.size()) {
@@ -142,24 +133,3 @@ void Conteiner::backgroundColor(colors_enum c) {
     this->color = c;
 }
 
-bool Conteiner::mouse_left(int state) {
-
-    if(state == 0 && collisions::rectangle(CV::get_mouse_pos(),
-    getAbsolutePos(),
-    getAbsolutePos() + size)){
-        return true;
-    }
-
-    return false;
-}
-
-bool Conteiner::mouse_right(int state) {
-
-    if(state == 0 && collisions::rectangle(CV::get_mouse_pos(),
-        getAbsolutePos(),
-                getAbsolutePos() + size)){
-        return true;
-    }
-
-    return false;
-}
