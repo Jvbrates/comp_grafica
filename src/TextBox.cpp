@@ -23,7 +23,7 @@ TextBox::TextBox(std::string text, text_align_t align, Vector2  pos){
 }
 
 void TextBox::resize() {
-    this->size.y = getHeightText();
+    this->size.y = getHeightText()+PXL_STR_H*2;
     this->size.x = getWhithText();
 }
 
@@ -69,6 +69,13 @@ void TextBox::render(){
                     line++*PXL_STR_H + align_vertical},
                          item);
                 break;
+            }
+            case left_center:{
+                CV::text({
+                    2.f,
+                    line++*PXL_STR_H + align_vertical},
+                         item);
+            break;
             }
             default:{
                 CV::text({0.,line++*PXL_STR_H}, item);

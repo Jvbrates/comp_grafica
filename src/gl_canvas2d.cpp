@@ -50,8 +50,8 @@ void specialUp(int key);
 void mouse(int bt, int st, int wheel, int direction, int x, int y);
 void mouseWheelCB(int wheel, int direction, int x, int y);
 
-Vector3 CV::camera_coord = Vector3(0., 0., 0.);
-float CV::camera_d = 100.f; //Distancia da camera para o plano de projeção;
+Vector3 CV::camera_coord = Vector3(0., 0., -200.);
+float CV::camera_d = 400.f; //Distancia da camera para o plano de projeção;
 float CV::rotate_x = 0.f;
 float CV::rotate_y = 0.f;
 float CV::rotate_z = 0.f;
@@ -215,6 +215,18 @@ void CV::text(float x, float y, const char *t)
 
 void CV::text(Vector2  pos, const char *t)
 {
+    int tam = (int)strlen(t);
+    for(int c=0; c < tam; c++)
+    {
+        glRasterPos2i(pos.x + c*10, pos.y);
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, t[c]);
+    }
+}
+
+void CV::text(Vector2  pos, string str)
+{
+    const char* t = str.c_str();
+
     int tam = (int)strlen(t);
     for(int c=0; c < tam; c++)
     {
@@ -532,14 +544,7 @@ void CV::run()
    glutMainLoop();
 }
 
-void CV::text(Vector2  pos, std::string valor) {
-    int tam = valor.size();
-    for(int c=0; c < tam; c++)
-    {
-        glRasterPos2i(pos.x + c*10, pos.y);
-        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, valor[c]);
-    }
-}
+
 
 void CV::rect(Vector2  p1, Vector2  p2) {
 

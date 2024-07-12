@@ -30,6 +30,8 @@ typedef enum {
 
 
 class TextBox: public Renderizable {
+
+    friend void CV_render();
 protected:
     std::vector<std::string> text;
     float whithText;

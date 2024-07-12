@@ -56,7 +56,7 @@ class Obj3D
         void translation();
         void projection(float d);
         void camera_transformation();
-        void render();
+        void render(bool ort);
 };
 
 #endif // OBJ3D_H
