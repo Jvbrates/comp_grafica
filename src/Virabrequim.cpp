@@ -73,11 +73,11 @@ Virabrequim::Virabrequim(int points, float ray, float distance, float dist_prato
         {
             tmp3.push_back(make_shared<point3d_t>(cil_ray*cos(i*step),
                                                   cil_ray*sin(i*step),
-                                                  dist_pratos/-2. - depth));
+                                                  dist_pratos/2));
 
             tmp4.push_back(make_shared<point3d_t>(cil_ray*cos(i*step),
                                                   cil_ray*sin(i*step),
-                                                  dist_pratos/2. + depth));
+                                                  dist_pratos/2. + depth*3.f));
 
         }
 

@@ -1,14 +1,19 @@
 /*
-    Lista de Instruções:
-    O usuário interage  com a aplicação usando somente o mouse,
-    para atirar use o botão esquerdo, para rotacionar o canhão mova o mouse;
+INSTRUÇÕES:
+O programa inteiro é controlado por teclas:
+SETA PARA CIMA/BAIXO: Move a câmera no eixo Z;
+SETA PARA ESQUERDA/DIREOTA: Aumenta/Diminui RPM;
+S/W: Rotaciona a câmera no eixo x;
+A/D: Rotaciona a câmera no eixo y;
+Q/E: Rotaciona a câmera no eixo Z;
+R:   Alterna visualização 2D/3D;
+K:   Alterna projeção ortográfica ou perspectiva;
+1:   Alterna esconder/mostrar Engrenagem 1;
+2:   Alterna esconder/mostrar Engrenagem 2;
+3:   Alterna esconder/mostrar virabrequim;
+4:   Alterna esconder/mostrar pistão;
+5:   Alterna esconder/mostrar cilindro;
 
-    Quesitos Implementados:
-    Além dos critérios básicos de avaliação, foram implementados.
-    - Outros tipos de primitivas, além de quadrados (0.5 pontos).
-    - Menu incial (0.5 pontos).
-    - Criação de várias fases do jogo (até 1 ponto). Muda-se de fase quando
-    todos os quadrados são removidos.
 
 */
 // CPP Libraries

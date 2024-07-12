@@ -1,3 +1,17 @@
+/*
+Este código define a namespace `Arestas` e implementa várias funções que manipulam
+e geram arestas (linhas conectando pontos) a partir de pontos tridimensionais (`point3d_t`).
+ A função `linear` cria arestas conectando sequencialmente os pontos em um vetor e,
+  opcionalmente, conecta o último ponto ao primeiro para formar um ciclo.
+  A função `intercalado` possui duas sobrecargas: uma que intercalam arestas entre
+  dois vetores de pontos e outra entre dois vetores de arestas, com a opção de
+  conectá-los de forma linear ou não. A função `central` cria arestas ligando cada ponto
+  de um vetor a um ponto central fornecido. A função `gear_points` gera pontos que
+  descrevem a forma de uma engrenagem, com dentes e vales alternados, com base em um
+  raio externo e uma profundidade dos dentes, todos no mesmo plano `z`.
+  Este conjunto de funções pode ser utilizado para criar estruturas geométricas complexas
+   a partir de pontos e arestas.
+*/
 #include "Arestas.h"
 
 

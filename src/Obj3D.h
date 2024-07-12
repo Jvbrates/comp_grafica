@@ -1,3 +1,20 @@
+/*
+Este código implementa uma classe `Obj3D` que realiza diversas transformações em
+pontos tridimensionais, incluindo rotações, translações, projeções e
+transformações de câmera, para posteriormente renderizá-los. A função `rotations`
+aplica rotações nos pontos do objeto. Dependendo do valor do flag `rotate_old`, as
+rotações são realizadas ou por rotação arbitrária ao redor dos eixos X, Y e Z ou
+por multiplicação de matrizes de rotação. A função `translation` aplica uma
+translação a todos os pontos, ajustando suas coordenadas com um vetor de
+translação. A função `projection` aplica uma projeção perspectiva aos pontos,
+calculando suas posições projetadas. A função `camera_transformation` ajusta as
+coordenadas dos pontos de acordo com a posição da câmera e aplica rotações
+adicionais conforme necessário. Finalmente, a função `render` chama todas essas
+transformações e desenha as arestas entre os pontos, podendo optar entre uma
+projeção ortográfica ou perspectiva, resetando os flags de projeção, rotação e
+translação dos pontos ao final do processo.
+*/
+
 #ifndef OBJ3D_H
 #define OBJ3D_H
 
@@ -16,8 +33,8 @@ class Obj3D
 {
     static shared_ptr<point3d_t> p_zero;
     friend class CV;
-    friend void view2d();
     friend void CV_render();
+    friend void view2d();
 
     public:
         bool rotate_old = true;
